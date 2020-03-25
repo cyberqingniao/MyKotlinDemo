@@ -5,7 +5,7 @@ import android.os.Bundle
 
 /**
  * $
- * @author yjp
+ * @author com.yjp
  * @date 2020/3/25 13:53
  */
 interface IBaseView {
@@ -37,13 +37,40 @@ interface IBaseView {
      */
     fun initViewObservable()
 
+    /**
+     * 显示加载弹窗
+     */
     fun showLoading()
 
-    fun showLoading(msg:String)
+    /**
+     * 显示加载弹窗，带提示文字
+     * @param msg ： 显示文字
+     */
+    fun showLoading(msg: String)
 
-    fun showLoading(resId:Int)
+    /**
+     * 显示加载弹窗，带提示文字
+     * @param resId : 字符串资源ID
+     */
+    fun showLoading(resId: Int)
 
+    /**
+     * 关闭加载弹窗
+     */
     fun dismissLoading()
+
+    /**
+     * 跳转新Activity
+     * @param clazz : Activity
+     */
+    fun startActivity(clazz: Class<*>)
+
+    /**
+     * 跳转新的activity，带参数
+     * @param clazz : Activity
+     * @param bundle : 需要携带的参数
+     */
+    fun startActivity(clazz: Class<*>, bundle: Bundle)
 
     /**
      * 隐藏软键盘

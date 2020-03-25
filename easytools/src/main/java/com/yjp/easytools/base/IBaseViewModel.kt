@@ -7,7 +7,7 @@ import androidx.lifecycle.OnLifecycleEvent
 
 /**
  * $
- * @author yjp
+ * @author com.yjp
  * @date 2020/3/25 13:43
  */
 interface IBaseViewModel : LifecycleObserver {
@@ -41,4 +41,5 @@ interface IBaseViewModel : LifecycleObserver {
      * 移除RxBus
      */
     fun removeRxBus()
+
 }

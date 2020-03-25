@@ -6,7 +6,7 @@ import java.io.PrintWriter
 
 /**
  * 项目自动构建器$
- * @author yjp
+ * @author com.yjp
  * @date 2020/3/25 11:30
  */
 class GeneratorUtils {
@@ -19,7 +19,7 @@ class GeneratorUtils {
         //easytools路径
         private const val PATH_EASYTOOLS = "./easytools/src/main"
         //easytools代码路径
-        private const val PATH_EASYTOOLS_CODE = "$PATH_EASYTOOLS/java/com/yjp/easytools"
+        private const val PATH_EASYTOOLS_CODE = "$PATH_EASYTOOLS/java/com/com.yjp/easytools"
         //easytools资源存放路径
         private const val PATH_EASYTOOLS_VALUES = "$PATH_EASYTOOLS/res/values"
 
