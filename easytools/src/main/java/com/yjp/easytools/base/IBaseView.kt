@@ -20,7 +20,7 @@ interface IBaseView {
      * @param saveInstanceState
      * @return 布局layout的Id
      */
-    fun initContentView(saveInstanceState: Bundle): Int
+    fun initContentView(saveInstanceState: Bundle?): Int
 
     /**
      * 初始化ViewModel
@@ -70,17 +70,6 @@ interface IBaseView {
      * @param clazz : Activity
      * @param bundle : 需要携带的参数
      */
-    fun startActivity(clazz: Class<*>, bundle: Bundle)
+    fun startActivity(clazz: Class<*>, bundle: Bundle?)
 
-    /**
-     * 隐藏软键盘
-     */
-    fun goneKey()
-
-    /**
-     * 图片资源转换
-     * @param resId : 资源id
-     * @return Drawable
-     */
-    fun getDrawables(resId: Int): Drawable
 }
