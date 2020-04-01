@@ -1,7 +1,8 @@
 package com.yjp.easytools.base
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import androidx.annotation.LayoutRes
+import androidx.annotation.StringRes
 
 /**
  * $
@@ -20,6 +21,7 @@ interface IBaseView {
      * @param saveInstanceState
      * @return 布局layout的Id
      */
+    @LayoutRes
     fun initContentView(saveInstanceState: Bundle?): Int
 
     /**
@@ -52,7 +54,7 @@ interface IBaseView {
      * 显示加载弹窗，带提示文字
      * @param resId : 字符串资源ID
      */
-    fun showLoading(resId: Int)
+    fun showLoading(@StringRes resId: Int)
 
     /**
      * 关闭加载弹窗
