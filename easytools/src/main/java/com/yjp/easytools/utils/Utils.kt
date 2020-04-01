@@ -20,6 +20,7 @@ import java.io.File
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.*
 import kotlin.experimental.and
 
 /**
@@ -324,5 +325,43 @@ object Utils {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         context!!.startActivity(intent)
+    }
+
+    /**
+     * 二进制数组转十六进制字符串
+     *
+     * @param bytes byte array to be converted
+     * @return string containing hex values
+     */
+    fun byteArrayToHexString(bytes: ByteArray): String {
+        val sb = StringBuilder(bytes.size * 2)
+        for (element in bytes) {
+            val v: Byte = element and 0xff.toByte()
+            if (v < 16) {
+                sb.append('0')
+            }
+            sb.append(Integer.toHexString(v.toInt()))
+        }
+        return sb.toString().toUpperCase(Locale.US)
+    }
+
+    /**
+     * 十六进制字符串转二进制数组
+     *
+     * @param hexString string of hex-encoded values
+     * @return decoded byte array
+     */
+    fun hexStringToByteArray(hexString: String): ByteArray {
+        val len = hexString.length
+        val data = ByteArray(len / 2)
+        var i = 0
+        while (i < len) {
+            data[i / 2] = ((Character.digit(
+                hexString[i],
+                16
+            ) shl 4) + Character.digit(hexString[i + 1], 16)).toByte()
+            i += 2
+        }
+        return data
     }
 }

@@ -189,12 +189,7 @@
         <attr name="round_corner_bottom_left" format="dimension" />
         <attr name="round_corner_bottom_right" format="dimension" />
     </declare-styleable>
-    <!-- 待删除按钮的EditText  -->
-    <declare-styleable name="ClearEditText">
-        <attr name="clearDrawable" format="reference" />
-        <attr name="drawableWidth" format="dimension" />
-        <attr name="drawableHeight" format="dimension" />
-    </declare-styleable>
+    <!--  进度条  -->
     <declare-styleable name="NumberProgressBar">
         <attr name="progress_current" format="integer" />
         <attr name="progress_max" format="integer" />
