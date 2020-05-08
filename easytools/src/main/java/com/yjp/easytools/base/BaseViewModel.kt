@@ -8,6 +8,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.yjp.easytools.bus.event.SingleLiveEvent
+import com.yjp.easytools.databing.command.BindingAction
+import com.yjp.easytools.databing.command.BindingCommand
 import java.lang.ref.WeakReference
 
 /**
@@ -20,6 +22,13 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     val uc: UIChangeLiveData by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { UIChangeLiveData() }
 
     private var lifecycle: WeakReference<LifecycleProvider<*>>? = null
+
+    //返回事件
+    var backOnClickCommand: BindingCommand<*> = BindingCommand<Any>(object : BindingAction {
+        override fun call() {
+            finish()
+        }
+    })
 
     /**
      * 注入RxLifecycle生命周期

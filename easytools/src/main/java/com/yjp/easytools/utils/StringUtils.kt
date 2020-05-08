@@ -1,5 +1,7 @@
 package com.yjp.easytools.utils
 
+import java.util.regex.Pattern
+
 /**
  * 字符串操作工具类$
  * @author yjp
@@ -121,6 +123,51 @@ object StringUtils {
     }
 
     /**
+     * 判断字符串中是否包含大写字符
+     */
+    fun isUpperCase(s: String): Boolean {
+        return Pattern.compile(".*[A-Z]+.*").matcher(s).matches()
+    }
+
+    /**
+     * 查找字符串中大写字符的个数
+     */
+    fun findUpperCaseCount(s: String): Int {
+        return if (isUpperCase(s)) {
+            val m = Pattern.compile("[A-Z]+").matcher(s)
+            var endIndex = 0;
+            var count = 0;
+            while (m.find(endIndex)) {
+                println(m.start())
+                println(m.group())
+                endIndex = m.end()
+                count++
+            }
+            count
+        } else {
+            -1
+        }
+    }
+
+    /**
+     * 把字符串中的大写字母转小写并在前加“_”
+     */
+    fun toLowerCaseName(s: String): String {
+        val m = Pattern.compile("[A-Z]").matcher(s)
+        var endIndex = 0;
+        var temp = s;
+        while (m.find(endIndex)) {
+            val index = temp.indexOf(m.group())
+            val str = temp.substring(index, index + 1);
+            temp = temp.substring(0, index) + "_" + str.toLowerCase() + temp.substring(index + 1)
+            endIndex = m.end()
+        }
+        println(temp)
+        return temp
+    }
+
+
+    /**
      * 首字母大写
      *
      * @param s 待转字符串
@@ -129,7 +176,7 @@ object StringUtils {
     fun upperFirstLetter(s: String?): String? {
         return if (isEmpty(s)) s
         else if (!Character.isLowerCase(s!![0])) s
-        else (s[0].toInt() - 32).toString() + s.substring(1)
+        else (s[0].toInt() - 32).toChar() + s.substring(1)
     }
 
     /**
@@ -140,7 +187,7 @@ object StringUtils {
      */
     fun lowerFirstLetter(s: String): String? {
         if (isEmpty(s) || !Character.isUpperCase(s[0])) return s
-        return (s[0].toInt() + 32).toString() + s.substring(1)
+        return (s[0].toInt() + 32).toChar() + s.substring(1)
     }
 
     /**

@@ -17,8 +17,7 @@ object LoadingDialog {
         try {
             if (progressDialog == null) {
                 progressDialog = ProgressDialog(context)
-            } else {
-                progressDialog!!.dismiss()
+            } else if (progressDialog!!.isShowing) {
                 return
             }
             progressDialog!!.isIndeterminate = true

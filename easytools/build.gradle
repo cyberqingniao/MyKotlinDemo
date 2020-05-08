@@ -13,7 +13,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
     }
 
@@ -43,7 +42,6 @@ dependencies {
     api rootProject.ext.androidx["appcompat"]
     api rootProject.ext.androidx["design"]
     api rootProject.ext.androidx["recyclerview"]
-    api rootProject.ext.androidx["junit"]
     //rxjava
     api rootProject.ext.dependencies.rxjava
     api rootProject.ext.dependencies.rxandroid

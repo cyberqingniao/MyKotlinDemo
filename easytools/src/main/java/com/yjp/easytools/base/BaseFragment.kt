@@ -21,7 +21,7 @@ import java.lang.reflect.Type
  * @author yjp
  * @date 2020/3/26 14:30
  */
-open class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragment(), IBaseView {
+abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragment(), IBaseView {
 
     var binding: V? = null
     var viewModel: VM? = null
@@ -116,14 +116,6 @@ open class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragment(),
     }
 
     override fun initParam() {
-    }
-
-    open override fun initContentView(saveInstanceState: Bundle?): Int {
-        return 0
-    }
-
-    open override fun initVariableId(): Int {
-        return 0
     }
 
     override fun initData() {

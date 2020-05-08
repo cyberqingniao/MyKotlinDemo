@@ -173,7 +173,7 @@ object Utils {
      */
     fun getFieldValueByName(fieldName: String, obj: Any): Any? {
         try {
-            val firstLetter = fieldName.substring(0, 1).toUpperCase()
+            val firstLetter = fieldName.substring(0, 1).toUpperCase(Locale.ROOT)
             val getter = "get" + firstLetter + fieldName.substring(1)
             val method = obj.javaClass.getMethod(getter)
             return method.invoke(obj)
