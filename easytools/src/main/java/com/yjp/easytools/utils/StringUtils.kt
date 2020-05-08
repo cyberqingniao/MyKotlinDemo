@@ -34,8 +34,8 @@ object StringUtils {
      * @param str : 需要处理的字符串
      * @return String
      */
-    fun delInvisibleChar(str: String?): String? {
-        return str?.replace("[ \n\r\t]".toRegex(), "")
+    fun delInvisibleChar(str: String?): String {
+        return str?.replace("[ \n\r\t]".toRegex(), "") ?: ""
     }
 
     /**

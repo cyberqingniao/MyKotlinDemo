@@ -76,7 +76,7 @@ class DividerLine : RecyclerView.ItemDecoration {
             val bottom = child.bottom - params.bottomMargin
             val left = child.right - params.rightMargin
             val right = if (dividerSize == 0) {
-                left + Utils.dp2px(mContext!!, DEFAULT_DIVIDER_SIZE.toFloat())
+                left + Utils.dp2px(DEFAULT_DIVIDER_SIZE.toFloat())
             } else {
                 left + dividerSize
             }
@@ -94,7 +94,7 @@ class DividerLine : RecyclerView.ItemDecoration {
             val top = child.bottom - params.topMargin
             val right = child.right - params.rightMargin
             val bottom = if (dividerSize == 0) {
-                top + Utils.dp2px(mContext!!, DEFAULT_DIVIDER_SIZE.toFloat())
+                top + Utils.dp2px(DEFAULT_DIVIDER_SIZE.toFloat())
             } else {
                 top + dividerSize
             }

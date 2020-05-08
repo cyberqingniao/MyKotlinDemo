@@ -18,11 +18,11 @@ import java.lang.reflect.Type
  * @author yjp
  * @date 2020/3/26 13:30
  */
-open class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppCompatActivity(),
+abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppCompatActivity(),
     IBaseView {
 
-    private var binding: V? = null
-    private var viewModel: VM? = null
+    var binding: V? = null
+    var viewModel: VM? = null
     private var viewModelId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,14 +127,6 @@ open class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppCompatAc
 
 
     override fun initParam() {
-    }
-
-    open override fun initContentView(saveInstanceState: Bundle?): Int {
-        return 0
-    }
-
-    open override fun initVariableId(): Int {
-        return 0
     }
 
     override fun initData() {

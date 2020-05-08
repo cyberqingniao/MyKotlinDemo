@@ -5,14 +5,14 @@ import android.app.ActivityManager
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.content.pm.PackageInfo
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.core.content.FileProvider
 import okio.internal.commonAsUtf8ToByteArray
 import org.jetbrains.annotations.Contract
@@ -104,7 +104,7 @@ object Utils {
      * 判断对象是否为空
      */
     @Contract(value = "null->true;!null->false", pure = true)
-    fun isEmpty(map: Map<Any, Any>?): Boolean {
+    fun isEmpty(map: Map<*, *>?): Boolean {
         return map == null || map.isEmpty()
     }
 
@@ -114,6 +114,38 @@ object Utils {
     @Contract(value = "null->true;!null->false", pure = true)
     fun isEmpty(list: List<*>?): Boolean {
         return list == null || list.isEmpty()
+    }
+
+    /**
+     * 判断字符串是否为空
+     */
+    fun isEmpty(s: String?): Boolean {
+        return StringUtils.isEmpty(s)
+    }
+
+    /**
+     * 根据资源ID获取字符串
+     */
+    fun getString(@StringRes resId: Int): String {
+        return StringUtils.getString(resId)
+    }
+
+    /**
+     * 读取字符串
+     * 如果为空则返回空字符串
+     * 如果不是String类型则转成String类型返回
+     */
+    fun getString(obj: Any?): String {
+        if (obj == null) {
+            return ""
+        }
+        return StringUtils.delInvisibleChar(
+            if (obj is String) {
+                obj
+            } else {
+                obj.toString()
+            }
+        )
     }
 
     /**
@@ -295,19 +327,24 @@ object Utils {
     }
 
     /**
-     * 判断是否按照了应用
+     * 判断是否安装了应用
      */
-    @RequiresApi(Build.VERSION_CODES.N)
-    fun iSInstallApp(pkgName: String): Boolean {
-        return try {
-            context!!.packageManager.getApplicationInfo(
-                pkgName,
-                PackageManager.MATCH_UNINSTALLED_PACKAGES
-            )
-            true
+    fun isInstallApp(pkgName: String): Boolean {
+        try {
+            val info: List<PackageInfo> = context!!.packageManager.getInstalledPackages(0)
+            if (info.isEmpty()) {
+                return false
+            } else {
+                for (i in info) {
+                    if (pkgName == i.packageName) {
+                        return true
+                    }
+                }
+            }
         } catch (e: Exception) {
-            false
+            e.printStackTrace()
         }
+        return false
     }
 
     /**

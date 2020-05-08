@@ -1,6 +1,6 @@
 package com.yjp.easytools.http
 
-import com.yjp.easytools.BuildConfig
+import com.com.yjp.easytools.BuildConfig
 import com.yjp.easytools.http.cooike.CookieJarImpl
 import com.yjp.easytools.http.cooike.store.PersistentCookieStore
 import com.yjp.easytools.http.interceptor.logging.Level
@@ -22,31 +22,54 @@ import java.util.concurrent.TimeUnit
  * @author yjp
  * @date 2020/4/1 16:24
  */
-abstract class BaseHttp private constructor() {
+abstract class BaseHttp() {
+
     companion object {
         //最大缓存
         const val MAX_CACHE_SIZE = 1024 * 1024 * 50L
         //链接超时
-        const val CONNECT_TIME_OUT = 30L
+        const val CONNECT_TIME_OUT = 10L
         //读取超时
         const val READ_TIME_OUT = 60L
         //请求超时
         const val WRITE_TIME_OUT = 60L
-
     }
+
+    private var retrofit: Retrofit? = null
+    private var client: OkHttpClient? = null
 
     /**
      * 同步创建API
      */
     @Synchronized
-    fun <T> getAPI(clazz: Class<T>): T {
+    fun <T : BaseApi> getAPI(clazz: Class<T>): T {
         return getRetrofit().create(clazz)
+    }
+
+    /**
+     * 重置
+     */
+    fun reset() {
+        retrofit = null
+        client = null
     }
 
     /**
      * 初始Retrofit
      */
     fun getRetrofit(): Retrofit {
+        if (retrofit == null) {
+            synchronized(BaseHttp) {
+                retrofit = initRetrofit()
+            }
+        }
+        return retrofit!!
+    }
+
+    /**
+     * 初始化Retrofit
+     */
+    private fun initRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(getBaseUrl())
             .client(getOkClient())
@@ -59,6 +82,18 @@ abstract class BaseHttp private constructor() {
      * 初始化OkHttp客户端
      */
     fun getOkClient(): OkHttpClient {
+        if (client == null) {
+            synchronized(BaseHttp) {
+                client = initClient()
+            }
+        }
+        return client!!
+    }
+
+    /**
+     * 初始化OkHttpClient
+     */
+    private fun initClient(): OkHttpClient {
         val mLoggingInterceptor = LoggingInterceptor.Builder()
             .loggable(true)
             .setLevel(Level.BASIC)

@@ -21,12 +21,30 @@ object FileUtil {
     private const val DOWNLOAD_DIR = "/$fileName/apk/"
     private const val IMG_PATH = "/$fileName/images/"
 
-    fun init() {
-        if (path == null) {
+    init {
+        Log.i("FileUtils", "创建项目存储目录");
+        if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             path = File("$SDPATH/$fileName/")
+            if (!path!!.exists()) {
+                if (!path!!.mkdirs()) {
+                    Log.e("FileUtils", "外部存储-无法创建目录\t" + path!!.path);
+                }
+            }
+        } else {
+            path = File(Utils.context!!.filesDir, "/$fileName/")
+            if (!path!!.exists()) {
+                if (!path!!.mkdirs()) {
+                    Log.e("FileUtils", "私有存储-无法创建目录\t" + path!!.path);
+                }
+            }
         }
         if (!path!!.exists()) {
-            path!!.mkdirs()
+            path = Utils.context!!.getExternalFilesDir(fileName)
+            if (!path!!.exists()) {
+                if (!path!!.mkdirs()) {
+                    Log.e("FileUtils", "创建内部目录失败\t" + path!!.path);
+                }
+            }
         }
     }
 
@@ -175,5 +193,31 @@ object FileUtil {
                 }
             }
         }
+    }
+
+    /**
+     * 读取assets中的文件
+     */
+    fun readAssetsFile(fileName: String, savePath: String): File? {
+        try {
+            val f = File(savePath)
+            if (!f.exists()) {
+                if (!f.createNewFile()) {
+                    Log.e("FileUtils", "读取Assets文件时创建本地存储文件失败");
+                }
+            }
+            var cmd = "chmod 777" + f.absolutePath
+            Runtime.getRuntime().exec(cmd)
+            cmd = "chmod 777" + f.parent
+            Runtime.getRuntime().exec(cmd)
+            cmd = "chmod 777" + File(f.parent!!).parent
+            Runtime.getRuntime().exec(cmd)
+            val mIS = Utils.context!!.assets.open(fileName)
+            inputStreamToFile(mIS, f)
+            return f
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
     }
 }

@@ -15,7 +15,7 @@ import java.lang.ref.WeakReference
  * @author yjp
  * @date 2020/3/26 10:19
  */
-class BaseViewModel(application: Application) : AndroidViewModel(application), IBaseViewModel {
+open class BaseViewModel(application: Application) : AndroidViewModel(application), IBaseViewModel {
 
     val uc: UIChangeLiveData by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { UIChangeLiveData() }
 

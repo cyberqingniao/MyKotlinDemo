@@ -11,7 +11,7 @@ import com.yjp.easytools.utils.Utils
  * @author yjp
  * @date 2020/4/1 16:42
  */
-class BaseApplication : Application() {
+open class BaseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
