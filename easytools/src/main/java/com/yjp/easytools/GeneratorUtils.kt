@@ -26,7 +26,7 @@ class GeneratorUtils {
         private const val PATH_MAIN_LAYOUT = "${PATH_MAIN_RES}layout/"
 
         //项目包名
-        private const val PATH_PACKAGE = "com.yjp.mydemo.ui"
+        private const val PATH_PACKAGE = "com.yjp.mydemo"
 
         //easytools路径
         private const val PATH_EASYTOOLS = "./easytools/src/main"
@@ -56,13 +56,33 @@ class GeneratorUtils {
 //            gu.isFileExists(File(PATH_EASYTOOLS_CODE, "/ui"))
 
             //创建视图
-            gu.generateFile("main", "Activity")
-            gu.generateFile("home", "Fragment")
+//            gu.generateUIFile("main", "Activity")
+//            gu.generateUIFile("home", "Fragment")
+            //创建Http模块
+            gu.generateHttpFile()
         }
     }
 
-    fun generateFile(modelName: String, type: String) {
+    /**
+     * 生成网络请求框架
+     */
+    fun generateHttpFile() {
+        //文件名
+        val httpHelpName = "HttpHelp.kt"
+        val apiServiceName = "ApiService.kt"
+        val commonObserver = "CommonObserver.kt"
+        //包名中的“.”替换成“/”
+        var mPackage = PATH_PACKAGE
+        mPackage = mPackage.replace(".", "/") + "/http/"
+        commonObserverFile(mPackage, commonObserver)
+        apiServiceFile(mPackage, apiServiceName)
+        httpHelpFile(mPackage, httpHelpName, apiServiceName)
+    }
 
+    /**
+     * 生成UI文件
+     */
+    fun generateUIFile(modelName: String, type: String) {
         val aName: String
         //ViewModel
         val vmName: String = StringUtils.upperFirstLetter(modelName) + "ViewModel.kt"
@@ -70,7 +90,7 @@ class GeneratorUtils {
         var xmlName: String
         //包名中的“.”替换成“/”
         var mPackage = PATH_PACKAGE
-        mPackage = mPackage.replace(".", "/")
+        mPackage = mPackage.replace(".", "/") + "/ui/"
 
         isFileExists(File(PATH_MAIN_CODE + mPackage, modelName))
         if (type == "Activity") {
@@ -103,9 +123,134 @@ class GeneratorUtils {
     }
 
     /**
+     * 生成observer数据解析文件
+     */
+    private fun commonObserverFile(mPackage: String, commonObserver: String) {
+        //创建文件
+        val cFile = File(PATH_MAIN_CODE + mPackage, commonObserver)
+        //生成文件
+        fileExists(cFile)
+        //写入文件初始内容
+        val cSB = StringBuilder()
+        cSB.append("package ${PATH_PACKAGE}.http\n\n")
+        cSB.append("import com.yjp.easytools.dialog.LoadingDialog\n")
+        cSB.append("import com.yjp.easytools.http.exception.ApiException\n")
+        cSB.append("import com.yjp.easytools.http.exception.ErrorType\n")
+        cSB.append("import com.yjp.easytools.http.observer.BaseObserver\n")
+        cSB.append("import com.yjp.easytools.utils.ActivityManager\n")
+        cSB.append("import com.yjp.easytools.utils.StringUtils\n")
+        cSB.append("import com.yjp.easytools.utils.ToastUtils\n")
+        cSB.append("import io.reactivex.disposables.Disposable\n")
+        cSB.append("import org.greenrobot.eventbus.EventBus\n")
+        cSB.append("/**\n* 数据解析\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        cSB.append(
+            "abstract class ${commonObserver.substring(
+                0,
+                commonObserver.indexOf(".")
+            )}<T>(var isShowLoading: Boolean) : BaseObserver<T?>() {\n"
+        )
+        cSB.append("\tvar disposable: Disposable? = null\n")
+        cSB.append("\toverride fun onSubscribe(d: Disposable) {\n")
+        cSB.append("\t\tdisposable = d\n")
+        cSB.append("\t\tif (isShowLoading) {\n")
+        cSB.append("\t\t\tif (!LoadingDialog.isShowing()) {\n")
+        cSB.append("\t\t\t\tLoadingDialog.showLoading(ActivityManager.instance.currentActivity(), \"请稍后...\")\n")
+        cSB.append("\t\t\t}\n")
+        cSB.append("\t\t}\n")
+        cSB.append("\t}\n")
+        cSB.append("\toverride fun onError(e: ApiException) {\n\t}\n")
+        cSB.append("\toverride fun onComplete() {\n")
+        cSB.append("\t\tif (isShowLoading) {\n")
+        cSB.append("\t\t\tif (LoadingDialog.isShowing()) {\n")
+        cSB.append("\t\t\t\tLoadingDialog.dismissLoading()\n")
+        cSB.append("\t\t\t}\n")
+        cSB.append("\t\t}\n")
+        cSB.append("\t}\n")
+        writeFile(cFile, cSB)
+    }
+
+    /**
+     * 生成API文件
+     */
+    private fun apiServiceFile(mPackage: String, apiServiceName: String) {
+        //生成文件
+        val aFile = File(PATH_MAIN_CODE + mPackage, apiServiceName)
+        fileExists(aFile)
+        //写入初始数据
+        val aSB = StringBuilder();
+        aSB.append("package ${PATH_PACKAGE}.http\n\n")
+        aSB.append("import com.yjp.easytools.http.BaseApi\n")
+        aSB.append("import com.yjp.easytools.http.transformer.BaseResult\n")
+        aSB.append("import io.reactivex.Observable\n")
+        aSB.append("import retrofit2.http.GET\n")
+        aSB.append("/**\n* API$\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        aSB.append(
+            "interface ${apiServiceName.substring(
+                0,
+                apiServiceName.indexOf(".")
+            )} : BaseApi {\n\n}"
+        )
+        writeFile(aFile, aSB)
+    }
+
+    /**
+     * 生成网络请求框架
+     */
+    private fun httpHelpFile(mPackage: String, httpHelpName: String, apiServiceName: String) {
+        //生成文件
+        val hFile = File(PATH_MAIN_CODE + mPackage, httpHelpName)
+        fileExists(hFile)
+        //写入初始数据
+        val hSB = StringBuilder()
+        hSB.append("package ${PATH_PACKAGE}.http\n\n")
+        hSB.append("import com.yjp.easytools.http.BaseHttp\n")
+        hSB.append("import ${PATH_PACKAGE}.utils.SPUtils\n")
+        hSB.append("import ${PATH_PACKAGE}.constant.ConstantUtil\n")
+        hSB.append("import ${PATH_PACKAGE}.constant.SPKey\n")
+        hSB.append("import okhttp3.Interceptor\n\n")
+        hSB.append("/**\n* 网络请求框架\n* @author yjp\n*@date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        hSB.append("class ${httpHelpName.substring(0, httpHelpName.indexOf("."))} : BaseHttp(){\n")
+        hSB.append("\tcompanion object {\n")
+        hSB.append(
+            "\t\tprivate val httpHelp by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { ${httpHelpName.substring(
+                0,
+                httpHelpName.indexOf(".")
+            )}() }\n"
+        )
+        hSB.append("\t\tfun api(): ${apiServiceName.substring(0, apiServiceName.indexOf("."))} {\n")
+        hSB.append(
+            "\t\t\treturn httpHelp.getAPI(${apiServiceName.substring(
+                0,
+                apiServiceName.indexOf(".")
+            )}::class.java)\n"
+        )
+        hSB.append("\t\t}\n")
+        hSB.append("\t\tfun reset() {\n")
+        hSB.append("\t\t\thttpHelp.reset()\n")
+        hSB.append("\t\t}\n")
+        hSB.append("\t}\n")
+        hSB.append("\toverride fun getBaseUrl(): String {\n")
+        hSB.append("\t\treturn \"http://\" + SPUtils.getString(SPKey.CURRENT_IP,ConstantUtil.IP)+\":\"+SPUtils.getString(SPKey.CURRENT_PORT,ConstantUtil.PORT)\n")
+        hSB.append("\t}\n")
+        hSB.append("\toverride fun getHeaderInterceptor(): Interceptor {\n")
+        hSB.append("\t\treturn Interceptor.invoke {\n")
+        hSB.append("\t\t\tval originalRequest = it.request()\n")
+        hSB.append("\t\t\tval request = originalRequest.newBuilder()\n")
+        hSB.append("\t\t\t\t.addHeader(\"Authorization\", SPUtils.getString(SPKey.TOKEN, \"\"))\n")
+        hSB.append("\t\t\t\t.addHeader(\"Content-Type\", \"application/json;charset=UTF-8\")\n")
+        hSB.append("\t\t\t\t.method(originalRequest.method, originalRequest.body)\n")
+        hSB.append("\t\t\t\t.build()\n")
+        hSB.append("\t\t\tit.proceed(request)\n")
+        hSB.append("\t\t}\n")
+        hSB.append("\t}\n")
+        hSB.append("}")
+        writeFile(hFile, hSB)
+    }
+
+    /**
      * Fragment生成器
      */
-    fun fragmentFile(
+    private fun fragmentFile(
         aName: String,
         vmName: String,
         xmlName: String,
@@ -117,7 +262,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入文件初始内容
         val aSB = StringBuilder()
-        aSB.append("package ${PATH_PACKAGE}.${modelName}\n\n")
+        aSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
         aSB.append("import android.os.Bundle\n")
         aSB.append("import com.yjp.easytools.base.BaseFragment\n")
         aSB.append("import com.yjp.mydemo.BR\n")
@@ -159,7 +304,7 @@ class GeneratorUtils {
     /**
      * Activity生成器
      */
-    fun activityFile(
+    private fun activityFile(
         aName: String,
         vmName: String,
         xmlName: String,
@@ -171,7 +316,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入文件初始内容
         val aSB = StringBuilder()
-        aSB.append("package ${PATH_PACKAGE}.${modelName}\n\n")
+        aSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
         aSB.append("import android.os.Bundle\n")
         aSB.append("import com.yjp.easytools.base.BaseActivity\n")
         aSB.append("import com.yjp.mydemo.BR\n")
@@ -213,13 +358,13 @@ class GeneratorUtils {
     /**
      * ViewModel生成器
      */
-    fun viewModelFile(aName: String, vmName: String, modelName: String, mPackage: String) {
+    private fun viewModelFile(aName: String, vmName: String, modelName: String, mPackage: String) {
         //生成文件
         val vmFile = File(PATH_MAIN_CODE + mPackage, "/$modelName/$vmName")
         fileExists(vmFile)
         //写入初始内容
         val vmSB = StringBuilder()
-        vmSB.append("package ${PATH_PACKAGE}.${modelName}\n\n")
+        vmSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
         vmSB.append("import android.app.Application\n")
         vmSB.append("import com.yjp.easytools.base.BaseViewModel\n\n")
         vmSB.append("/**\n*\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
@@ -235,7 +380,7 @@ class GeneratorUtils {
     /**
      * XMl生成器
      */
-    fun xmlFile(vmName: String, xmlName: String, modelName: String) {
+    private fun xmlFile(vmName: String, xmlName: String, modelName: String) {
         //生成XML文件
         val xmlFile = File(PATH_MAIN_LAYOUT, xmlName)
         fileExists(xmlFile)
@@ -254,7 +399,7 @@ class GeneratorUtils {
             )}\"\n"
         )
         xmlSB.append(
-            "\t\t\ttype=\"${PATH_PACKAGE}.${modelName}.${vmName.substring(
+            "\t\t\ttype=\"${PATH_PACKAGE}.ui.${modelName}.${vmName.substring(
                 0,
                 vmName.indexOf(".")
             )}\"/>\n"
@@ -292,7 +437,7 @@ class GeneratorUtils {
      * @param end    : 结束值
      * @return String 生成后的字符串
      */
-    fun intervalDimen(format: String, start: Int, end: Int): String {
+    private fun intervalDimen(format: String, start: Int, end: Int): String {
         val sb = StringBuilder()
         for (i in start until end) {
             sb.append("    ")
@@ -346,7 +491,7 @@ class GeneratorUtils {
      * @param arg
      * @return String 生成后的字符串
      */
-    fun stringFormat(format: String, key: String, value: String): String {
+    private fun stringFormat(format: String, key: String, value: String): String {
         return String.format(format, key, value)
     }
 
@@ -356,7 +501,7 @@ class GeneratorUtils {
      * @param fileName: 文件名称
      * @param content : 文件内容
      * */
-    fun outFile(path: String, fileName: String, content: StringBuilder) {
+    private fun outFile(path: String, fileName: String, content: StringBuilder) {
         var file: File? = null
         if (isFileExists(File(path))) {
             file = File(path, fileName)
@@ -366,7 +511,7 @@ class GeneratorUtils {
         }
     }
 
-    fun writeFile(file: File, content: StringBuilder) {
+    private fun writeFile(file: File, content: StringBuilder) {
         var fos: FileOutputStream? = null
         var pw: PrintWriter? = null
         try {
@@ -381,14 +526,14 @@ class GeneratorUtils {
         }
     }
 
-    fun isFileExists(file: File): Boolean {
+    private fun isFileExists(file: File): Boolean {
         if (!file.exists()) {
             return file.mkdirs()
         }
         return true
     }
 
-    fun fileExists(file: File): Boolean {
+    private fun fileExists(file: File): Boolean {
         if (!file.exists()) {
             return file.createNewFile()
         }
