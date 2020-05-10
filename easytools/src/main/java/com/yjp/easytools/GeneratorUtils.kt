@@ -56,12 +56,87 @@ class GeneratorUtils {
 //            gu.isFileExists(File(PATH_EASYTOOLS_CODE, "/ui"))
 
             //创建视图
-//            gu.generateUIFile("main", "Activity")
-//            gu.generateUIFile("home", "Fragment")
+//            gu.generateFile("login", "Activity")
+//            gu.generateFile("welcome", "Activity")
+//            gu.generateFile("main", "Activity")
+//            gu.generateFile("setService", "Activity")
+//            gu.generateFile("home", "Fragment")
+//            gu.generateFile("message", "Fragment")
+//            gu.generateFile("my", "Fragment")
+//            gu.generateFile("goodsType", "Fragment")
+
             //创建Http模块
-            gu.generateHttpFile()
+//            gu.generateHttpFile()
+
+            //创建工具模块
+            gu.generateTools()
         }
     }
+
+    /**
+     * 生成基础工具
+     */
+    fun generateTools() {
+        //文件名
+        val spKeyName = "SPKey.kt"
+        val constantUtilName = "ConstantUtil.kt"
+        val eventKeyName = "EventKey.kt"
+
+        //包名中的“.”替换成“/”
+        var mPackage = PATH_PACKAGE
+        mPackage = mPackage.replace(".", "/")
+        //生成文件
+        val sFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", spKeyName)
+        val cFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", constantUtilName)
+        val ekFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", eventKeyName)
+        isFileExists(File("${PATH_MAIN_CODE}${mPackage}/constant/"))
+        fileExists(sFile)
+        fileExists(cFile)
+        fileExists(ekFile)
+        //写入文件初始内容
+        val sSB = StringBuilder()
+        sSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        sSB.append(
+            "/**\n* SharedPreferences存储Key\n* @author yjp\n* @date ${DataUtils.data2Str(
+                System.currentTimeMillis()
+            )}\n*/\n"
+        )
+        sSB.append("object ${spKeyName.substring(0, spKeyName.indexOf("."))}{\n")
+        sSB.append("\tconst val CURRENT_IP=\"CURRENT_IP\"\n")
+        sSB.append("\tconst val CURRENT_PORT=\"CURRENT_PORT\"\n")
+        sSB.append("\tconst val TOKEN=\"TOKEN\"\n")
+        sSB.append("}")
+        writeFile(sFile, sSB)
+        val cSB = StringBuilder()
+        cSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        cSB.append("/**\n* 网络链接配置\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        cSB.append("object ${constantUtilName.substring(0, constantUtilName.indexOf("."))}{\n")
+        cSB.append("\tconst val IP=\"11.1.1.80\"\n")
+        cSB.append("\tconst val PORT=\"8080\"\n")
+        cSB.append("}")
+        writeFile(cFile, cSB)
+        val eSB = StringBuilder()
+        eSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        eSB.append("/**\n* EventBus Key\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        eSB.append(
+            "data class ${eventKeyName.substring(
+                0,
+                eventKeyName.indexOf(".")
+            )}(var type: EventType, var arg: Any?){\n"
+        )
+        eSB.append("\tconstructor(type: EventType) : this(type, null)")
+        eSB.append("}\n\n")
+        eSB.append("enum class EventType {\n")
+        eSB.append("\t//token验证失败\n")
+        eSB.append("\tTOKEN_FAIL,\n")
+        eSB.append("\t//token验证失败\n")
+        eSB.append("\tTOKEN_FAIL,\n")
+        eSB.append("\t//token验证失败\n")
+        eSB.append("\tTOKEN_FAIL,\n")
+        eSB.append("}")
+        writeFile(ekFile, eSB)
+    }
+
 
     /**
      * 生成网络请求框架
@@ -80,9 +155,10 @@ class GeneratorUtils {
     }
 
     /**
-     * 生成UI文件
+     * 生成视图
      */
     fun generateUIFile(modelName: String, type: String) {
+
         val aName: String
         //ViewModel
         val vmName: String = StringUtils.upperFirstLetter(modelName) + "ViewModel.kt"
@@ -166,6 +242,7 @@ class GeneratorUtils {
         cSB.append("\t\t\t}\n")
         cSB.append("\t\t}\n")
         cSB.append("\t}\n")
+        cSB.append("}\n")
         writeFile(cFile, cSB)
     }
 
@@ -204,7 +281,7 @@ class GeneratorUtils {
         val hSB = StringBuilder()
         hSB.append("package ${PATH_PACKAGE}.http\n\n")
         hSB.append("import com.yjp.easytools.http.BaseHttp\n")
-        hSB.append("import ${PATH_PACKAGE}.utils.SPUtils\n")
+        hSB.append("import com.yjp.easytools.utils.SPUtils\n")
         hSB.append("import ${PATH_PACKAGE}.constant.ConstantUtil\n")
         hSB.append("import ${PATH_PACKAGE}.constant.SPKey\n")
         hSB.append("import okhttp3.Interceptor\n\n")
