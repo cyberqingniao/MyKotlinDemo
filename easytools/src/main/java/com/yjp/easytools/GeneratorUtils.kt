@@ -56,17 +56,17 @@ class GeneratorUtils {
 //            gu.isFileExists(File(PATH_EASYTOOLS_CODE, "/ui"))
 
             //创建视图
-//            gu.generateFile("login", "Activity")
-//            gu.generateFile("welcome", "Activity")
-//            gu.generateFile("main", "Activity")
-//            gu.generateFile("setService", "Activity")
-//            gu.generateFile("home", "Fragment")
-//            gu.generateFile("message", "Fragment")
-//            gu.generateFile("my", "Fragment")
-//            gu.generateFile("goodsType", "Fragment")
+            gu.generateUIFile("splash", "Activity")
+            gu.generateUIFile("login", "Activity")
+            gu.generateUIFile("setService", "Activity")
+            gu.generateUIFile("main", "Activity")
+            gu.generateUIFile("home", "Fragment")
+            gu.generateUIFile("message", "Fragment")
+            gu.generateUIFile("my", "Fragment")
+            gu.generateUIFile("goodsType", "Fragment")
 
             //创建Http模块
-//            gu.generateHttpFile()
+            gu.generateHttpFile()
 
             //创建工具模块
             gu.generateTools()
@@ -129,10 +129,10 @@ class GeneratorUtils {
         eSB.append("enum class EventType {\n")
         eSB.append("\t//token验证失败\n")
         eSB.append("\tTOKEN_FAIL,\n")
-        eSB.append("\t//token验证失败\n")
-        eSB.append("\tTOKEN_FAIL,\n")
-        eSB.append("\t//token验证失败\n")
-        eSB.append("\tTOKEN_FAIL,\n")
+        eSB.append("\t//登录成功\n")
+        eSB.append("\tLOGIN_SUCCESS,\n")
+        eSB.append("\t//退出登录\n")
+        eSB.append("\tLOGOUT_SUCCESS,\n")
         eSB.append("}")
         writeFile(ekFile, eSB)
     }
@@ -223,7 +223,7 @@ class GeneratorUtils {
             "abstract class ${commonObserver.substring(
                 0,
                 commonObserver.indexOf(".")
-            )}<T>(var isShowLoading: Boolean) : BaseObserver<T?>() {\n"
+            )}<T>(private var isShowLoading: Boolean) : BaseObserver<T?>() {\n"
         )
         cSB.append("\tvar disposable: Disposable? = null\n")
         cSB.append("\toverride fun onSubscribe(d: Disposable) {\n")
@@ -611,6 +611,8 @@ class GeneratorUtils {
     }
 
     private fun fileExists(file: File): Boolean {
+        //判断文件路径是否存在，不存在则创建
+        isFileExists(file.parentFile)
         if (!file.exists()) {
             return file.createNewFile()
         }
