@@ -82,4 +82,8 @@ class RxTimerUtil {
 
             })
     }
+
+    fun isDispose(): Boolean {
+        return mDisposable == null || mDisposable!!.isDisposed
+    }
 }
