@@ -56,20 +56,23 @@ class GeneratorUtils {
 //            gu.isFileExists(File(PATH_EASYTOOLS_CODE, "/ui"))
 
             //创建视图
-            gu.generateUIFile("splash", "Activity")
-            gu.generateUIFile("login", "Activity")
-            gu.generateUIFile("setService", "Activity")
-            gu.generateUIFile("main", "Activity")
-            gu.generateUIFile("home", "Fragment")
-            gu.generateUIFile("message", "Fragment")
-            gu.generateUIFile("my", "Fragment")
-            gu.generateUIFile("goodsType", "Fragment")
+//            gu.generateUIFile("splash", "Activity")
+//            gu.generateUIFile("login", "Activity")
+//            gu.generateUIFile("setService", "Activity")
+//            gu.generateUIFile("main", "Activity")
+//            gu.generateUIFile("home", "Fragment")
+//            gu.generateUIFile("message", "Fragment")
+//            gu.generateUIFile("my", "Fragment")
+//            gu.generateUIFile("goodsType", "Fragment")
+//            gu.generateUIFile("forgetPassword", "Activity")
+//            gu.generateUIFile("register", "Activity")
+            gu.generateUIFile("bindPhone", "Activity")
 
             //创建Http模块
-            gu.generateHttpFile()
+//            gu.generateHttpFile()
 
             //创建工具模块
-            gu.generateTools()
+//            gu.generateTools()
         }
     }
 
