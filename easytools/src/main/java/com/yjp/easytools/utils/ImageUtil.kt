@@ -12,6 +12,7 @@ import android.util.Base64
 import android.util.Log
 import android.util.LruCache
 import androidx.appcompat.app.AppCompatActivity
+import com.yjp.easytools.utils.FileUtil.saveBitmap
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -274,7 +275,7 @@ object ImageUtil {
         view.destroyDrawingCache()
         view.isDrawingCacheEnabled = false
         if (null != bitmap) {
-            FileUtil.saveBitmap(bitmap, fileName, Bitmap.CompressFormat.JPEG)
+            saveBitmap(bitmap, fileName, Bitmap.CompressFormat.JPEG)
         }
         return bitmap!!
     }

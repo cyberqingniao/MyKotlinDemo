@@ -108,7 +108,7 @@ object NotifyUtil {
      * 初始化通知栏管理器
      */
     private fun init(): Context {
-        val context = Utils.context!!
+        val context = Utils.context
         if (nManager == null) {
             nManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         }

@@ -91,7 +91,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
         viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { this::dismissLoading })
         //跳入新页面
         viewModel!!.uc.startActivityEvent.observe(this, Observer { params ->
-            {
+            run {
                 var intent = params[BaseViewModel.ParameterField.INTENT]
                 if (intent == null) {
                     var clazz: Class<*> = params[BaseViewModel.ParameterField.CLASS] as Class<*>

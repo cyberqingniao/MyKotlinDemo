@@ -1,5 +1,6 @@
 package com.yjp.easytools.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
@@ -47,7 +48,7 @@ object ToastUtils {
     //初始化
     init {
         this.yOffset =
-            (64 * (Utils.context?.resources?.displayMetrics?.density?.plus(0.5)!!)).toInt()
+            (64 * (Utils.context.resources?.displayMetrics?.density?.plus(0.5)!!)).toInt()
     }
 
     /**
@@ -64,7 +65,7 @@ object ToastUtils {
      */
     fun setView(@LayoutRes layoutId: Int) {
         val inflate: LayoutInflater =
-            Utils.context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            Utils.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         sViewWeakReference = WeakReference<View>(inflate.inflate(layoutId, null))
 
     }
@@ -240,14 +241,14 @@ object ToastUtils {
      * 显示Toast
      */
     fun show(@StringRes resId: Int, duration: Int) {
-        showToast(Utils.context?.resources?.getText(resId).toString(), duration)
+        showToast(Utils.context.resources?.getText(resId).toString(), duration)
     }
 
     /**
      * 显示Toast
      */
     fun show(@StringRes resId: Int, duration: Int, vararg args: Any) {
-        showToast(String.format(Utils.context?.resources?.getString(resId)!!, args), duration)
+        showToast(String.format(Utils.context.resources?.getString(resId)!!, args), duration)
     }
 
     /**
@@ -260,6 +261,7 @@ object ToastUtils {
     /**
      * 显示Toast
      */
+    @SuppressLint("ShowToast")
     private fun showToast(text: CharSequence, duration: Int) {
         cancel()
         var isCustom: Boolean = false

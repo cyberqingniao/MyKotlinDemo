@@ -29,9 +29,8 @@ import kotlin.experimental.and
  * @date 2020/3/27 19:39
  */
 object Utils {
-    @SuppressLint("StaticFieldLeak")
-    var context: Context? = null
-        get() = field
+
+    lateinit var context: Context
         private set
 
     fun init(context: Context) {
@@ -64,7 +63,7 @@ object Utils {
      * dp转px
      */
     fun dp2px(value: Float): Int {
-        val scale = context!!.resources.displayMetrics.density
+        val scale = context.resources.displayMetrics.density
         return (value * (scale + 0.5f)).toInt()
     }
 
@@ -72,7 +71,7 @@ object Utils {
      * px转dp
      */
     fun px2dp(value: Float): Int {
-        val scale = context!!.resources.displayMetrics.density
+        val scale = context.resources.displayMetrics.density
         return (value / scale + 0.5).toInt()
     }
 
@@ -80,7 +79,7 @@ object Utils {
      * px转sp
      */
     fun px2sp(value: Float): Int {
-        val scale = context!!.resources.displayMetrics.density
+        val scale = context.resources.displayMetrics.density
         return (value / scale + 0.5).toInt()
     }
 
@@ -88,7 +87,7 @@ object Utils {
      * sp转px
      */
     fun sp2px(value: Float): Int {
-        val scale = context!!.resources.displayMetrics.density
+        val scale = context.resources.displayMetrics.density
         return (value * scale + 0.5).toInt()
     }
 
@@ -190,7 +189,7 @@ object Utils {
      */
     fun isServiceRunning(serviceName: String): Boolean {
         var isRun = false
-        val am = context!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
+        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
         if (am != null) {
             val list = am.getRunningServices(Int.MAX_VALUE)
             if (!isEmpty(list)) {
@@ -212,12 +211,12 @@ object Utils {
      */
     fun isBackground(): Boolean {
         var isBack = false;
-        val am = context!!.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
+        val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
         if (am != null) {
             val aps = am.runningAppProcesses
             if (aps != null) {
                 for (ap in aps) {
-                    if (ap.processName == context!!.packageName) {
+                    if (ap.processName == context.packageName) {
                         return ap.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
                     }
                 }
@@ -233,7 +232,7 @@ object Utils {
      */
     fun getScreenHeight(): Int {
         val dm = DisplayMetrics()
-        val wm = context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         wm.defaultDisplay.getMetrics(dm)
         return dm.heightPixels
     }
@@ -245,7 +244,7 @@ object Utils {
      */
     fun getScreenWidth(): Int {
         val dm = DisplayMetrics()
-        val wm = context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         wm.defaultDisplay.getMetrics(dm)
         return dm.widthPixels
     }
@@ -256,9 +255,9 @@ object Utils {
      * @return
      */
     fun getStatusBarHeight(): Int {
-        val resourceId = context!!.resources.getIdentifier("status_bar_height", "dimen", "android")
+        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
         return if (resourceId > 0) {
-            context!!.resources.getDimensionPixelSize(resourceId)
+            context.resources.getDimensionPixelSize(resourceId)
         } else {
             0
         }
@@ -272,9 +271,9 @@ object Utils {
      */
     fun getNavigationBarHeight(): Int {
         val resourceId =
-            context!!.resources.getIdentifier("navigation_bar_height", "dimen", "android")
+            context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
         return if (resourceId > 0) {
-            context!!.resources.getDimensionPixelSize(resourceId)
+            context.resources.getDimensionPixelSize(resourceId)
         } else {
             0
         }
@@ -287,7 +286,7 @@ object Utils {
      * @return Drawable
      */
     fun getDrawable(resId: Int): Drawable {
-        val drawable = context!!.resources.getDrawable(resId)
+        val drawable = context.resources.getDrawable(resId)
         drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
         return drawable
     }
@@ -300,7 +299,7 @@ object Utils {
      * @return
      */
     fun getResId(filePath: String, fileName: String): Int {
-        return context!!.resources.getIdentifier(fileName, filePath, context!!.packageName)
+        return context.resources.getIdentifier(fileName, filePath, context.packageName)
     }
 
     /**
@@ -311,10 +310,10 @@ object Utils {
     @SuppressLint("InvalidWakeLockTag")
     fun wakeUpAndUnlock() {
         try {
-            val km = context!!.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            val km = context.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
             val kl = km.newKeyguardLock("unLock")
             kl.disableKeyguard()
-            val pm = context!!.getSystemService(Context.POWER_SERVICE) as PowerManager
+            val pm = context.getSystemService(Context.POWER_SERVICE) as PowerManager
             val wl = pm.newWakeLock(
                 PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.SCREEN_DIM_WAKE_LOCK,
                 "bright"
@@ -331,7 +330,7 @@ object Utils {
      */
     fun isInstallApp(pkgName: String): Boolean {
         try {
-            val info: List<PackageInfo> = context!!.packageManager.getInstalledPackages(0)
+            val info: List<PackageInfo> = context.packageManager.getInstalledPackages(0)
             if (info.isEmpty()) {
                 return false
             } else {
@@ -355,13 +354,13 @@ object Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             val uri =
-                FileProvider.getUriForFile(context!!, context!!.packageName + ".fileProvider", file)
+                FileProvider.getUriForFile(context, context.packageName + ".fileProvider", file)
             intent.setDataAndType(uri, "application/vnd.android.package-archive")
         } else {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
-        context!!.startActivity(intent)
+        context.startActivity(intent)
     }
 
     /**

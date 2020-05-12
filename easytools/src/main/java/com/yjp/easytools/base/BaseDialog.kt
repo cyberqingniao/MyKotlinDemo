@@ -18,7 +18,7 @@ import com.yjp.easytools.utils.Utils
  * @author yjp
  * @date 2020/4/1 10:47
  */
-open class BaseDialog<V : ViewDataBinding> : RxDialogFragment() {
+abstract class BaseDialog<V : ViewDataBinding> : RxDialogFragment() {
     var binding: V? = null
     private var listener: OnDismissListener? = null
 
@@ -63,20 +63,14 @@ open class BaseDialog<V : ViewDataBinding> : RxDialogFragment() {
         dialog.window!!.setGravity(gravity)
     }
 
-    fun show() {
-        show(activity.fragmentManager, "")
-    }
-
     override fun dismiss() {
         listener?.onDismiss()
         super.dismiss()
     }
 
-    open fun initContentView(savedInstanceState: Bundle?): Int {
-        return 0
-    }
+    abstract fun initContentView(savedInstanceState: Bundle?): Int;
 
-    open fun init() {}
+    abstract fun init();
 
     fun setOnDismissListener(listener: OnDismissListener) {
         this.listener = listener

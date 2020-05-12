@@ -94,7 +94,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
         viewModel!!.uc.showLoadingEvent.observe(this, Observer { msg -> showLoading(msg) })
         viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { this::dismissLoading })
         viewModel!!.uc.startActivityEvent.observe(this, Observer { params ->
-            {
+            run {
                 var intent = params[BaseViewModel.ParameterField.INTENT]
                 if (intent == null) {
                     var clazz = params[BaseViewModel.ParameterField.CLASS] as Class<*>

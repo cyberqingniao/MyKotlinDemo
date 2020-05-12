@@ -15,7 +15,7 @@ object StringUtils {
      * @return
      */
     fun getString(resId: Int): String {
-        return Utils.context!!.getString(resId)
+        return Utils.context.getString(resId)
     }
 
     /**
@@ -27,7 +27,7 @@ object StringUtils {
     fun isEmpty(str: String?): Boolean {
         var str = str
         str = delInvisibleChar(str)
-        return str == null || str == "" || str.isEmpty()
+        return str == null || str.isEmpty() || str == ""
     }
 
     /**
@@ -277,6 +277,23 @@ object StringUtils {
     }
 
     /**
+     * 字符串转Double
+     */
+    fun getDouble(s: String?): Double {
+        return when {
+            isEmpty(s) -> {
+                0.0
+            }
+            isDouble(s!!) -> {
+                s.toDouble()
+            }
+            else -> {
+                -1.0
+            }
+        }
+    }
+
+    /**
      * 判断传入的字符串是不是正整数
      *
      * @param s
@@ -284,6 +301,31 @@ object StringUtils {
      */
     fun isNumber(s: String): Boolean {
         return s.matches(Regex("^[1-9]\\d*$"))
+    }
+
+    /**
+     * 字符串转整数
+     */
+    fun getNumber(s: String?): Int {
+        return when {
+            isEmpty(s) -> {
+                0
+            }
+            isNumber(s!!) -> {
+                s.toInt()
+            }
+            isDouble(s) -> {
+                val end = s.substring(s.indexOf(".") + 1)
+                if (isNumber(end) && end.toInt() == 0) {
+                    s.substring(0, s.indexOf(".")).toInt()
+                } else {
+                    -1
+                }
+            }
+            else -> {
+                -1
+            }
+        }
     }
 
     /**

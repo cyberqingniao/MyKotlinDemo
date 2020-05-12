@@ -22,7 +22,7 @@ object NetworkUtils {
      */
     fun isNetworkAvailable(): Boolean {
         val manager =
-            Utils.context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val info = manager.activeNetworkInfo
         if (null == info || !info.isAvailable) {
             return false
@@ -59,7 +59,7 @@ object NetworkUtils {
      */
     fun getWifiIP(): String {
         val wifi_service =
-            Utils.context!!.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            Utils.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val dhcpInfo = wifi_service.dhcpInfo
         return Formatter.formatIpAddress(dhcpInfo.gateway)
     }
@@ -72,7 +72,7 @@ object NetworkUtils {
     fun getState(): Int {
         try {
             val connectivity =
-                Utils.context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkinfo = connectivity.activeNetworkInfo
             if (networkinfo != null) {
                 return if (networkinfo.isAvailable && networkinfo.isConnected) {
@@ -124,7 +124,7 @@ object NetworkUtils {
      * @return boolean
      */
     fun is2G(): Boolean {
-        val connectivityManager = Utils.context!!
+        val connectivityManager = Utils.context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var activeNetInfo: NetworkInfo? = null
         activeNetInfo = connectivityManager.activeNetworkInfo
@@ -139,7 +139,7 @@ object NetworkUtils {
      * @return boolean
      */
     fun is3G(): Boolean {
-        val connectivityManager = Utils.context!!
+        val connectivityManager = Utils.context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var activeNetInfo: NetworkInfo? = null
         activeNetInfo = connectivityManager.activeNetworkInfo
@@ -152,7 +152,7 @@ object NetworkUtils {
      * @return boolean
      */
     fun isWifi(): Boolean {
-        val connectivityManager = Utils.context!!
+        val connectivityManager = Utils.context
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         var activeNetInfo: NetworkInfo? = null
         activeNetInfo = connectivityManager.activeNetworkInfo
@@ -163,8 +163,8 @@ object NetworkUtils {
      * check is wifi on
      */
     fun isWifiEnabled(): Boolean {
-        val mgrConn = Utils.context!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val mgrTel = Utils.context!!.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        val mgrConn = Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val mgrTel = Utils.context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
         return mgrConn.activeNetworkInfo != null && mgrConn.activeNetworkInfo.state == NetworkInfo.State.CONNECTED || mgrTel.networkType == TelephonyManager.NETWORK_TYPE_UMTS
     }
 

@@ -14,7 +14,7 @@ object SPUtils {
     private lateinit var sp: SharedPreferences
 
     init {
-        sp = Utils.context!!.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
+        sp = Utils.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)
     }
 
     fun put(key: String, value: Any) {

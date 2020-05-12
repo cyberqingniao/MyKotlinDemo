@@ -68,7 +68,7 @@ object SystemUtils {
      */
     fun getDeviceId(): String? {
         return Settings.System.getString(
-            Utils.context!!.contentResolver,
+            Utils.context.contentResolver,
             Settings.System.ANDROID_ID
         );
     }
@@ -79,8 +79,8 @@ object SystemUtils {
     fun getPackageInfo(): PackageInfo? {
         var pi: PackageInfo? = null
         try {
-            val pm = Utils.context!!.packageManager
-            pi = pm.getPackageInfo(Utils.context!!.packageName, PackageManager.GET_CONFIGURATIONS)
+            val pm = Utils.context.packageManager
+            pi = pm.getPackageInfo(Utils.context.packageName, PackageManager.GET_CONFIGURATIONS)
         } catch (e: Exception) {
             e.printStackTrace()
         }

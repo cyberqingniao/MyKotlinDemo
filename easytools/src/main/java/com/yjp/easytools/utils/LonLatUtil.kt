@@ -1,39 +1,40 @@
 package com.yjp.easytools.utils
 
+import kotlin.math.abs
+
 /**
  * $
  * @author yjp
  * @date 2020/3/31 18:20
  */
 object LonLatUtil {
-    fun toDecimal(latlng: Double, jf: Float): Double { //替换′和″错误的情况
+    /**
+     *
+     */
+    fun toDecimal(latlng: Double, jf: Float): Double {
+        //替换′和″错误的情况
         var str = toLonLatStr(latlng)
         str = str.replace("['’‘]".toRegex(), "′").replace("[“”]".toRegex(), "″").replace('"', '″')
         var du = 0f
         var fen = 0f
         var miao = 0f
         if (str.contains("°")) {
-            du = java.lang.Float.valueOf(str.substring(0, str.indexOf("°")))
+            du = str.substring(0, str.indexOf("°")).toFloat()
             if (str.contains("′")) {
-                fen = java.lang.Float.valueOf(
-                    str.substring(
-                        str.indexOf("°") + 1,
-                        str.indexOf("′")
-                    )
-                ) - jf
+                fen = str.substring(
+                    str.indexOf("°") + 1,
+                    str.indexOf("′")
+                ).toFloat() - jf
                 if (str.contains("″")) {
-                    miao = java.lang.Float.valueOf(
-                        str.substring(
-                            str.indexOf("′") + 1,
-                            str.indexOf("″")
-                        )
-                    )
+                    miao = str.substring(
+                        str.indexOf("′") + 1,
+                        str.indexOf("″")
+                    ).toFloat()
                 }
             }
         }
-        var lonlat = 0f
-        lonlat = if (du < 0) {
-            -(Math.abs(du) + (fen + miao / 60) / 60)
+        val lonlat = if (du < 0) {
+            -(abs(du) + (fen + miao / 60) / 60)
         } else {
             du + (fen + miao / 60) / 60
         }
@@ -47,29 +48,27 @@ object LonLatUtil {
      * @param digit 保留位数
      * @return
      */
-    fun toDecimal(str: String, digit: Int?): Float { //替换′和″错误的情况
+    fun toDecimal(str: String, digit: Int?): Float {
+        //替换′和″错误的情况
         var str = str
         str = str.replace("['’‘]".toRegex(), "′").replace("[“”]".toRegex(), "″").replace('"', '″')
         var du = 0f
         var fen = 0f
         var miao = 0f
         if (str.contains("°")) {
-            du = java.lang.Float.valueOf(str.substring(0, str.indexOf("°")))
+            du = str.substring(0, str.indexOf("°")).toFloat()
             if (str.contains("′")) {
-                fen = java.lang.Float.valueOf(str.substring(str.indexOf("°") + 1, str.indexOf("′")))
+                fen = str.substring(str.indexOf("°") + 1, str.indexOf("′")).toFloat()
                 if (str.contains("″")) {
-                    miao = java.lang.Float.valueOf(
-                        str.substring(
-                            str.indexOf("′") + 1,
-                            str.indexOf("″")
-                        )
-                    )
+                    miao = str.substring(
+                        str.indexOf("′") + 1,
+                        str.indexOf("″")
+                    ).toFloat()
                 }
             }
         }
-        var lonlat = 0f
-        lonlat = if (du < 0) {
-            -(Math.abs(du) + (fen + miao / 60) / 60)
+        var lonlat = if (du < 0) {
+            -(abs(du) + (fen + miao / 60) / 60)
         } else {
             du + (fen + miao / 60) / 60
         }
