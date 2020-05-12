@@ -47,7 +47,33 @@ object ViewAdapter {
                 textChanged?.execute(text.toString())
             }
 
-            override fun afterTextChanged(editable: Editable) {}
+            override fun afterTextChanged(editable: Editable) {
+            }
+        })
+    }
+
+    @BindingAdapter(value = ["afterTextChangedCommand"], requireAll = false)
+    fun afterTextChangedListener(editText: EditText, textChanged: BindingCommand<String>?) {
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                charSequence: CharSequence,
+                i: Int,
+                i1: Int,
+                i2: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                text: CharSequence,
+                i: Int,
+                i1: Int,
+                i2: Int
+            ) {
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+                textChanged?.execute(editable.toString())
+            }
         })
     }
 }
