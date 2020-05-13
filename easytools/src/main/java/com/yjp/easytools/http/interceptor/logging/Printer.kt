@@ -17,7 +17,7 @@ import java.io.IOException
 internal open class Printer private constructor() {
     companion object {
         private const val JSON_INDENT = 3
-        private val LINE_SEPARATOR = System.getProperty("line.separator")
+        private val LINE_SEPARATOR = System.getProperty("line_horizontal.separator")
         private val DOUBLE_SEPARATOR =
             LINE_SEPARATOR + LINE_SEPARATOR
         private val OMITTED_RESPONSE =

@@ -1,10 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="mainViewModel"
+            type="com.yjp.mydemo.ui.main.MainViewModel" />
+    </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/c_bg"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:id="@+id/fl_main"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <include layout="@layout/line_horizontal" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:orientation="horizontal"
+            binding:onCheckedChangedCommand="@{mainViewModel.pageChangeCommand}">
+
+            <RadioButton
+                android:id="@+id/rb_page_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:checked="true"
+                android:drawableTop="@drawable/page_home_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/page_home"
+                android:textColor="@color/page_txt_color_selector"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_05"
+                android:layout_height="match_parent"
+                android:background="@color/c_line" />
+
+            <RadioButton
+                android:id="@+id/rb_page_type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/page_type_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/page_type"
+                android:textColor="@color/page_txt_color_selector"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_05"
+                android:layout_height="match_parent"
+                android:background="@color/c_line" />
+
+            <RadioButton
+                android:id="@+id/rb_page_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/page_message_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/page_message"
+                android:textColor="@color/page_txt_color_selector"
+                android:textSize="@dimen/sp_12" />
+
+            <View
+                android:layout_width="@dimen/dp_05"
+                android:layout_height="match_parent"
+                android:background="@color/c_line" />
+
+            <RadioButton
+                android:id="@+id/rb_page_my"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@null"
+                android:drawableTop="@drawable/page_my_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/page_my"
+                android:textColor="@color/page_txt_color_selector"
+                android:textSize="@dimen/sp_12" />
+        </RadioGroup>
     </LinearLayout>
 </layout>

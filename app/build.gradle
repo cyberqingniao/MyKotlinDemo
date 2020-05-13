@@ -25,17 +25,24 @@ android {
     }
 
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
     dataBinding {
         enabled true
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-//    "com.android.databinding:compiler:3.6.1"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
@@ -43,4 +50,12 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(path: ':easytools')
+//    implementation (name:'GDTSDK.unionNormal.4.191.1061', ext:'aar')
+    //刷新框架
+    //核心必须依赖
+    api rootProject.ext.dependencies["refresh-layout-kernel"]
+    //谷歌刷新头
+    api rootProject.ext.dependencies["refresh-header-material"]
+    //经典加载
+    api rootProject.ext.dependencies["refresh-footer-classics"]
 }

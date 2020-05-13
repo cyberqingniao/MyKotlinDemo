@@ -3,4 +3,32 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_transparent_30">#30FFFFFF</color>
+    <color name="white_transparent_80">#80FFFFFF</color>
+    <color name="white_transparent_70">#70FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="black_transparent_30">#30000000</color>
+    <color name="black_transparent_80">#80000000</color>
+    <color name="black_transparent_70">#70000000</color>
+    <color name="c_bg">#F2F2F2</color>
+    <color name="c_line">#EDEDED</color>
+    <color name="c_33">#333333</color>
+    <color name="c_66">#666666</color>
+    <color name="c_99">#999999</color>
+    <color name="c_B2">#B2B2B2</color>
+    <color name="c_4156E1">#4156E1</color>
+    <color name="c_3B6EE3">#3B6EE3</color>
+    <color name="c_D0DDFE">#D0DDFE</color>
+    <color name="c_5776BC">#5776BC</color>
+    <color name="c_F0">#F0F0F0</color>
+    <color name="c_F3471A">#F3471A</color>
+    <color name="c_6783C2">#6783C2</color>
+    <color name="c_163A97">#163A97</color>
+    <color name="c_CC">#CCCCCC</color>
+    <color name="c_515766">#515766</color>
+    <color name="c_69A3FF">#69A3FF</color>
+    <color name="c_FDE96A">#FDE96A</color>
+    <color name="c_F06F6D">#F06F6D</color>
 </resources>
