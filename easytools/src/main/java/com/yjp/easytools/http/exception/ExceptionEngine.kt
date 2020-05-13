@@ -53,7 +53,7 @@ object ExceptionEngine {
             || e is ParseException
         ) { // 均视为解析错误
             ex = ApiException(e, ErrorType.PARSE_ERROR)
-            ex.msg = "解析错误"
+            ex.msg = "数据解析错误"
             ex
         } else if (e is ConnectException || e is SocketTimeoutException || e is ConnectTimeoutException) { // 均视为网络错误
             ex = ApiException(e, ErrorType.NETWORK_ERROR)
@@ -62,10 +62,10 @@ object ExceptionEngine {
         } else if (e is HttpException) {
             if ("HTTP 404 Not Found" == e.message) {
                 ex = ApiException(e, ErrorType.NETWORK_ERROR)
-                ex.msg = "没有连接服务器"
+                ex.msg = "没有发现服务器"
             } else {
                 ex = ApiException(e, ErrorType.NETWORK_ERROR)
-                ex.msg = "连接服务器错误"
+                ex.msg = "无法连接服务器"
             }
             ex
         } else { // 未知错误

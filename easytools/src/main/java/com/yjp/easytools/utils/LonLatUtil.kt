@@ -1,6 +1,7 @@
 package com.yjp.easytools.utils
 
 import kotlin.math.abs
+import kotlin.math.floor
 
 /**
  * $
@@ -67,7 +68,7 @@ object LonLatUtil {
                 }
             }
         }
-        var lonlat = if (du < 0) {
+        val lonlat = if (du < 0) {
             -(abs(du) + (fen + miao / 60) / 60)
         } else {
             du + (fen + miao / 60) / 60
@@ -106,9 +107,9 @@ object LonLatUtil {
             temp = -lonlat
         }
         //获取整数部分
-        val du = Math.floor(temp).toInt()
+        val du = floor(temp).toInt()
         temp = (temp - du) * 60
-        val fen = Math.floor(temp).toInt()
+        val fen = floor(temp).toInt()
         temp = (temp - fen) * 60
         val miao = temp.toFloat()
         return "$str$du°$fen′" + (if (digit == null) miao else String.format(

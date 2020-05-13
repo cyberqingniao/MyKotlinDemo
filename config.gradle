@@ -57,11 +57,10 @@ ext {
             /**
              *  -------------------------------
              *
-             * Material风格超级EditText
+             * Material风格弹窗
              *
              * --------------------------------
              */
-            //material-dialogs
             "material-dialogs-core"                : "com.afollestad.material-dialogs:core:0.9.4.5",
             "material-dialogs-commons"             : "com.afollestad.material-dialogs:commons:0.9.4.5",
 

@@ -2,6 +2,7 @@ package com.yjp.easytools
 
 import com.yjp.easytools.utils.DataUtils
 import com.yjp.easytools.utils.StringUtils
+import com.yjp.easytools.utils.Utils
 import java.io.File
 import java.io.FileOutputStream
 import java.io.PrintWriter
@@ -66,8 +67,8 @@ class GeneratorUtils {
 //            gu.generateUIFile("goodsType", "Fragment")
 //            gu.generateUIFile("forgetPassword", "Activity")
 //            gu.generateUIFile("register", "Activity")
-            gu.generateUIFile("bindPhone", "Activity")
-
+//            gu.generateUIFile("bindPhone", UiType.ACTIVITY)
+            gu.generateUIFile("tip", UiType.DIALOG)
             //创建Http模块
 //            gu.generateHttpFile()
 
@@ -160,8 +161,7 @@ class GeneratorUtils {
     /**
      * 生成视图
      */
-    fun generateUIFile(modelName: String, type: String) {
-
+    fun generateUIFile(modelName: String, type: UiType) {
         val aName: String
         //ViewModel
         val vmName: String = StringUtils.upperFirstLetter(modelName) + "ViewModel.kt"
@@ -169,34 +169,57 @@ class GeneratorUtils {
         var xmlName: String
         //包名中的“.”替换成“/”
         var mPackage = PATH_PACKAGE
-        mPackage = mPackage.replace(".", "/") + "/ui/"
-
-        isFileExists(File(PATH_MAIN_CODE + mPackage, modelName))
-        if (type == "Activity") {
-            //Activity
-            aName = StringUtils.upperFirstLetter(modelName) + "Activity.kt"
-            xmlName = if (StringUtils.isUpperCase(modelName)) {
-                "activity_${StringUtils.toLowerCaseName(modelName)}.xml"
-            } else {
-                "activity_${modelName}.xml"
-            }
-            //生成Activity
-            activityFile(aName, vmName, xmlName, modelName, mPackage)
+        if (type == UiType.DIALOG) {
+            mPackage = mPackage.replace(".", "/") + "/dialog/"
+            isFileExists(File(PATH_MAIN_CODE + mPackage))
         } else {
-            //Fragment
-            aName = StringUtils.upperFirstLetter(modelName) + "Fragment.kt"
-            //XML
-            xmlName = if (StringUtils.isUpperCase(modelName)) {
-                "fragment_${StringUtils.toLowerCaseName(modelName)}.xml"
-            } else {
-                "fragment_${modelName}.xml"
-            }
-            //生成Fragment
-            fragmentFile(aName, vmName, xmlName, modelName, mPackage)
+            mPackage = mPackage.replace(".", "/") + "/ui/"
+            isFileExists(File(PATH_MAIN_CODE + mPackage, modelName))
         }
-
-        //生成ViewModel
-        viewModelFile(aName, vmName, modelName, mPackage)
+        when (type) {
+            UiType.ACTIVITY -> {
+                //Activity
+                aName = StringUtils.upperFirstLetter(modelName) + "Activity.kt"
+                xmlName = if (StringUtils.isUpperCase(modelName)) {
+                    "activity_${StringUtils.toLowerCaseName(modelName)}.xml"
+                } else {
+                    "activity_${modelName}.xml"
+                }
+                //生成Activity
+                activityFile(aName, vmName, xmlName, modelName, mPackage)
+            }
+            UiType.FRAGMENT -> {
+                //Fragment
+                aName = StringUtils.upperFirstLetter(modelName) + "Fragment.kt"
+                //XML
+                xmlName = if (StringUtils.isUpperCase(modelName)) {
+                    "fragment_${StringUtils.toLowerCaseName(modelName)}.xml"
+                } else {
+                    "fragment_${modelName}.xml"
+                }
+                //生成Fragment
+                fragmentFile(aName, vmName, xmlName, modelName, mPackage)
+            }
+            UiType.DIALOG -> {
+                //Dialog
+                aName = StringUtils.upperFirstLetter(modelName) + "Dialog.kt"
+                //XML
+                xmlName = if (StringUtils.isUpperCase(modelName)) {
+                    "dialog_${StringUtils.toLowerCaseName(modelName)}.xml"
+                } else {
+                    "dialog_${modelName}.xml"
+                }
+                //生成Dialog
+                dialogFile(aName, xmlName, modelName, mPackage)
+            }
+            else -> {
+                throw RuntimeException("没有该类型的视图创建方式\tname=${modelName}\ttype=${type}")
+            }
+        }
+        if (type != UiType.DIALOG) {
+            //生成ViewModel
+            viewModelFile(aName, vmName, modelName, mPackage)
+        }
         //生成XML
         xmlFile(vmName, xmlName, modelName)
     }
@@ -325,6 +348,35 @@ class GeneratorUtils {
         hSB.append("\t}\n")
         hSB.append("}")
         writeFile(hFile, hSB)
+    }
+
+    /**
+     * 生成Dialog
+     */
+    private fun dialogFile(aName: String, xmlName: String, modelName: String, mPackage: String) {
+        //生成文件
+        val aFile = File(PATH_MAIN_CODE + mPackage, aName)
+        fileExists(aFile)
+        //写入文件初始内容
+        val dSB = StringBuilder()
+        dSB.append("package ${PATH_PACKAGE}.dialog\n\n")
+        dSB.append("import android.os.Bundle\n")
+        dSB.append("import com.yjp.easytools.base.BaseDialog\n")
+        dSB.append("import com.yjp.mydemo.R\n")
+        dSB.append("import com.yjp.mydemo.databinding.DialogTipBinding\n")
+        dSB.append("/**\n*$\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        dSB.append(
+            "class ${aName.substring(
+                0,
+                aName.indexOf(".")
+            )}: BaseDialog<Dialog${StringUtils.upperFirstLetter(
+                modelName
+            )}Binding>() {\n\n"
+        )
+        dSB.append("\toverride fun initContentView(savedInstanceState: Bundle?): Int {\n")
+        dSB.append("\t\treturn R.layout.${xmlName.substring(0, xmlName.indexOf("."))}\n\t}\n\n")
+        dSB.append("\toverride fun init() {\n\t}\n}")
+        writeFile(aFile, dSB)
     }
 
     /**
@@ -468,23 +520,25 @@ class GeneratorUtils {
         val xmlSB = StringBuilder()
         xmlSB.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
         xmlSB.append("<layout>\n")
-        xmlSB.append("\t<data>\n")
-        xmlSB.append("\t\t<variable\n")
-        xmlSB.append(
-            "\t\t\tname=\"${StringUtils.lowerFirstLetter(
-                vmName.substring(
+        if (!Utils.isEmpty(vmName)) {
+            xmlSB.append("\t<data>\n")
+            xmlSB.append("\t\t<variable\n")
+            xmlSB.append(
+                "\t\t\tname=\"${StringUtils.lowerFirstLetter(
+                    vmName.substring(
+                        0,
+                        vmName.indexOf(".")
+                    )
+                )}\"\n"
+            )
+            xmlSB.append(
+                "\t\t\ttype=\"${PATH_PACKAGE}.ui.${modelName}.${vmName.substring(
                     0,
                     vmName.indexOf(".")
-                )
-            )}\"\n"
-        )
-        xmlSB.append(
-            "\t\t\ttype=\"${PATH_PACKAGE}.ui.${modelName}.${vmName.substring(
-                0,
-                vmName.indexOf(".")
-            )}\"/>\n"
-        )
-        xmlSB.append("\t</data>\n")
+                )}\"/>\n"
+            )
+            xmlSB.append("\t</data>\n")
+        }
         xmlSB.append("\t<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n")
         xmlSB.append("\t\tandroid:layout_width=\"match_parent\"\n")
         xmlSB.append("\t\tandroid:layout_height=\"match_parent\"\n")
@@ -621,4 +675,8 @@ class GeneratorUtils {
         }
         return true
     }
+}
+
+enum class UiType {
+    ACTIVITY, FRAGMENT, DIALOG
 }

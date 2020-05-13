@@ -265,7 +265,7 @@ class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, nu
      * @return 属性名
      */
     fun getPropertyName(name: String): String? {
-        val sb = java.lang.StringBuilder()
+        val sb = StringBuilder()
         val chars = name.toCharArray()
         var i = 0
         while (i < chars.size) {
