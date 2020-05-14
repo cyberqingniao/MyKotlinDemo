@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="loginViewModel"
+            type="com.yjp.mydemo.ui.login.LoginViewModel" />
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/ll_username_and_password"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dp_50"
+                android:src="@mipmap/logo" />
+
+            <LinearLayout
+                android:id="@+id/ll_username_and_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input_selector"
+                    android:drawableStart="@drawable/icon_username_selector"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:hint="@string/hint_username"
+                    android:singleLine="true"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@={loginViewModel.username}"
+                    android:textColor="@color/c_33"
+                    android:textColorHint="@color/c_B2"
+                    android:textSize="@dimen/sp_13" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@drawable/bg_input_selector"
+                    android:drawableStart="@drawable/icon_password_selector"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:singleLine="true"
+                    android:inputType="textPassword"
+                    android:hint="@string/hint_password"
+                    android:paddingStart="@dimen/dp_10"
+                    android:paddingTop="@dimen/dp_10"
+                    android:paddingEnd="@dimen/dp_20"
+                    android:paddingBottom="@dimen/dp_10"
+                    android:text="@={loginViewModel.password}"
+                    android:textColor="@color/c_33"
+                    android:textColorHint="@color/c_B2"
+                    android:textSize="@dimen/sp_13" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_username_and_password"
+                android:layout_alignEnd="@id/ll_username_and_password"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingRight="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/btn_forget_password"
+                android:textColor="@color/c_163A97"
+                android:textSize="@dimen/sp_13"
+                binding:onClickCommand="@{loginViewModel.forgetPasswordOnClickCommand}" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_username_and_password"
+                android:layout_alignStart="@id/ll_username_and_password"
+                android:layout_marginStart="@dimen/dp_10"
+                android:button="@drawable/btn_chang_selector"
+                android:checked="@={loginViewModel.isRememberPassword()}"
+                android:paddingStart="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/btn_remember_password"
+                android:textColor="@color/c_163A97"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_username_and_password"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="@dimen/dp_50"
+                android:layout_marginTop="@dimen/dp_100"
+                android:layout_marginRight="@dimen/dp_50"
+                android:background="@drawable/btn_confirm_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@string/btn_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15"
+                binding:onClickCommand="@{loginViewModel.loginOnClickCommand}" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
+            android:text="@string/btn_register"
+            android:textColor="@color/c_163A97"
+            android:textSize="@dimen/sp_18"
+            binding:onClickCommand="@{loginViewModel.registerOnClickCommand}" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp_10"
+            android:src="@mipmap/icon_setting"
+            binding:onClickCommand="@{loginViewModel.setServiceOnClickCommand}" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dp_30"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_qq"
+                binding:onClickCommand="@{loginViewModel.qqOnClickCommand}" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:src="@mipmap/icon_wx"
+                binding:onClickCommand="@{loginViewModel.wxOnClickCommand}" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

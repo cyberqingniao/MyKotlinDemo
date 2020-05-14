@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="setServiceViewModel"
+            type="com.yjp.mydemo.ui.setService.SetServiceViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/c_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingRight="@dimen/dp_12"
+                android:src="@mipmap/arrow_back"
+                binding:onClickCommand="@{setServiceViewModel.backOnClickCommand}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="忘记密码"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_18" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="当前服务器地址"
+            android:textColor="@color/c_99"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_15"
+            android:paddingBottom="@dimen/dp_15"
+            android:text="11.1.1.80:8080"
+            android:textColor="@color/c_66"
+            android:textSize="@dimen/sp_15" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_20"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.7"
+                android:gravity="right"
+                android:text="新的IP："
+                android:textColor="@color/c_99"
+                android:textSize="@dimen/sp_13" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:background="@null"
+                android:gravity="left"
+                android:inputType="number"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:singleLine="true"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_13" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_05"
+            android:background="@color/c_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.7"
+                android:gravity="right"
+                android:text="新的端口："
+                android:textColor="@color/c_99"
+                android:textSize="@dimen/sp_13" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:background="@null"
+                android:gravity="left"
+                android:inputType="number"
+                android:paddingLeft="@dimen/dp_10"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:singleLine="true"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_13" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_100"
+            android:layout_marginRight="@dimen/dp_50"
+            android:background="@drawable/btn_confirm_selector"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="保存"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_15"
+            binding:onClickCommand="@{setServiceViewModel.reportOnClickCommand}" />
+    </LinearLayout>
+</layout>

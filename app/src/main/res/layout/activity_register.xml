@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="registerViewModel"
+            type="com.yjp.mydemo.ui.register.RegisterViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/c_bg"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_55"
+            android:background="@color/white">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingRight="@dimen/dp_12"
+                android:src="@mipmap/arrow_back"
+                binding:onClickCommand="@{registerViewModel.backOnClickCommand}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="注册"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_18" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.2"
+                android:background="@null"
+                android:hint="手机号"
+                android:inputType="phone"
+                android:padding="@dimen/dp_15"
+                android:singleLine="true"
+                android:text="@={registerViewModel.phone}"
+                android:textColor="@color/c_33"
+                android:textColorHint="@color/c_B2"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.7"
+                android:background="@drawable/btn_confirm_selector"
+                android:gravity="center"
+                android:paddingTop="@dimen/dp_10"
+                android:paddingBottom="@dimen/dp_10"
+                android:text="@{registerViewModel.codeTxt}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_15"
+                binding:onClickCommand="@{registerViewModel.getCodeOncClickCommand}" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_05"
+            android:background="@color/c_line" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="验证码"
+            android:inputType="number"
+            android:padding="@dimen/dp_15"
+            android:singleLine="true"
+            android:text="@={registerViewModel.code}"
+            android:textColor="@color/c_33"
+            android:textColorHint="@color/c_B2"
+            android:textSize="@dimen/sp_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_05"
+            android:background="@color/c_line" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:padding="@dimen/dp_15"
+            android:singleLine="true"
+            android:text="@{registerViewModel.password}"
+            android:textColor="@color/c_33"
+            android:textColorHint="@color/c_B2"
+            android:textSize="@dimen/sp_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_05"
+            android:background="@color/c_line" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:hint="确认密码"
+            android:inputType="textPassword"
+            android:padding="@dimen/dp_15"
+            android:singleLine="true"
+            android:text="@{registerViewModel.password1}"
+            android:textColor="@color/c_33"
+            android:textColorHint="@color/c_B2"
+            android:textSize="@dimen/sp_13" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_05"
+            android:background="@color/c_line" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_60"
+            android:layout_marginTop="@dimen/dp_100"
+            android:button="@drawable/btn_chang_selector"
+            android:paddingStart="@dimen/dp_5"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="阅读并同意《用户平台使用协议》"
+            android:textColor="@color/c_4156E1"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_50"
+            android:background="@drawable/btn_confirm_selector"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="注册并登录"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_15"
+            binding:onClickCommand="@{registerViewModel.registerOnClickCommand}" />
+    </LinearLayout>
+</layout>
