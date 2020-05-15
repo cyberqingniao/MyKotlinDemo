@@ -15,7 +15,7 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding
  * @date 2020-05-15 21:51
  */
 class GoodsListViewModel(application: Application) : BaseViewModel(application) {
-    val items = ObservableArrayList<GoodEntity>()
+    val items = ObservableArrayList<GoodItemViewModel<GoodsListViewModel>>()
     val itemBinding: ItemBinding<GoodItemViewModel<GoodsListViewModel>> = ItemBinding.of(
         BR.goodItemViewModel,
         R.layout.item_good
