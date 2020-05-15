@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="homeViewModel"
             type="com.yjp.mydemo.ui.home.HomeViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.yjp.mydemo.ui.home.item.GoodsMenuAdapter" />
+
+        <variable
+            name="bannerAdapter"
+            type="com.yjp.mydemo.ui.home.item.BannerAdapter" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
+
+        <import type="com.yjp.easytools.databing.viewadapter.recyclerview.LineManagers" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,22 +39,37 @@
                 android:layout_marginRight="@dimen/dp_30"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:background="@drawable/bg_input_selector"
-                android:drawableLeft="@mipmap/icon_search"
-                android:drawableRight="@mipmap/icon_del"
+                android:drawableStart="@mipmap/icon_search"
+                android:drawableEnd="@mipmap/icon_del"
                 android:drawablePadding="@dimen/dp_10"
                 android:gravity="center_vertical"
+                android:hint="@string/hint_search"
                 android:paddingLeft="@dimen/dp_10"
                 android:paddingRight="@dimen/dp_10"
-                android:text="大大大" />
+                android:textColorHint="@color/c_B2" />
         </RelativeLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_200" />
+            android:layout_height="@dimen/dp_200"
+            binding:adapter="@{bannerAdapter}"
+            binding:itemBinding="@{homeViewModel.bannerItemBinding}"
+            binding:items="@{homeViewModel.bannerItems}"
+            binding:onPageSelectedCommand="@{homeViewModel.onPageSelectedCommand}"
+            binding:pageTitles="@{homeViewModel.pageTitles}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_5"
+            android:paddingRight="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_5"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{homeViewModel.menuItemBinding}"
+            binding:items="@{homeViewModel.menuItems}"
+            binding:layoutManager="@{LayoutManagers.grid(5)}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"

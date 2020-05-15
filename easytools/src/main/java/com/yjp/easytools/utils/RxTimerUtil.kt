@@ -75,6 +75,7 @@ class RxTimerUtil {
                 }
 
                 override fun onNext(t: Long) {
+                    next.next(t)
                 }
 
                 override fun onError(e: Throwable) {

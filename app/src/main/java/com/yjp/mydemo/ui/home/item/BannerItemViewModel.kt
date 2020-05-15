@@ -11,8 +11,10 @@ import com.yjp.mydemo.ui.home.HomeViewModel
  */
 class BannerItemViewModel(
     viewModel: HomeViewModel,
-    public val url: ObservableField<String>,
-    public val resId: ObservableField<Int>
+    url: String,
+    resId: Int
 ) :
     ItemViewModel<HomeViewModel>(viewModel) {
+    val url = ObservableField<String>(url)
+    val resId = ObservableField<Int>(resId)
 }

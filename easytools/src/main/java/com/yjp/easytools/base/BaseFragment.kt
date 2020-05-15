@@ -44,9 +44,6 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if (viewModel != null) {
-            viewModel!!.removeRxBus()
-        }
         if (binding != null) {
             binding!!.unbind()
         }
@@ -57,13 +54,11 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
         //私有的初始化Databinding和ViewModel方法
         initViewDatabinding()
         //私有的ViewModel与View的契约事件回调逻辑
-        registorUIChangLiveDataCallBack()
+        registerUIChangLiveDataCallBack()
         //页面数据初始化
         initData()
         //页面事件监听方法，一般用于ViewModel层转到View层的事件注册
         initViewDatabinding()
-        //注册RxBus
-        viewModel!!.registerRxBus()
     }
 
     /**
@@ -73,13 +68,13 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
         viewModelId = initVariableId()
         viewModel = initViewModel()
         if (viewModel == null) {
-            var modelClass: Class<BaseViewModel>
-            var type: Type = javaClass.genericSuperclass as Type
-            modelClass = if (type is ParameterizedType) {
+            val modelClass: Class<BaseViewModel>
+            val type: Type = javaClass.genericSuperclass as Type
+            modelClass = (if (type is ParameterizedType) {
                 type.actualTypeArguments[1] as Class<BaseViewModel>
             } else {
                 BaseViewModel(activity!!.application).javaClass
-            }
+            })
             viewModel = createViewModel(this, modelClass) as VM
         }
         binding!!.setVariable(viewModelId, viewModel)
@@ -90,15 +85,15 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
     /**
      * 注册ViewModel与View的契约UI回调事件
      */
-    private fun registorUIChangLiveDataCallBack() {
+    private fun registerUIChangLiveDataCallBack() {
         viewModel!!.uc.showLoadingEvent.observe(this, Observer { msg -> showLoading(msg) })
-        viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { this::dismissLoading })
+        viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { dismissLoading() })
         viewModel!!.uc.startActivityEvent.observe(this, Observer { params ->
             run {
-                var intent = params[BaseViewModel.ParameterField.INTENT]
+                val intent = params[BaseViewModel.ParameterField.INTENT]
                 if (intent == null) {
-                    var clazz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
-                    var bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
+                    val clazz = params[BaseViewModel.ParameterField.CLASS] as Class<*>
+                    val bundle = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                     startActivity(clazz, bundle)
                 } else if (intent is Intent) {
                     startActivity(intent)
@@ -147,7 +142,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
     }
 
     override fun startActivity(clazz: Class<*>, bundle: Bundle?) {
-        var intent = Intent(context, clazz)
+        val intent = Intent(context, clazz)
         if (bundle != null) {
             intent.putExtras(bundle)
         }

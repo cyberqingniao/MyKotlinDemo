@@ -24,10 +24,10 @@ object StringUtils {
      * @param str : 需要判断的字符串
      * @return Boolean
      */
-    fun isEmpty(str: String?): Boolean {
-        var str = str
+    fun isEmpty(s: String?): Boolean {
+        var str = s
         str = delInvisibleChar(str)
-        return str == null || str.isEmpty() || str == ""
+        return str.isEmpty() || str == ""
     }
 
     /**

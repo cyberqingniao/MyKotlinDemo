@@ -34,20 +34,20 @@ object ViewAdapter {
             private var state: Int = 0
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                onScrollChangeCommand?.execute(ScrollDataWrapper(dx.toFloat(), dy.toFloat(), state))
+                onScrollChangeCommand.execute(ScrollDataWrapper(dx.toFloat(), dy.toFloat(), state))
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 state = newState
-                onScrollStateChangedCommand?.execute(newState)
+                onScrollStateChangedCommand.execute(newState)
             }
         })
     }
 
     @BindingAdapter("onLoadMoreCommand")
     fun onLoadMoreCommand(recyclerView: RecyclerView, onLoadMoreCommand: BindingCommand<Int>) {
-        var listener = OnScrollListener(onLoadMoreCommand)
+        val listener = OnScrollListener(onLoadMoreCommand)
         recyclerView.addOnScrollListener(listener)
     }
 
@@ -68,20 +68,15 @@ object ViewAdapter {
 
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
-            var layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            var visibleItemCount = layoutManager.childCount
-            var totalItemCount = layoutManager.itemCount
-            var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+            val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
             if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                if (onLoadMoreCommand != null) {
-                    methodInvoke.onNext(recyclerView.adapter!!.itemCount)
-                }
+                methodInvoke.onNext(recyclerView.adapter!!.itemCount)
             }
         }
 
-        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-            super.onScrollStateChanged(recyclerView, newState)
-        }
     }
 
     class ScrollDataWrapper(var scrollX: Float, var scrollY: Float, var state: Int)

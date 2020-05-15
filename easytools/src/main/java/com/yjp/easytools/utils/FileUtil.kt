@@ -83,7 +83,7 @@ object FileUtil {
      * @return
      */
     fun saveFileByByteData(data: ByteArray, fileName: String) {
-        var bufferedOutputStream: BufferedOutputStream? = null
+        val bufferedOutputStream: BufferedOutputStream?
         try {
             val file = File(path, fileName)
             if (file.exists()) {
@@ -190,7 +190,7 @@ object FileUtil {
         var outputStream: OutputStream? = null
         return try {
             outputStream = FileOutputStream(file)
-            var read = 0
+            var read: Int
             val bytes = ByteArray(1024)
             while (inputStream.read(bytes).also { read = it } != -1) {
                 outputStream.write(bytes, 0, read)

@@ -81,7 +81,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
      * @param intent
      */
     fun startActivity(intent: Intent) {
-        var params = mutableMapOf<String, Any>()
+        val params = mutableMapOf<String, Any>()
         params[ParameterField.INTENT] = intent
         uc.startActivityEvent.postValue(params)
     }
@@ -92,7 +92,7 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
      * @param bundle : 携带参数
      */
     fun startActivity(clazz: Class<*>, bundle: Bundle?) {
-        var params = mutableMapOf<String, Any>()
+        val params = mutableMapOf<String, Any>()
         params[ParameterField.CLASS] = clazz
         if (bundle != null) {
             params[ParameterField.BUNDLE] = bundle
@@ -108,43 +108,24 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     override fun onAny(owner: LifecycleOwner, event: Lifecycle.Event) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onCreate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onStart() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onResume() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onPause() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onStop() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onDestroy() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun registerRxBus() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun removeRxBus() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onCleared() {
-        super.onCleared()
     }
 
     class UIChangeLiveData {

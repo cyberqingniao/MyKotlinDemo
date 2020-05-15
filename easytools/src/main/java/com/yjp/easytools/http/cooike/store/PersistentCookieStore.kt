@@ -102,11 +102,11 @@ class PersistentCookieStore(var context: Context) : CookieStore {
     }
 
     /** 将url的所有Cookie保存在本地 */
-    override fun saveCookie(url: HttpUrl, cookie: List<Cookie>) {
+    override fun saveCookie(url: HttpUrl, cookieList: List<Cookie>) {
         if (!cookies.containsKey(url.host)) {
             cookies[url.host] = ConcurrentHashMap<String, Cookie>()
         }
-        for (cookie in cookie) {
+        for (cookie in cookieList) {
             if (isCookieExpired(cookie)) {
                 removeCookie(url, cookie)
             } else {
@@ -128,9 +128,9 @@ class PersistentCookieStore(var context: Context) : CookieStore {
 
     /** 根据当前url获取所有需要的cookie,只返回没有过期的cookie */
     override fun loadCookie(url: HttpUrl): List<Cookie> {
-        var ret = mutableListOf<Cookie>()
+        val ret = mutableListOf<Cookie>()
         if (cookies.containsKey(url.host)) {
-            var urlCookie = cookies[url.host]!!.values
+            val urlCookie = cookies[url.host]!!.values
             for (cookie in urlCookie) {
                 if (isCookieExpired(cookie)) {
                     removeCookie(url, cookie)

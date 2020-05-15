@@ -88,14 +88,14 @@ class DownloadDialog(
         try {
             val fos = FileOutputStream(file)
             val b = ByteArray(1024)
-            var len = 0
+            var len: Int
             var total = 0
             var lastProgress = 0
             var progress = 0
             while (inputStream.read(b).also { len = it } != -1) {
                 fos.write(b, 0, len)
                 total += len
-                progress = (total * 100 / mTotalLength) as Int
+                progress = (total * 100 / mTotalLength).toInt()
                 if (progress > 0 && progress != lastProgress) {
                     lastProgress = progress
                     downloadProgress.progress = progress

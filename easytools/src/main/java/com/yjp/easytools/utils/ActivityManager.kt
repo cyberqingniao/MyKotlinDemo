@@ -13,10 +13,8 @@ import kotlin.system.exitProcess
 class ActivityManager private constructor() {
     companion object {
         var activityStack: Stack<Activity>? = null
-            get() = field
             private set
         var fragmentStack: Stack<Fragment>? = null
-            get() = field
             private set
         val instance: ActivityManager by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { ActivityManager() }
 
@@ -25,11 +23,7 @@ class ActivityManager private constructor() {
     /**
      * 是否有activity
      */
-    var isActivity: Boolean = false
-        get() = field
-        private set(f) {
-            field = activityStack?.isEmpty() ?: false
-        }
+    var isActivity: Boolean = activityStack?.isEmpty() ?: false
 
     /**
      * 添加Activity到堆栈

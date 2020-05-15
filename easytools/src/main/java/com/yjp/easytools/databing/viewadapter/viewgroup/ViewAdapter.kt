@@ -19,19 +19,19 @@ object ViewAdapter {
     fun addViews(
         viewGroup: ViewGroup,
         itemBinding: ItemBinding<*>,
-        viewModelList: ObservableList<IBindingItemViewModel<*>>
+        viewModelList: ObservableList<IBindingItemViewModel<ViewDataBinding>>
     ) {
         if (!viewModelList.isEmpty()) {
             viewGroup.removeAllViews()
             for (viewModel in viewModelList) {
-                var binding = DataBindingUtil.inflate(
+                val binding = DataBindingUtil.inflate(
                     LayoutInflater.from(viewGroup.context),
                     itemBinding.layoutRes(),
                     viewGroup,
                     true
                 ) as ViewDataBinding
                 binding.setVariable(itemBinding.variableId(), viewModel)
-                viewModel.injecDataBinding(binding as Nothing)
+                viewModel.injecDataBinding(binding)
             }
         }
     }

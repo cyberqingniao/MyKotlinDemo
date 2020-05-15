@@ -31,15 +31,4 @@ interface IBaseViewModel : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy()
-
-    /**
-     * 注册RxBus
-     */
-    fun registerRxBus()
-
-    /**
-     * 移除RxBus
-     */
-    fun removeRxBus()
-
 }

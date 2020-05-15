@@ -113,7 +113,6 @@ object NetworkUtils {
         } catch (ignored: IOException) {
         } finally {
             httpUrl?.disconnect()
-            httpUrl = null
         }
         return result
     }
@@ -165,7 +164,7 @@ object NetworkUtils {
     fun isWifiEnabled(): Boolean {
         val mgrConn = Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val mgrTel = Utils.context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return mgrConn.activeNetworkInfo != null && mgrConn.activeNetworkInfo.state == NetworkInfo.State.CONNECTED || mgrTel.networkType == TelephonyManager.NETWORK_TYPE_UMTS
+        return mgrConn.activeNetworkInfo != null && mgrConn.activeNetworkInfo!!.state == NetworkInfo.State.CONNECTED || mgrTel.networkType == TelephonyManager.NETWORK_TYPE_UMTS
     }
 
     /**

@@ -17,8 +17,8 @@ class ContentViewPager : ViewPager {
     ) {
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        var heightMeasureSpec = heightMeasureSpec
+    override fun onMeasure(widthMeasureSpec: Int, hms: Int) {
+        var heightMeasureSpec: Int = hms
         var height = 0
         //下面遍历所有child的高度
         for (i in 0 until childCount) {

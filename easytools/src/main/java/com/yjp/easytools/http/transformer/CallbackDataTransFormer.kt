@@ -15,8 +15,8 @@ import io.reactivex.ObservableTransformer
 class CallbackDataTransFormer<T> private constructor() : ObservableTransformer<BaseResult<T>, T> {
 
     companion object {
-
         private var instance: CallbackDataTransFormer<*>? = null
+
         @Synchronized
         fun <T> getInstance(): CallbackDataTransFormer<T> {
             if (instance == null) {
@@ -24,7 +24,7 @@ class CallbackDataTransFormer<T> private constructor() : ObservableTransformer<B
                     instance = CallbackDataTransFormer<T>()
                 }
             }
-            return (instance as CallbackDataTransFormer<T>)
+            return instance as CallbackDataTransFormer<T>
         }
     }
 

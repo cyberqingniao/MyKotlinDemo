@@ -14,8 +14,8 @@ object ViewAdapter {
     @BindingAdapter(value = ["onCheckedChangedCommand"], requireAll = false)
     fun onCheckedChangedCommand(radioGroup: RadioGroup, bindingCommand: BindingCommand<String>) {
         radioGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener() { group, checkedId ->
-            {
-                var radioButton = group.findViewById<RadioButton>(checkedId)
+            run {
+                val radioButton = group.findViewById<RadioButton>(checkedId)
                 if (radioButton != null && radioButton.text != null) {
                     bindingCommand.execute(radioButton.text.toString())
                 }

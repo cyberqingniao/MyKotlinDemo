@@ -184,10 +184,10 @@ object DataUtils {
     fun compareDate(begin: String, end: String): Int {
         val df = SimpleDateFormat(FORMAT.DATETIME_YMDHM)
         try {
-            var beginDate = df.parse(begin)
-            var endDate = df.parse(end)
+            val beginDate = df.parse(begin)
+            val endDate = df.parse(end)
             return when {
-                beginDate.time < endDate.time -> {
+                beginDate!!.time < endDate!!.time -> {
                     1
                 }
                 beginDate.time > endDate.time -> {

@@ -2,7 +2,6 @@ package com.yjp.easytools.databing.viewadapter.recyclerview
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
@@ -22,16 +21,8 @@ class DividerLine : RecyclerView.ItemDecoration {
     private var dividerDrawable: Drawable? = null
     private var mContext: Context? = null
     var dividerSize: Int = 0
-        get() = field
-        set(value) {
-            field = value
-        }
 
     var mMode: LineDrawModel? = null
-        get() = field
-        set(value) {
-            field = value
-        }
 
     enum class LineDrawModel {
         HORIZONTAL, VERTICAL, BOTH
@@ -39,7 +30,7 @@ class DividerLine : RecyclerView.ItemDecoration {
 
     constructor(context: Context) {
         this.mContext = context
-        var attrArray = context.obtainStyledAttributes(ATTRS)
+        val attrArray = context.obtainStyledAttributes(ATTRS)
         this.dividerDrawable = attrArray.getDrawable(0)
         attrArray.recycle()
     }
@@ -58,16 +49,19 @@ class DividerLine : RecyclerView.ItemDecoration {
             throw IllegalStateException("assign LineDrawMode,please!")
         }
         when (mMode) {
-            DividerLine.LineDrawModel.VERTICAL -> drawVertical(c, parent, state)
-            DividerLine.LineDrawModel.HORIZONTAL -> drawHorizontal(c, parent, state)
-            DividerLine.LineDrawModel.BOTH -> {
-                drawHorizontal(c, parent, state)
-                drawVertical(c, parent, state)
+            LineDrawModel.VERTICAL -> drawVertical(c, parent)
+            LineDrawModel.HORIZONTAL -> drawHorizontal(c, parent)
+            LineDrawModel.BOTH -> {
+                drawHorizontal(c, parent)
+                drawVertical(c, parent)
             }
         }
     }
 
-    private fun drawVertical(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
+    private fun drawVertical(
+        c: Canvas,
+        parent: RecyclerView
+    ) {
         val childCount: Int = parent.childCount
         for (i in 0 until childCount) {
             val child = parent.getChildAt(i)
@@ -85,8 +79,11 @@ class DividerLine : RecyclerView.ItemDecoration {
         }
     }
 
-    private fun drawHorizontal(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        var childCount = parent.childCount
+    private fun drawHorizontal(
+        c: Canvas,
+        parent: RecyclerView
+    ) {
+        val childCount = parent.childCount
         for (i in 0 until childCount) {
             val child: View = parent.getChildAt(i)
             val params = child.layoutParams as RecyclerView.LayoutParams
@@ -101,15 +98,6 @@ class DividerLine : RecyclerView.ItemDecoration {
             dividerDrawable?.bounds?.set(left, top, right, bottom)
             dividerDrawable?.draw(c)
         }
-    }
-
-    override fun getItemOffsets(
-        outRect: Rect,
-        view: View,
-        parent: RecyclerView,
-        state: RecyclerView.State
-    ) {
-        super.getItemOffsets(outRect, view, parent, state)
     }
 
 

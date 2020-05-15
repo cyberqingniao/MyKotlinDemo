@@ -11,7 +11,7 @@ import com.google.gson.Gson
  */
 object SPUtils {
     private const val SP_NAME = "YJP_SP_UTILS"
-    private lateinit var sp: SharedPreferences
+    private var sp: SharedPreferences
 
     init {
         sp = Utils.context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE)

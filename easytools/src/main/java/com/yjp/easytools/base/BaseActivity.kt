@@ -37,16 +37,10 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
         initData()
         //页面事件监听的方法，一般用于ViewModel层转到View层的事件注册
         initViewObservable()
-        //注册RxBus
-        viewModel!!.registerRxBus()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //解除Messenger注册
-        if (viewModel != null) {
-            viewModel!!.removeRxBus()
-        }
         if (binding != null) {
             binding!!.unbind()
         }
@@ -88,27 +82,27 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
         //加载对话框显示
         viewModel!!.uc.showLoadingEvent.observe(this, Observer { msg: String -> showLoading(msg) })
         //加载对话框消失
-        viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { this::dismissLoading })
+        viewModel!!.uc.dismissLoadingDialogEvent.observe(this, Observer { dismissLoading() })
         //跳入新页面
         viewModel!!.uc.startActivityEvent.observe(this, Observer { params ->
             run {
-                var intent = params[BaseViewModel.ParameterField.INTENT]
+                val intent = params[BaseViewModel.ParameterField.INTENT]
                 if (intent == null) {
-                    var clazz: Class<*> = params[BaseViewModel.ParameterField.CLASS] as Class<*>
-                    var bundle: Bundle? = params[BaseViewModel.ParameterField.BUNDLE] as Bundle
+                    val clazz: Class<*> = params[BaseViewModel.ParameterField.CLASS] as Class<*>
+                    val bundle: Bundle? = params[BaseViewModel.ParameterField.BUNDLE] as Bundle?
                     startActivity(clazz, bundle)
                 } else if (intent is Intent) {
                     startActivity(intent)
                 }
             }
         })
-        viewModel!!.uc.finishEvent.observe(this, Observer { this::finish })
+        viewModel!!.uc.finishEvent.observe(this, Observer { finish() })
     }
 
     /**
      * 创建ViewModel
      */
-    fun <T : ViewModel> createViewModel(activity: FragmentActivity, clazz: Class<T>): T {
+    private fun <T : ViewModel> createViewModel(activity: FragmentActivity, clazz: Class<T>): T {
         return ViewModelProviders.of(activity).get(clazz)
     }
 
@@ -160,7 +154,7 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
     }
 
     override fun startActivity(clazz: Class<*>, bundle: Bundle?) {
-        var intent = Intent(this, clazz)
+        val intent = Intent(this, clazz)
         if (bundle != null) {
             intent.putExtras(bundle)
         }

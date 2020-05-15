@@ -19,4 +19,5 @@
 
     <string name="hint_username">手机/账号/邮箱</string>
     <string name="hint_password">密码</string>
+    <string name="hint_search">名称</string>
 </resources>

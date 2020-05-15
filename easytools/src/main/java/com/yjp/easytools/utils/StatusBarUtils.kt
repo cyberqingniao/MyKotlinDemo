@@ -311,7 +311,7 @@ object StatusBarUtils {
         }
 
         fun getProp(name: String): String? {
-            var line: String? = null
+            val line: String?
             var input: BufferedReader? = null
             try {
                 val p = Runtime.getRuntime().exec("getprop $name")

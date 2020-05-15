@@ -100,7 +100,6 @@ object ImageUtil {
      * @return
      */
     fun createWatermark(
-        mContext: Context,
         path: String,
         watermarkText: String
     ): Bitmap? {
@@ -196,7 +195,7 @@ object ImageUtil {
                 }
             }
         }
-        var imgByte: ByteArray? = null
+        val imgByte: ByteArray?
         try {
             var bitmap = mMemoryCache!![base64Data]
             if (bitmap == null) {
@@ -208,7 +207,6 @@ object ImageUtil {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            imgByte = null
             System.gc()
         }
         return null

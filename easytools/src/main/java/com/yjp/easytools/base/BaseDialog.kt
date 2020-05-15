@@ -28,7 +28,7 @@ abstract class BaseDialog<V : ViewDataBinding> : RxDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        var window = dialog.window
+        val window = dialog.window
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         binding =
             DataBindingUtil.inflate(

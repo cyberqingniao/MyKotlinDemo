@@ -123,7 +123,7 @@ class RoundLayout @JvmOverloads constructor(
             areas.left.toInt(), areas.top.toInt(),
             areas.right.toInt(), areas.bottom.toInt()
         )
-        mAreaRegion!!.setPath(mClipPath, clip)
+        mAreaRegion!!.setPath(mClipPath!!, clip)
     }
 
     fun onClipDraw(canvas: Canvas) {

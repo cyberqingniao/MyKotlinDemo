@@ -11,7 +11,9 @@ import com.yjp.mydemo.ui.home.HomeViewModel
  */
 class GoodsMenuItemViewModel(
     viewModel: HomeViewModel,
-    public val icon: ObservableField<Int>,
-    public val name: ObservableField<String>
+    icon: Int,
+    name: String
 ) : ItemViewModel<HomeViewModel>(viewModel) {
+    val icon = ObservableField<Int>(icon)
+    val name = ObservableField<String>(name)
 }

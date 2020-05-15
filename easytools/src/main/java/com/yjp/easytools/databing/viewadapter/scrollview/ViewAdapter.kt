@@ -19,7 +19,7 @@ object ViewAdapter {
         onScrollChangeCommand: BindingCommand<NestScrollDataWrapper>
     ) {
         nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            onScrollChangeCommand?.execute(
+            onScrollChangeCommand.execute(
                 NestScrollDataWrapper(scrollX, scrollY, oldScrollX, oldScrollY)
             )
         })

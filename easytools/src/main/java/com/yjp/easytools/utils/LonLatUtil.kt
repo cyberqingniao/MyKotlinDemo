@@ -49,9 +49,9 @@ object LonLatUtil {
      * @param digit 保留位数
      * @return
      */
-    fun toDecimal(str: String, digit: Int?): Float {
+    fun toDecimal(s: String, digit: Int?): Float {
         //替换′和″错误的情况
-        var str = str
+        var str = s
         str = str.replace("['’‘]".toRegex(), "′").replace("[“”]".toRegex(), "″").replace('"', '″')
         var du = 0f
         var fen = 0f

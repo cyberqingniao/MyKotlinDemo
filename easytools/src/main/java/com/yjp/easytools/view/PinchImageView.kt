@@ -29,6 +29,7 @@ open class PinchImageView : ImageView {
      * @see .setOnClickListener
      */
     private var mOnClickListener: OnClickListener? = null
+
     /**
      * 外界长按事件
      *
@@ -51,6 +52,7 @@ open class PinchImageView : ImageView {
      * @see .outerMatrixTo
      */
     private val mOuterMatrix = Matrix()
+
     /**
      * 矩形遮罩
      *
@@ -58,6 +60,7 @@ open class PinchImageView : ImageView {
      * @see .zoomMaskTo
      */
     private var mMask: RectF? = null
+
     /**
      * 当前手势状态
      *
@@ -218,7 +221,7 @@ open class PinchImageView : ImageView {
         if (mPinchMode == PINCH_MODE_SCALE) {
             return true
         }
-        val bound = getImageBound(null) ?: return false
+        val bound = getImageBound(null)
         if (bound.isEmpty) {
             return false
         }
@@ -239,7 +242,7 @@ open class PinchImageView : ImageView {
         if (mPinchMode == PINCH_MODE_SCALE) {
             return true
         }
-        val bound = getImageBound(null) ?: return false
+        val bound = getImageBound(null)
         if (bound.isEmpty) {
             return false
         }
@@ -368,6 +371,7 @@ open class PinchImageView : ImageView {
      */
     private var mOuterMatrixChangedListeners: MutableList<OuterMatrixChangedListener>? =
         null
+
     /**
      * 当mOuterMatrixChangedListeners被锁定不允许修改时,临时将修改写到这个副本中
      *
@@ -375,6 +379,7 @@ open class PinchImageView : ImageView {
      */
     private var mOuterMatrixChangedListenersCopy: MutableList<OuterMatrixChangedListener>? =
         null
+
     /**
      * mOuterMatrixChangedListeners的修改锁定
      *
@@ -601,10 +606,12 @@ open class PinchImageView : ImageView {
          * 开始mask
          */
         private val mStart = FloatArray(4)
+
         /**
          * 结束mask
          */
         private val mEnd = FloatArray(4)
+
         /**
          * 中间结果mask
          */
@@ -663,6 +670,7 @@ open class PinchImageView : ImageView {
      * @see .scaleEnd
      */
     private val mLastMovePoint = PointF()
+
     /**
      * 缩放模式下图片的缩放中点.
      *
@@ -677,6 +685,7 @@ open class PinchImageView : ImageView {
      * @see .scale
      */
     private val mScaleCenter = PointF()
+
     /**
      * 缩放模式下的基础缩放比例
      *
@@ -688,6 +697,7 @@ open class PinchImageView : ImageView {
      * @see .scale
      */
     private var mScaleBase = 0f
+
     /**
      * 图片缩放动画
      *
@@ -701,12 +711,14 @@ open class PinchImageView : ImageView {
      * @see .outerMatrixTo
      */
     private var mScaleAnimator: ScaleAnimator? = null
+
     /**
      * 滑动产生的惯性动画
      *
      * @see .fling
      */
     private var mFlingAnimator: FlingAnimator? = null
+
     /**
      * 常用手势处理
      *
@@ -1282,10 +1294,12 @@ open class PinchImageView : ImageView {
          * 开始矩阵
          */
         private val mStart = FloatArray(9)
+
         /**
          * 结束矩阵
          */
         private val mEnd = FloatArray(9)
+
         /**
          * 中间结果矩阵
          */
@@ -1367,7 +1381,7 @@ open class PinchImageView : ImageView {
             return if (mQueue.size == 0) {
                 newInstance()
             } else { //对象池里有就从顶端拿出来一个返回
-                resetInstance(mQueue.poll())
+                resetInstance(mQueue.poll()!!)
             }
         }
 
@@ -1456,14 +1470,14 @@ open class PinchImageView : ImageView {
          * 获取矩阵对象
          */
         fun matrixTake(): Matrix {
-            return mMatrixPool.take()!!
+            return mMatrixPool.take()
         }
 
         /**
          * 获取某个矩阵的copy
          */
         fun matrixTake(matrix: Matrix?): Matrix {
-            val result = mMatrixPool.take()!!
+            val result = mMatrixPool.take()
             if (matrix != null) {
                 result.set(matrix)
             }
@@ -1486,7 +1500,7 @@ open class PinchImageView : ImageView {
          * 获取矩形对象
          */
         fun rectFTake(): RectF {
-            return mRectFPool.take()!!
+            return mRectFPool.take()
         }
 
         /**
@@ -1498,7 +1512,7 @@ open class PinchImageView : ImageView {
             right: Float,
             bottom: Float
         ): RectF {
-            val result = mRectFPool.take()!!
+            val result = mRectFPool.take()
             result[left, top, right] = bottom
             return result
         }
@@ -1507,7 +1521,7 @@ open class PinchImageView : ImageView {
          * 获取某个矩形的副本
          */
         fun rectFTake(rectF: RectF?): RectF {
-            val result = mRectFPool.take()!!
+            val result = mRectFPool.take()
             if (rectF != null) {
                 result.set(rectF)
             }
@@ -1796,10 +1810,12 @@ open class PinchImageView : ImageView {
          * 图片缩放动画时间
          */
         const val SCALE_ANIMATOR_DURATION = 200
+
         /**
          * 惯性动画衰减参数
          */
         const val FLING_DAMPING_FACTOR = 0.9f
+
         /**
          * 图片最大放大比例
          */
@@ -1811,12 +1827,14 @@ open class PinchImageView : ImageView {
          * @see .getPinchMode
          */
         const val PINCH_MODE_FREE = 0
+
         /**
          * 手势状态：单指滚动状态
          *
          * @see .getPinchMode
          */
         const val PINCH_MODE_SCROLL = 1
+
         /**
          * 手势状态：双指缩放状态
          *

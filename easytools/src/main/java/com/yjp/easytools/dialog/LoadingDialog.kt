@@ -26,7 +26,7 @@ object LoadingDialog {
             progressDialog!!.show()
             progressDialog!!.window!!.decorView.tag = System.currentTimeMillis()
         } catch (e: Exception) {
-            Log.e("LoadingDialog", e.message);
+            Log.e("LoadingDialog", "$e.message");
         }
     }
 
@@ -36,7 +36,7 @@ object LoadingDialog {
                 return progressDialog!!.isShowing
             }
         } catch (e: Exception) {
-            Log.e("LoadingDialog", e.message);
+            Log.e("LoadingDialog", "$e.message");
         }
         return false
     }
@@ -52,7 +52,7 @@ object LoadingDialog {
                             progressDialog = null
                         }
                     } catch (e: Exception) {
-                        Log.e("LoadingDialog", e.message);
+                        Log.e("LoadingDialog", "$e.message");
                     }
                 }, 500)
             } else {
@@ -60,7 +60,7 @@ object LoadingDialog {
                     progressDialog!!.dismiss()
                     progressDialog = null
                 } catch (e: Exception) {
-                    Log.e("LoadingDialog", e.message);
+                    Log.e("LoadingDialog", "$e.message");
                 }
             }
         }

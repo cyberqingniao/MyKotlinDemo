@@ -18,7 +18,7 @@ class CookieJarImpl(var cookieStore: CookieStore) : CookieJar {
     }
 
     @Synchronized
-    override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
-        cookieStore.saveCookie(url, cookies)
+    override fun saveFromResponse(url: HttpUrl, cookieList: List<Cookie>) {
+        cookieStore.saveCookie(url, cookieList)
     }
 }

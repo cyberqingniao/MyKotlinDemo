@@ -62,7 +62,7 @@ object ViewAdapter {
     @BindingAdapter("onFocusChangeCommand")
     fun onFocusChangeCommand(view: View, onFocusChangeCommand: BindingCommand<Boolean>) {
         view.setOnFocusChangeListener { v, hasFocus ->
-            {
+            run{
                 onFocusChangeCommand.execute(hasFocus)
             }
         }

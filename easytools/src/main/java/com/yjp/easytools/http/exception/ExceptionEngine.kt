@@ -28,9 +28,8 @@ object ExceptionEngine {
         e.printStackTrace()
         var ex: ApiException
         return if (e is ServerException) { // HTTP错误
-            val httpException = e as ServerException
             ex = ApiException(e, ErrorType.HTTP_ERROR)
-            when (httpException.code) {
+            when (e.code) {
                 FAIL -> ex.msg = "请求错误"
                 FORBIDDEN -> ex.msg = "服务器已经理解请求，但是拒绝执行它"
                 NOT_FOUND -> ex.msg = "服务器异常，请稍后再试"
@@ -43,9 +42,8 @@ object ExceptionEngine {
                 SERVICE_UNAVAILABLE -> ex.msg = "由于临时的服务器维护或者过载，服务器当前无法处理请求"
                 else -> {
                     // 服务器返回的错误
-                    val resultException = e as ServerException
-                    ex = ApiException(resultException, resultException.code)
-                    ex.msg = resultException.message
+                    ex = ApiException(e, e.code)
+                    ex.msg = e.message
                 }
             }
             ex

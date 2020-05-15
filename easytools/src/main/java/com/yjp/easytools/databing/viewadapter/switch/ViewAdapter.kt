@@ -19,7 +19,7 @@ object ViewAdapter {
     @BindingAdapter("onCheckedChangeCommand")
     fun onCheckedChangeCommand(mSwitch: Switch, changeListener: BindingCommand<Boolean>) {
         mSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            {
+            run {
                 changeListener.execute(isChecked)
             }
         }

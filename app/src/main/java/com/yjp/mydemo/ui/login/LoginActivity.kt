@@ -27,13 +27,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
         return BR.loginViewModel
     }
 
-    override fun initData() {
-        super.initData()
-        binding?.iv?.setOnClickListener {
-
-        }
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (System.currentTimeMillis() - oldTime < 2000) {

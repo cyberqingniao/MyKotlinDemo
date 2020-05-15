@@ -212,13 +212,10 @@ class GeneratorUtils {
                 //生成Dialog
                 dialogFile(aName, xmlName, modelName, mPackage)
             }
-            else -> {
-                throw RuntimeException("没有该类型的视图创建方式\tname=${modelName}\ttype=${type}")
-            }
         }
         if (type != UiType.DIALOG) {
             //生成ViewModel
-            viewModelFile(aName, vmName, modelName, mPackage)
+            viewModelFile(vmName, modelName, mPackage)
         }
         //生成XML
         xmlFile(vmName, xmlName, modelName)
@@ -490,7 +487,11 @@ class GeneratorUtils {
     /**
      * ViewModel生成器
      */
-    private fun viewModelFile(aName: String, vmName: String, modelName: String, mPackage: String) {
+    private fun viewModelFile(
+        vmName: String,
+        modelName: String,
+        mPackage: String
+    ) {
         //生成文件
         val vmFile = File(PATH_MAIN_CODE + mPackage, "/$modelName/$vmName")
         fileExists(vmFile)
@@ -636,7 +637,7 @@ class GeneratorUtils {
      * @param content : 文件内容
      * */
     private fun outFile(path: String, fileName: String, content: StringBuilder) {
-        var file: File? = null
+        val file: File?
         if (isFileExists(File(path))) {
             file = File(path, fileName)
             writeFile(file, content)
@@ -669,7 +670,7 @@ class GeneratorUtils {
 
     private fun fileExists(file: File): Boolean {
         //判断文件路径是否存在，不存在则创建
-        isFileExists(file.parentFile)
+        isFileExists(file.parentFile!!)
         if (!file.exists()) {
             return file.createNewFile()
         }
