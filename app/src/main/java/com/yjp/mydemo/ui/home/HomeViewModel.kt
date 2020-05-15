@@ -25,7 +25,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         ItemBinding.of<GoodsMenuItemViewModel>(BR.goodsMenuItemViewModel, R.layout.item_home_menu)
     val bannerItems = ObservableArrayList<BannerItemViewModel>()
     val bannerItemBinding =
-        ItemBinding.of<BannerItemViewModel>(BR.bannerItemViewModel, R.layout.item_banner)
+        ItemBinding.of<BannerItemViewModel>(BR.bannerItemViewModel, R.layout.item_home_banner)
     private val menuNames = arrayOf("服装", "鞋靴", "数码", "珠宝", "箱包", "电器", "食品", "美妆", "百货", "更多")
     private val menuIcons = arrayOf(
         R.mipmap.icon_qq,
