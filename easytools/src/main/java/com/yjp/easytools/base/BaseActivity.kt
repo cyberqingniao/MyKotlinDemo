@@ -63,8 +63,8 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
         //获取ViewModel,子类如果实现并有返回ViewModel后将不在初始花ViewModel
         viewModel = initViewModel()
         if (viewModel == null) {
-            var modelClass: Class<BaseViewModel>
-            var type: Type? = javaClass.genericSuperclass
+            val modelClass: Class<BaseViewModel>
+            val type: Type? = javaClass.genericSuperclass
             modelClass = if (type is ParameterizedType) {
                 type.actualTypeArguments[1] as Class<BaseViewModel>
             } else {

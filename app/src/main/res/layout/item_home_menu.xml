@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="goodsMenuItemViewModel"
+            type="com.yjp.mydemo.ui.home.item.GoodsMenuItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dp_2"
+        android:paddingBottom="@dimen/dp_2">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_setting"
+            binding:placeholderRes="@{goodsMenuItemViewModel.icon}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_5"
+            android:text="@{goodsMenuItemViewModel.name}"
+            android:textColor="@color/c_33"
+            android:textSize="@dimen/sp_13" />
+    </LinearLayout>
+</layout>

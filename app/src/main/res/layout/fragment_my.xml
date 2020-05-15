@@ -14,13 +14,13 @@
         android:background="@color/c_bg"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal">
+            android:background="@color/white">
 
             <com.yjp.easytools.view.CircleImageView
+                android:id="@+id/civ_head"
                 android:layout_width="@dimen/dp_60"
                 android:layout_height="@dimen/dp_60"
                 android:layout_marginStart="@dimen/dp_12"
@@ -32,15 +32,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dp_10"
-                android:drawableRight="@mipmap/arrow_right"
-                android:drawablePadding="@dimen/dp_10"
+                android:layout_toRightOf="@id/civ_head"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:drawablePadding="@dimen/dp_15"
                 android:gravity="center_vertical"
                 android:text="用户名"
                 android:textColor="@color/c_33"
                 android:textSize="@dimen/sp_18" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/dp_10"
+                android:src="@mipmap/icon_setting" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -221,10 +230,107 @@
                 </LinearLayout>
             </LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="@dimen/dp_10"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:drawableRight="@mipmap/arrow_right_gay"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_12"
+                    android:paddingBottom="@dimen/dp_15"
+                    android:text="我的钱包"
+                    android:textColor="@color/c_33" />
+
+                <include
+                    layout="@layout/line_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_05"
+                    android:layout_marginLeft="@dimen/dp_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/arrow_right_gay"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_12"
+                    android:paddingBottom="@dimen/dp_15"
+                    android:text="地址管理"
+                    android:textColor="@color/c_33" />
+
+                <include
+                    layout="@layout/line_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_05"
+                    android:layout_marginLeft="@dimen/dp_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/arrow_right_gay"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_12"
+                    android:paddingBottom="@dimen/dp_15"
+                    android:text="交易中心"
+                    android:textColor="@color/c_33" />
+
+                <include
+                    layout="@layout/line_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_05"
+                    android:layout_marginLeft="@dimen/dp_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/arrow_right_gay"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_12"
+                    android:paddingBottom="@dimen/dp_15"
+                    android:text="联系客服"
+                    android:textColor="@color/c_33" />
+
+                <include
+                    layout="@layout/line_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_05"
+                    android:layout_marginLeft="@dimen/dp_12" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/arrow_right_gay"
+                    android:paddingLeft="@dimen/dp_12"
+                    android:paddingTop="@dimen/dp_15"
+                    android:paddingRight="@dimen/dp_12"
+                    android:paddingBottom="@dimen/dp_15"
+                    android:text="关于我们"
+                    android:textColor="@color/c_33" />
+            </LinearLayout>
+
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_50"
+            android:layout_marginTop="@dimen/dp_50"
+            android:layout_marginRight="@dimen/dp_50"
+            android:background="@drawable/btn_k_selector"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="退出登录"
+            android:textColor="@color/c_4156E1"
+            android:textSize="@dimen/sp_13" />
     </LinearLayout>
 </layout>

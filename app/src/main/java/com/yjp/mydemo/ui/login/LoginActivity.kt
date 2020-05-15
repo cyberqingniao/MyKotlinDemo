@@ -2,6 +2,7 @@ package com.yjp.mydemo.ui.login
 
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
 import com.yjp.easytools.base.BaseActivity
 import com.yjp.easytools.utils.ActivityManager
 import com.yjp.easytools.utils.ToastUtils
@@ -24,6 +25,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginViewModel>() {
 
     override fun initVariableId(): Int {
         return BR.loginViewModel
+    }
+
+    override fun initData() {
+        super.initData()
+        binding?.iv?.setOnClickListener {
+
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

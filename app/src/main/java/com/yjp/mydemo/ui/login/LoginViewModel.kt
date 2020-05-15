@@ -35,7 +35,6 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         override fun call() {
             startActivity(SetServiceActivity::class.java)
         }
-
     })
 
     /**
