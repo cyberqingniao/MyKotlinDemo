@@ -24,27 +24,48 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_55"
-            android:background="@color/c_69A3FF">
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/c_title">
 
-            <com.yjp.easytools.view.ClearEditText
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingRight="@dimen/dp_12"
+                android:src="@mipmap/arrow_white_back"
+                binding:onClickCommand="@{goodsViewModel.backOnClickCommand}" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_60"
                 android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginRight="@dimen/dp_30"
                 android:layout_marginBottom="@dimen/dp_10"
                 android:background="@drawable/bg_input_selector"
-                android:drawableStart="@mipmap/icon_search"
-                android:drawableEnd="@mipmap/icon_del"
-                android:drawablePadding="@dimen/dp_10"
-                android:gravity="center_vertical"
-                android:hint="@string/hint_search"
-                android:imeOptions="actionSearch"
-                android:paddingLeft="@dimen/dp_10"
-                android:paddingRight="@dimen/dp_10"
-                android:singleLine="true"
-                android:textColorHint="@color/c_B2" />
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/dp_12"
+                    android:src="@mipmap/icon_search" />
+
+
+                <com.yjp.easytools.view.ClearEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:drawableEnd="@mipmap/icon_del"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_search"
+                    android:imeOptions="actionSearch"
+                    android:paddingLeft="@dimen/dp_10"
+                    android:paddingRight="@dimen/dp_10"
+                    android:singleLine="true"
+                    android:textColorHint="@color/c_B2" />
+            </LinearLayout>
         </RelativeLayout>
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout

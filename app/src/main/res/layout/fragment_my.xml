@@ -64,7 +64,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_12"
                     android:layout_weight="1"
@@ -79,6 +79,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dp_12"
                     android:drawableEnd="@mipmap/arrow_right_gay"
+                    android:drawablePadding="@dimen/dp_5"
                     android:gravity="center"
                     android:paddingLeft="@dimen/dp_12"
                     android:paddingTop="@dimen/dp_10"
@@ -230,93 +231,112 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="我的钱包"
+                android:textColor="@color/c_33" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:drawableRight="@mipmap/arrow_right_gay"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:text="我的钱包"
-                    android:textColor="@color/c_33" />
+            <include
+                layout="@layout/line_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_05"
+                android:layout_marginLeft="@dimen/dp_12" />
 
-                <include
-                    layout="@layout/line_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_05"
-                    android:layout_marginLeft="@dimen/dp_12" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="地址管理"
+                android:textColor="@color/c_33" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/arrow_right_gay"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:text="地址管理"
-                    android:textColor="@color/c_33" />
+            <include
+                layout="@layout/line_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_05"
+                android:layout_marginLeft="@dimen/dp_12" />
 
-                <include
-                    layout="@layout/line_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_05"
-                    android:layout_marginLeft="@dimen/dp_12" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="交易中心"
+                android:textColor="@color/c_33" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/arrow_right_gay"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:text="交易中心"
-                    android:textColor="@color/c_33" />
+            <include
+                layout="@layout/line_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_05"
+                android:layout_marginLeft="@dimen/dp_12" />
 
-                <include
-                    layout="@layout/line_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_05"
-                    android:layout_marginLeft="@dimen/dp_12" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="彩票中心"
+                android:textColor="@color/c_33"
+                binding:onClickCommand="@{myViewModel.lotteryOnClickCommand}"
+                />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/arrow_right_gay"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:text="联系客服"
-                    android:textColor="@color/c_33" />
+            <include
+                layout="@layout/line_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_05"
+                android:layout_marginLeft="@dimen/dp_12" />
 
-                <include
-                    layout="@layout/line_horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_05"
-                    android:layout_marginLeft="@dimen/dp_12" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="联系客服"
+                android:textColor="@color/c_33" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@mipmap/arrow_right_gay"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_15"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_15"
-                    android:text="关于我们"
-                    android:textColor="@color/c_33" />
-            </LinearLayout>
+            <include
+                layout="@layout/line_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_05"
+                android:layout_marginLeft="@dimen/dp_12" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/arrow_right_gay"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingRight="@dimen/dp_12"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="关于我们"
+                android:textColor="@color/c_33" />
         </LinearLayout>
 
         <TextView

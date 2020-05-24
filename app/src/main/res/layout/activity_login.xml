@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,7 +9,7 @@
             type="com.yjp.mydemo.ui.login.LoginViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
@@ -41,11 +42,11 @@
                     android:drawableStart="@drawable/icon_username_selector"
                     android:drawablePadding="@dimen/dp_10"
                     android:hint="@string/hint_username"
-                    android:singleLine="true"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_20"
                     android:paddingBottom="@dimen/dp_10"
+                    android:singleLine="true"
                     android:text="@={loginViewModel.username}"
                     android:textColor="@color/c_33"
                     android:textColorHint="@color/c_B2"
@@ -58,13 +59,13 @@
                     android:background="@drawable/bg_input_selector"
                     android:drawableStart="@drawable/icon_password_selector"
                     android:drawablePadding="@dimen/dp_10"
-                    android:singleLine="true"
-                    android:inputType="textPassword"
                     android:hint="@string/hint_password"
+                    android:inputType="textPassword"
                     android:paddingStart="@dimen/dp_10"
                     android:paddingTop="@dimen/dp_10"
                     android:paddingEnd="@dimen/dp_20"
                     android:paddingBottom="@dimen/dp_10"
+                    android:singleLine="true"
                     android:text="@={loginViewModel.password}"
                     android:textColor="@color/c_33"
                     android:textColorHint="@color/c_B2"
@@ -133,7 +134,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:padding="@dimen/dp_10"
             android:src="@mipmap/icon_setting"
             binding:onClickCommand="@{loginViewModel.setServiceOnClickCommand}" />

@@ -13,6 +13,7 @@
     <color name="black_transparent_80">#80000000</color>
     <color name="black_transparent_70">#70000000</color>
     <color name="c_bg">#F2F2F2</color>
+    <color name="c_title">#69A3FF</color>
     <color name="c_line">#EDEDED</color>
     <color name="c_33">#333333</color>
     <color name="c_66">#666666</color>
@@ -28,7 +29,6 @@
     <color name="c_163A97">#163A97</color>
     <color name="c_CC">#CCCCCC</color>
     <color name="c_515766">#515766</color>
-    <color name="c_69A3FF">#69A3FF</color>
     <color name="c_FDE96A">#FDE96A</color>
     <color name="c_F06F6D">#F06F6D</color>
 </resources>

@@ -14,7 +14,9 @@
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="@dimen/dp_2"
-        android:paddingBottom="@dimen/dp_2">
+        android:paddingBottom="@dimen/dp_2"
+        binding:onClickCommand="@{goodsMenuItemViewModel.itemOnClickCommand}"
+        >
 
         <ImageView
             android:layout_width="wrap_content"

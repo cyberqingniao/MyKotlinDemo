@@ -85,8 +85,7 @@ class PersistentCookieStore(var context: Context) : CookieStore {
         val bytes = Utils.hexStringToByteArray(cookieString)
         val byteArrayInputStream = ByteArrayInputStream(bytes)
         val objectInputStream = ObjectInputStream(byteArrayInputStream)
-        val cookie = (objectInputStream.readObject() as SerializableHttpCookie).getMyCookie()
-        return cookie
+        return (objectInputStream.readObject() as SerializableHttpCookie).getMyCookie()
     }
 
     /**

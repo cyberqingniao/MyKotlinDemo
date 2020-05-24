@@ -10,11 +10,15 @@
 
         <variable
             name="adapter"
-            type="com.yjp.mydemo.ui.home.item.GoodsMenuAdapter" />
+            type="com.yjp.mydemo.ui.home.adapter.GoodsMenuAdapter" />
+
+        <variable
+            name="goodAdapter"
+            type="com.yjp.mydemo.ui.home.adapter.GoodsAdapter" />
 
         <variable
             name="bannerAdapter"
-            type="com.yjp.mydemo.ui.home.item.BannerAdapter" />
+            type="com.yjp.mydemo.ui.home.adapter.BannerAdapter" />
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
@@ -30,96 +34,126 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <com.yjp.easytools.view.MyScrollView
+                android:id="@+id/home_scrollview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/c_bg"
-                android:orientation="vertical">
-
-
-                <androidx.viewpager.widget.ViewPager
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_200"
-                    binding:adapter="@{bannerAdapter}"
-                    binding:itemBinding="@{homeViewModel.bannerItemBinding}"
-                    binding:items="@{homeViewModel.bannerItems}"
-                    binding:onPageSelectedCommand="@{homeViewModel.onPageSelectedCommand}"
-                    binding:pageTitles="@{homeViewModel.pageTitles}" />
-
-                <include layout="@layout/line_horizontal" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:paddingLeft="@dimen/dp_12"
-                    android:paddingTop="@dimen/dp_5"
-                    android:paddingRight="@dimen/dp_12"
-                    android:paddingBottom="@dimen/dp_5"
-                    binding:adapter="@{adapter}"
-                    binding:itemBinding="@{homeViewModel.menuItemBinding}"
-                    binding:items="@{homeViewModel.menuItems}"
-                    binding:layoutManager="@{LayoutManagers.grid(5)}" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@color/white"
-                    android:orientation="horizontal">
+                    android:background="@color/c_bg"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/dp_12"
-                        android:layout_weight="1"
-                        android:text="精品推荐"
-                        android:textColor="@color/c_33"
-                        android:textSize="@dimen/sp_13" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/home_banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_200"
+                        binding:adapter="@{bannerAdapter}"
+                        binding:itemBinding="@{homeViewModel.bannerItemBinding}"
+                        binding:items="@{homeViewModel.bannerItems}"
+                        binding:onPageSelectedCommand="@{homeViewModel.onPageSelectedCommand}"
+                        binding:pageTitles="@{homeViewModel.pageTitles}" />
+
+                    <include layout="@layout/line_horizontal" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableEnd="@mipmap/arrow_right"
-                        android:drawablePadding="@dimen/dp_5"
-                        android:gravity="center_vertical"
+                        android:background="@color/white"
                         android:paddingLeft="@dimen/dp_12"
                         android:paddingTop="@dimen/dp_10"
                         android:paddingRight="@dimen/dp_12"
                         android:paddingBottom="@dimen/dp_10"
-                        android:text="更多"
-                        android:textColor="@color/c_33"
-                        android:textSize="@dimen/sp_13" />
+                        binding:adapter="@{adapter}"
+                        binding:itemBinding="@{homeViewModel.menuItemBinding}"
+                        binding:items="@{homeViewModel.menuItems}"
+                        binding:layoutManager="@{LayoutManagers.grid(5)}" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/dp_12"
+                            android:layout_weight="1"
+                            android:text="精品推荐"
+                            android:textColor="@color/c_33"
+                            android:textSize="@dimen/sp_13" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@mipmap/arrow_right"
+                            android:drawablePadding="@dimen/dp_5"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/dp_12"
+                            android:paddingTop="@dimen/dp_10"
+                            android:paddingRight="@dimen/dp_12"
+                            android:paddingBottom="@dimen/dp_10"
+                            android:text="更多"
+                            android:textColor="@color/c_33"
+                            android:textSize="@dimen/sp_13" />
+                    </LinearLayout>
+
+                    <include layout="@layout/line_horizontal" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        binding:adapter="@{goodAdapter}"
+                        binding:itemBinding="@{homeViewModel.goodItemBinding}"
+                        binding:items="@{homeViewModel.goodItems}"
+                        binding:layoutManager="@{LayoutManagers.linear()}" />
                 </LinearLayout>
-
-                <include layout="@layout/line_horizontal" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@color/white" />
-            </LinearLayout>
+            </com.yjp.easytools.view.MyScrollView>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.yjp.easytools.view.ClearEditText
+        <RelativeLayout
+            android:id="@+id/home_title"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_30"
-            android:layout_marginLeft="@dimen/dp_30"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_30"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:background="@drawable/bg_input_selector"
-            android:drawableStart="@mipmap/icon_search"
-            android:drawableEnd="@mipmap/icon_del"
-            android:drawablePadding="@dimen/dp_10"
-            android:gravity="center_vertical"
-            android:hint="@string/hint_search"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10"
-            android:singleLine="true"
-            android:textColorHint="@color/c_B2" />
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/c_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp_30"
+                android:layout_marginRight="@dimen/dp_30"
+                android:background="@drawable/bg_input_selector"
+                android:orientation="horizontal"
+                binding:onClickCommand="@{homeViewModel.searchOnClickCommand}">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_10"
+                    android:layout_marginRight="@dimen/dp_10"
+                    android:src="@mipmap/icon_search" />
+
+                <include layout="@layout/line_vertical" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/hint_search"
+                    android:paddingEnd="@dimen/dp_10"
+                    android:singleLine="true"
+                    android:textColorHint="@color/c_B2" />
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

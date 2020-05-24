@@ -1,8 +1,6 @@
 package com.yjp.easytools.http
 
 import com.com.yjp.easytools.BuildConfig
-import com.yjp.easytools.http.cooike.CookieJarImpl
-import com.yjp.easytools.http.cooike.store.PersistentCookieStore
 import com.yjp.easytools.http.interceptor.logging.Level
 import com.yjp.easytools.http.interceptor.logging.LoggingInterceptor
 import com.yjp.easytools.utils.SystemUtils
@@ -27,10 +25,13 @@ abstract class BaseHttp() {
     companion object {
         //最大缓存
         const val MAX_CACHE_SIZE = 1024 * 1024 * 50L
+
         //链接超时
         const val CONNECT_TIME_OUT = 10L
+
         //读取超时
         const val READ_TIME_OUT = 60L
+
         //请求超时
         const val WRITE_TIME_OUT = 60L
     }
@@ -57,6 +58,7 @@ abstract class BaseHttp() {
     /**
      * 初始Retrofit
      */
+    @Synchronized
     fun getRetrofit(): Retrofit {
         if (retrofit == null) {
             synchronized(BaseHttp) {
@@ -81,6 +83,7 @@ abstract class BaseHttp() {
     /**
      * 初始化OkHttp客户端
      */
+    @Synchronized
     fun getOkClient(): OkHttpClient {
         if (client == null) {
             synchronized(BaseHttp) {
@@ -108,7 +111,8 @@ abstract class BaseHttp() {
         return OkHttpClient.Builder()
             .addInterceptor(getHeaderInterceptor())
             .addInterceptor(mLoggingInterceptor)
-            .cookieJar(CookieJarImpl(PersistentCookieStore(Utils.context)))
+            // TODO Cookie报错暂未探究
+//            .cookieJar(CookieJarImpl(PersistentCookieStore(Utils.context)))
             .cache(cache)
             .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)

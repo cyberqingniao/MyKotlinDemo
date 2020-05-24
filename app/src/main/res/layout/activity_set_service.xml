@@ -17,15 +17,15 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_55"
-            android:background="@color/white">
+            android:layout_height="@dimen/dp_50"
+            android:background="@color/c_title">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/dp_12"
                 android:paddingRight="@dimen/dp_12"
-                android:src="@mipmap/arrow_back"
+                android:src="@mipmap/arrow_white_back"
                 binding:onClickCommand="@{setServiceViewModel.backOnClickCommand}" />
 
             <TextView
@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="设置服务器地址"
-                android:textColor="@color/c_33"
+                android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
         </RelativeLayout>
 
@@ -70,7 +70,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.7"
                 android:gravity="right"
-                android:text="新的IP："
+                android:text="新IP："
                 android:textColor="@color/c_99"
                 android:textSize="@dimen/sp_13" />
 
@@ -108,7 +108,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="0.7"
                 android:gravity="right"
-                android:text="新的端口："
+                android:text="新端口："
                 android:textColor="@color/c_99"
                 android:textSize="@dimen/sp_13" />
 

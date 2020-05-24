@@ -1,6 +1,7 @@
-package com.yjp.mydemo.ui.home.item
+package com.yjp.mydemo.ui.home.adapter
 
 import androidx.databinding.ViewDataBinding
+import com.yjp.mydemo.ui.home.item.GoodsMenuItemViewModel
 import me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter
 
 /**

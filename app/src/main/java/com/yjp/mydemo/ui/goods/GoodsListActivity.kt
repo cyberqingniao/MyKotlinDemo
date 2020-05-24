@@ -1,6 +1,7 @@
 package com.yjp.mydemo.ui.goods
 
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.yjp.easytools.base.BaseActivity
 import com.yjp.mydemo.BR
 import com.yjp.mydemo.R
@@ -19,5 +20,25 @@ class GoodsListActivity : BaseActivity<ActivityGoodsListBinding, GoodsListViewMo
 
     override fun initVariableId(): Int {
         return BR.goodsViewModel
+    }
+
+    override fun initData() {
+        super.initData()
+        binding!!.refreshLayout.setOnRefreshListener {
+            viewModel!!.page=1
+            viewModel!!.getData()
+        }
+        binding!!.refreshLayout.setOnLoadMoreListener {
+            viewModel!!.page++
+            viewModel!!.getData()
+        }
+    }
+
+    override fun initViewObservable() {
+        super.initViewObservable()
+        viewModel!!.ui.observe(this, Observer<Int> {
+            binding!!.refreshLayout.finishRefresh()
+            binding!!.refreshLayout.finishLoadMore()
+        })
     }
 }

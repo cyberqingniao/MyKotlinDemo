@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="lotteryItemViewModel"
+            type="com.yjp.mydemo.ui.lottery.LotteryItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_12"
+            android:layout_marginRight="@dimen/dp_12"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@{lotteryItemViewModel.lotteryNo}"
+                android:textColor="@color/c_99"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@{lotteryItemViewModel.time}"
+                android:textColor="@color/c_99"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp_15"
+                android:paddingBottom="@dimen/dp_15"
+                android:text="@{lotteryItemViewModel.lotteryRes}"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_15" />
+        </LinearLayout>
+
+        <include layout="@layout/line_horizontal" />
+    </LinearLayout>
+</layout>

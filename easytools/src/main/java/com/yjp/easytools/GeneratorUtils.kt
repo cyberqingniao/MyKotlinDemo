@@ -68,7 +68,8 @@ class GeneratorUtils {
 //            gu.generateUIFile("forgetPassword", "Activity")
 //            gu.generateUIFile("register", "Activity")
 //            gu.generateUIFile("bindPhone", UiType.ACTIVITY)
-            gu.generateUIFile("tip", UiType.DIALOG)
+//            gu.generateUIFile("tip", UiType.DIALOG)
+            gu.generateUIFile("goodsDetails", UiType.ACTIVITY)
             //创建Http模块
 //            gu.generateHttpFile()
 
