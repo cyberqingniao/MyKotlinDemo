@@ -1,4 +1,4 @@
-package com.yjp.easytools
+package com.yjp.easytools.generator
 
 import com.yjp.easytools.utils.DataUtils
 import com.yjp.easytools.utils.StringUtils
@@ -69,7 +69,9 @@ class GeneratorUtils {
 //            gu.generateUIFile("register", "Activity")
 //            gu.generateUIFile("bindPhone", UiType.ACTIVITY)
 //            gu.generateUIFile("tip", UiType.DIALOG)
-            gu.generateUIFile("goodsDetails", UiType.ACTIVITY)
+            gu.generateUIFile("goodsDetails",
+                UiType.ACTIVITY
+            )
             //创建Http模块
 //            gu.generateHttpFile()
 
@@ -88,19 +90,20 @@ class GeneratorUtils {
         val eventKeyName = "EventKey.kt"
 
         //包名中的“.”替换成“/”
-        var mPackage = PATH_PACKAGE
+        var mPackage =
+            PATH_PACKAGE
         mPackage = mPackage.replace(".", "/")
         //生成文件
-        val sFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", spKeyName)
-        val cFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", constantUtilName)
-        val ekFile = File("${PATH_MAIN_CODE}${mPackage}/constant/", eventKeyName)
-        isFileExists(File("${PATH_MAIN_CODE}${mPackage}/constant/"))
+        val sFile = File("$PATH_MAIN_CODE${mPackage}/constant/", spKeyName)
+        val cFile = File("$PATH_MAIN_CODE${mPackage}/constant/", constantUtilName)
+        val ekFile = File("$PATH_MAIN_CODE${mPackage}/constant/", eventKeyName)
+        isFileExists(File("$PATH_MAIN_CODE${mPackage}/constant/"))
         fileExists(sFile)
         fileExists(cFile)
         fileExists(ekFile)
         //写入文件初始内容
         val sSB = StringBuilder()
-        sSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        sSB.append("package $PATH_PACKAGE.constant\n\n")
         sSB.append(
             "/**\n* SharedPreferences存储Key\n* @author yjp\n* @date ${DataUtils.data2Str(
                 System.currentTimeMillis()
@@ -113,7 +116,7 @@ class GeneratorUtils {
         sSB.append("}")
         writeFile(sFile, sSB)
         val cSB = StringBuilder()
-        cSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        cSB.append("package $PATH_PACKAGE.constant\n\n")
         cSB.append("/**\n* 网络链接配置\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         cSB.append("object ${constantUtilName.substring(0, constantUtilName.indexOf("."))}{\n")
         cSB.append("\tconst val IP=\"11.1.1.80\"\n")
@@ -121,7 +124,7 @@ class GeneratorUtils {
         cSB.append("}")
         writeFile(cFile, cSB)
         val eSB = StringBuilder()
-        eSB.append("package ${PATH_PACKAGE}.constant\n\n")
+        eSB.append("package $PATH_PACKAGE.constant\n\n")
         eSB.append("/**\n* EventBus Key\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         eSB.append(
             "data class ${eventKeyName.substring(
@@ -152,7 +155,8 @@ class GeneratorUtils {
         val apiServiceName = "ApiService.kt"
         val commonObserver = "CommonObserver.kt"
         //包名中的“.”替换成“/”
-        var mPackage = PATH_PACKAGE
+        var mPackage =
+            PATH_PACKAGE
         mPackage = mPackage.replace(".", "/") + "/http/"
         commonObserverFile(mPackage, commonObserver)
         apiServiceFile(mPackage, apiServiceName)
@@ -169,7 +173,8 @@ class GeneratorUtils {
         //XML
         var xmlName: String
         //包名中的“.”替换成“/”
-        var mPackage = PATH_PACKAGE
+        var mPackage =
+            PATH_PACKAGE
         if (type == UiType.DIALOG) {
             mPackage = mPackage.replace(".", "/") + "/dialog/"
             isFileExists(File(PATH_MAIN_CODE + mPackage))
@@ -232,7 +237,7 @@ class GeneratorUtils {
         fileExists(cFile)
         //写入文件初始内容
         val cSB = StringBuilder()
-        cSB.append("package ${PATH_PACKAGE}.http\n\n")
+        cSB.append("package $PATH_PACKAGE.http\n\n")
         cSB.append("import com.yjp.easytools.dialog.LoadingDialog\n")
         cSB.append("import com.yjp.easytools.http.exception.ApiException\n")
         cSB.append("import com.yjp.easytools.http.exception.ErrorType\n")
@@ -279,7 +284,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入初始数据
         val aSB = StringBuilder();
-        aSB.append("package ${PATH_PACKAGE}.http\n\n")
+        aSB.append("package $PATH_PACKAGE.http\n\n")
         aSB.append("import com.yjp.easytools.http.BaseApi\n")
         aSB.append("import com.yjp.easytools.http.transformer.BaseResult\n")
         aSB.append("import io.reactivex.Observable\n")
@@ -303,11 +308,11 @@ class GeneratorUtils {
         fileExists(hFile)
         //写入初始数据
         val hSB = StringBuilder()
-        hSB.append("package ${PATH_PACKAGE}.http\n\n")
+        hSB.append("package $PATH_PACKAGE.http\n\n")
         hSB.append("import com.yjp.easytools.http.BaseHttp\n")
         hSB.append("import com.yjp.easytools.utils.SPUtils\n")
-        hSB.append("import ${PATH_PACKAGE}.constant.ConstantUtil\n")
-        hSB.append("import ${PATH_PACKAGE}.constant.SPKey\n")
+        hSB.append("import $PATH_PACKAGE.constant.ConstantUtil\n")
+        hSB.append("import $PATH_PACKAGE.constant.SPKey\n")
         hSB.append("import okhttp3.Interceptor\n\n")
         hSB.append("/**\n* 网络请求框架\n* @author yjp\n*@date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         hSB.append("class ${httpHelpName.substring(0, httpHelpName.indexOf("."))} : BaseHttp(){\n")
@@ -357,7 +362,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入文件初始内容
         val dSB = StringBuilder()
-        dSB.append("package ${PATH_PACKAGE}.dialog\n\n")
+        dSB.append("package $PATH_PACKAGE.dialog\n\n")
         dSB.append("import android.os.Bundle\n")
         dSB.append("import com.yjp.easytools.base.BaseDialog\n")
         dSB.append("import com.yjp.mydemo.R\n")
@@ -392,7 +397,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入文件初始内容
         val aSB = StringBuilder()
-        aSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
+        aSB.append("package $PATH_PACKAGE.ui.${modelName}\n\n")
         aSB.append("import android.os.Bundle\n")
         aSB.append("import com.yjp.easytools.base.BaseFragment\n")
         aSB.append("import com.yjp.mydemo.BR\n")
@@ -446,7 +451,7 @@ class GeneratorUtils {
         fileExists(aFile)
         //写入文件初始内容
         val aSB = StringBuilder()
-        aSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
+        aSB.append("package $PATH_PACKAGE.ui.${modelName}\n\n")
         aSB.append("import android.os.Bundle\n")
         aSB.append("import com.yjp.easytools.base.BaseActivity\n")
         aSB.append("import com.yjp.mydemo.BR\n")
@@ -498,7 +503,7 @@ class GeneratorUtils {
         fileExists(vmFile)
         //写入初始内容
         val vmSB = StringBuilder()
-        vmSB.append("package ${PATH_PACKAGE}.ui.${modelName}\n\n")
+        vmSB.append("package $PATH_PACKAGE.ui.${modelName}\n\n")
         vmSB.append("import android.app.Application\n")
         vmSB.append("import com.yjp.easytools.base.BaseViewModel\n\n")
         vmSB.append("/**\n*\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
@@ -534,7 +539,7 @@ class GeneratorUtils {
                 )}\"\n"
             )
             xmlSB.append(
-                "\t\t\ttype=\"${PATH_PACKAGE}.ui.${modelName}.${vmName.substring(
+                "\t\t\ttype=\"$PATH_PACKAGE.ui.${modelName}.${vmName.substring(
                     0,
                     vmName.indexOf(".")
                 )}\"/>\n"
@@ -562,7 +567,9 @@ class GeneratorUtils {
         sb.append("    <!--  间距  -->\n")
         sb.append(intervalDimen(DIMEN_DP, 0, 1080));
         sb.append("</resources>")
-        outFile(PATH_EASYTOOLS_VALUES, DIMEN_NAME, sb)
+        outFile(
+            PATH_EASYTOOLS_VALUES,
+            DIMEN_NAME, sb)
     }
 
     /**

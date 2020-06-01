@@ -13,7 +13,7 @@ import java.io.*
 object FileUtil {
     private const val TAG = "FileUtils"
     private const val fileName = "SNsl"
-    private var SDPATH = Environment.getExternalStorageDirectory().absoluteFile
+    private var SDPATH: File? = null
     private var path: File? = null
 
     //Download APK path
@@ -23,6 +23,7 @@ object FileUtil {
     private const val IMG_PATH = "/$fileName/images/"
 
     fun init() {
+        SDPATH = Environment.getExternalStorageDirectory().absoluteFile
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
             path = File("$SDPATH/$fileName/")
             if (!path!!.exists()) {
@@ -213,6 +214,63 @@ object FileUtil {
                 }
             }
         }
+    }
+
+    /**
+     * 写入文件
+     */
+    fun writeFile(savePath: String, fileName: String, content: String): Boolean {
+        return try {
+            val file = File(savePath)
+            if (!file.exists()) {
+                file.mkdirs()
+            }
+            val outFile = File(file, fileName)
+            val bw = BufferedWriter(OutputStreamWriter(FileOutputStream(outFile)))
+            bw.write(content)
+            //刷新流
+            bw.flush()
+            //关闭资源
+            bw.close()
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
+    /**
+     * 读取目录下所有文件
+     */
+    fun readFile(path: String): List<File> {
+        val files = mutableListOf<File>()
+        val file = File(path)
+        if (file.exists()) {
+            files.addAll(readFile(file))
+        }
+        return files
+    }
+
+    /**
+     * 读取目录下所有文件
+     */
+    fun readFile(file: File): List<File> {
+        val files = mutableListOf<File>()
+        if (file.isFile) {
+            files.add(file)
+        } else if (file.isDirectory) {
+            val tempFile = file.listFiles()
+            if (!Utils.isEmpty(tempFile)) {
+                for (f in tempFile) {
+                    if (f.isFile) {
+                        files.add(f)
+                    } else if (f.isDirectory) {
+                        files.addAll(readFile(f))
+                    }
+                }
+            }
+        }
+        return files
     }
 
     /**

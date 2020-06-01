@@ -22,4 +22,15 @@ interface ApiService : BaseApi {
         @Query("page_size") page_size: Int,
         @Query("page") page: Int
     ): Observable<AggregateData<LotteryEntity>>
+
+    @POST
+    fun getTrans(
+        @Url url: String,
+        @Query("q") q: String,
+        @Query("from") from: String,
+        @Query("to") to: String,
+        @Query("appid") appid: String,
+        @Query("salt") salt: String,
+        @Query("sign") sign: String
+    ): Observable<AggregateData<LotteryEntity>>
 }

@@ -69,6 +69,7 @@ dependencies {
     api rootProject.ext.dependencies["adapter-rxjava2"]
     api rootProject.ext.dependencies["converter-gson"]
     api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies["kotson"]
     //glide图片加载库
     api(rootProject.ext.dependencies.glide) {
         exclude group: 'com.android.support'

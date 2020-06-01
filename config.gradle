@@ -53,6 +53,7 @@ ext {
             "adapter-rxjava2"                      : "com.squareup.retrofit2:adapter-rxjava2:2.8.0",
             "converter-gson"                       : "com.squareup.retrofit2:converter-gson:2.8.0",
             "logging-interceptor"                  : "com.squareup.okhttp3:logging-interceptor:4.4.1",
+            "kotson"                               : "com.github.salomonbrys.kotson:kotson:2.5.0",
 
             /**
              *  -------------------------------
