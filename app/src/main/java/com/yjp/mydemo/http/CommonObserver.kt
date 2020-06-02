@@ -2,35 +2,33 @@ package com.yjp.mydemo.http
 
 import com.yjp.easytools.dialog.LoadingDialog
 import com.yjp.easytools.http.exception.ApiException
-import com.yjp.easytools.http.exception.ErrorType
 import com.yjp.easytools.http.observer.BaseObserver
-import com.yjp.easytools.utils.ActivityManager
-import com.yjp.easytools.utils.StringUtils
-import com.yjp.easytools.utils.ToastUtils
 import io.reactivex.disposables.Disposable
-import org.greenrobot.eventbus.EventBus
+
 /**
-* 数据解析
-* @author yjp
-* @date 2020-05-11 23:41:52
-*/
+ * 数据解析
+ * @author yjp
+ * @date 2020-05-11 23:41:52
+ */
 abstract class CommonObserver<T>(private var isShowLoading: Boolean) : BaseObserver<T?>() {
-	var disposable: Disposable? = null
-	override fun onSubscribe(d: Disposable) {
-		disposable = d
-		if (isShowLoading) {
-			if (!LoadingDialog.isShowing()) {
-				LoadingDialog.showLoading(ActivityManager.instance.currentActivity(), "请稍后...")
-			}
-		}
-	}
-	override fun onError(e: ApiException) {
-	}
-	override fun onComplete() {
-		if (isShowLoading) {
-			if (LoadingDialog.isShowing()) {
-				LoadingDialog.dismissLoading()
-			}
-		}
-	}
+    var disposable: Disposable? = null
+    override fun onSubscribe(d: Disposable) {
+        disposable = d
+        if (isShowLoading) {
+            if (!LoadingDialog.isShowing()) {
+                LoadingDialog.show("请稍后...")
+            }
+        }
+    }
+
+    override fun onError(e: ApiException) {
+    }
+
+    override fun onComplete() {
+        if (isShowLoading) {
+            if (LoadingDialog.isShowing()) {
+                LoadingDialog.dismiss()
+            }
+        }
+    }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="categoriesItemViewModel"
+            type="com.yjp.mydemo.ui.goodsType.CategoriesItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="一类"
+            android:textColor="@color/c_33"
+            android:textSize="@dimen/sp_13"
+            android:textStyle="bold" />
+
+        <include layout="@layout/line_horizontal" />
+    </LinearLayout>
+</layout>

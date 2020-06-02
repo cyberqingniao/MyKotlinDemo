@@ -1,8 +1,11 @@
 package com.yjp.mydemo.ui.main
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.lifecycle.Observer
 import com.yjp.easytools.base.BaseActivity
+import com.yjp.easytools.utils.ActivityManager
+import com.yjp.easytools.utils.ToastUtils
 import com.yjp.mydemo.BR
 import com.yjp.mydemo.R
 import com.yjp.mydemo.databinding.ActivityMainBinding
@@ -19,6 +22,7 @@ import com.yjp.mydemo.ui.my.MyFragment
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     private var mCurrentFragmentIndex = -1;
+    private var oldClickTime: Long = 0
 
     override fun initContentView(saveInstanceState: Bundle?): Int {
         return R.layout.activity_main
@@ -87,6 +91,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                     .commit()
             }
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - oldClickTime < 2000) {
+                ActivityManager.instance.AppExit()
+            } else {
+                ToastUtils.showShort("再次点击退出程序")
+                oldClickTime = System.currentTimeMillis();
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }

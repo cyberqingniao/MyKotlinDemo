@@ -125,7 +125,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
 
     override fun showLoading(msg: String) {
         if (!LoadingDialog.isShowing()) {
-            LoadingDialog.showLoading(context!!, msg)
+            LoadingDialog.show(msg)
         }
     }
 
@@ -134,7 +134,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
     }
 
     override fun dismissLoading() {
-        LoadingDialog.dismissLoading()
+        LoadingDialog.dismiss()
     }
 
     override fun startActivity(clazz: Class<*>) {

@@ -135,18 +135,18 @@ abstract class BaseActivity<V : ViewDataBinding, VM : BaseViewModel> : RxAppComp
 
     override fun showLoading(msg: String) {
         if (!LoadingDialog.isShowing()) {
-            LoadingDialog.showLoading(this, msg)
+            LoadingDialog.show(msg)
         }
     }
 
     override fun showLoading(resId: Int) {
         if (!LoadingDialog.isShowing()) {
-            LoadingDialog.showLoading(this, getString(resId))
+            LoadingDialog.show(getString(resId))
         }
     }
 
     override fun dismissLoading() {
-        LoadingDialog.dismissLoading()
+        LoadingDialog.dismiss()
     }
 
     override fun startActivity(clazz: Class<*>) {

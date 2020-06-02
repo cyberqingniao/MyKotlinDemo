@@ -8,15 +8,6 @@ import java.util.regex.Pattern
  * @date 2020/3/31 10:10
  */
 object StringUtils {
-    /**
-     * 根据资源ID获取字符串
-     *
-     * @param resId
-     * @return
-     */
-    fun getString(resId: Int): String {
-        return Utils.context.getString(resId)
-    }
 
     /**
      * 判断字符串是否为空

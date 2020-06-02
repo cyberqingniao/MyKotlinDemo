@@ -1,6 +1,8 @@
 package com.yjp.mydemo
 
+import android.view.Gravity
 import com.yjp.easytools.base.BaseApplication
+import com.yjp.easytools.utils.ToastUtils
 
 /**
  * $
@@ -17,5 +19,6 @@ class MyApplication : BaseApplication() {
     override fun onCreate() {
         super.onCreate()
         context = this
+        ToastUtils.setGravity(Gravity.CENTER,0,0)
     }
 }

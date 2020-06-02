@@ -53,6 +53,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
     val loginOnClickCommand = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             startActivity(MainActivity::class.java)
+            finish()
         }
 
     })

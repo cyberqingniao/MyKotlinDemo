@@ -3,7 +3,6 @@ package com.yjp.mydemo.ui.main
 import android.app.Application
 import com.yjp.easytools.base.BaseViewModel
 import com.yjp.easytools.bus.event.SingleLiveEvent
-import com.yjp.easytools.databing.command.BindingAction
 import com.yjp.easytools.databing.command.BindingCommand
 import com.yjp.easytools.databing.command.BindingConsumer
 import com.yjp.easytools.utils.Utils

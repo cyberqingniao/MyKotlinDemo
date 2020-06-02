@@ -17,7 +17,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        var ae = if (e is ApiException) {
+        val ae = if (e is ApiException) {
             e
         } else {
             ExceptionEngine.handleException(e)

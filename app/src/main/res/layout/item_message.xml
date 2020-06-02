@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="msgItemViewModel"
+            type="com.yjp.mydemo.ui.message.MessageItemViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp_1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp_12"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_12"
+            android:paddingBottom="@dimen/dp_10">
+
+            <com.yjp.easytools.view.CircleImageView
+                android:id="@+id/civ_message_item_head"
+                android:layout_width="@dimen/dp_50"
+                android:layout_height="@dimen/dp_50"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_5"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_toStartOf="@id/tv_message_item_time"
+                android:layout_toEndOf="@id/civ_message_item_head"
+                android:singleLine="true"
+                android:text="昵称"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_13"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/civ_message_item_head"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_5"
+                android:layout_toStartOf="@id/tv_message_item_news"
+                android:layout_toEndOf="@id/civ_message_item_head"
+                android:singleLine="true"
+                android:text="消息内容"
+                android:textColor="@color/c_33"
+                android:textSize="@dimen/sp_13" />
+
+            <TextView
+                android:id="@+id/tv_message_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginTop="@dimen/dp_5"
+                android:singleLine="true"
+                android:text="2020-06-02 14:02:35"
+                android:textColor="@color/c_99"
+                android:textSize="@dimen/sp_10" />
+
+            <TextView
+                android:id="@+id/tv_message_item_news"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/civ_message_item_head"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/dp_8"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:background="@drawable/bg_news_message"
+                android:paddingLeft="@dimen/dp_5"
+                android:paddingTop="@dimen/dp_2"
+                android:paddingRight="@dimen/dp_5"
+                android:paddingBottom="@dimen/dp_2"
+                android:singleLine="true"
+                android:text="99+"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_8" />
+
+        </RelativeLayout>
+
+        <include layout="@layout/line_horizontal" />
+    </LinearLayout>
+</layout>

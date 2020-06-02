@@ -1,68 +1,105 @@
 package com.yjp.easytools.dialog
 
-import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.os.Bundle
 import android.os.Handler
-import android.util.Log
+import com.com.yjp.easytools.R
+import com.com.yjp.easytools.databinding.DialogLoadingBinding
+import com.yjp.easytools.base.BaseDialog
+import com.yjp.easytools.utils.ActivityManager
 
 /**
- * 加载弹窗$
+ * 加载框$
  * @author yjp
- * @date 2020/3/26 11:54
+ * @date 2020/6/1 16:40
  */
-object LoadingDialog {
-    private var progressDialog: ProgressDialog? = null
+class LoadingDialog : BaseDialog<DialogLoadingBinding> {
 
-    fun showLoading(context: Context, msg: String) {
-        try {
-            if (progressDialog == null) {
-                progressDialog = ProgressDialog(context)
-            } else if (progressDialog!!.isShowing) {
-                return
+    companion object {
+        private var msg: String = "请稍后..."
+
+        private var dialog: LoadingDialog? = null
+
+        /**
+         * 初始化Dialog
+         */
+        private fun initDialog(): LoadingDialog {
+            if (dialog == null) {
+                dialog = LoadingDialog(ActivityManager.instance.currentActivity())
             }
-            progressDialog!!.isIndeterminate = true
-            progressDialog!!.setCanceledOnTouchOutside(false)
-            progressDialog!!.setMessage(msg)
-            progressDialog!!.show()
-            progressDialog!!.window!!.decorView.tag = System.currentTimeMillis()
-        } catch (e: Exception) {
-            Log.e("LoadingDialog", "$e.message");
+            dialog!!.setMsg(msg)
+            return dialog!!
         }
-    }
 
-    fun isShowing(): Boolean {
-        try {
-            if (progressDialog != null) {
-                return progressDialog!!.isShowing
+        /**
+         * 显示Dialog
+         */
+        fun show(): LoadingDialog {
+            if (initDialog().isShowing) {
+                return dialog!!
             }
-        } catch (e: Exception) {
-            Log.e("LoadingDialog", "$e.message");
+            dialog!!.show()
+            dialog!!.window!!.decorView.tag = System.currentTimeMillis()
+            return dialog!!
         }
-        return false
-    }
 
-    fun dismissLoading() {
-        if (progressDialog != null && progressDialog!!.window != null) {
-            val createTimeMillis: Long = progressDialog!!.window!!.decorView.tag as Long
-            if (System.currentTimeMillis() - createTimeMillis < 1000) {
-                Handler().postDelayed(Runnable {
-                    try {
-                        if (progressDialog != null) {
-                            progressDialog!!.dismiss()
-                            progressDialog = null
-                        }
-                    } catch (e: Exception) {
-                        Log.e("LoadingDialog", "$e.message");
-                    }
-                }, 500)
-            } else {
-                try {
-                    progressDialog!!.dismiss()
-                    progressDialog = null
-                } catch (e: Exception) {
-                    Log.e("LoadingDialog", "$e.message");
+        /**
+         * 设置加载提示消息
+         */
+        fun show(msg: String): LoadingDialog {
+            this.msg = msg
+            return show()
+        }
+
+        /**
+         * 判断是否在运行中
+         */
+        fun isShowing(): Boolean {
+            return dialog?.isShowing ?: false
+        }
+
+        /**
+         * 关闭弹窗
+         */
+        fun dismiss() {
+            if (dialog != null && dialog!!.window != null) {
+                //判断Dialog显示时间，避免时间过短照成闪屏
+                val createTimeMillis = dialog!!.window!!.decorView.tag as Long
+                if (System.currentTimeMillis() - createTimeMillis < 1000) {
+                    Handler().postDelayed({
+                        dismiss()
+                    }, 500)
+                } else {
+                    dialog?.dismiss()
+                    dialog = null
                 }
             }
         }
+
     }
+
+    constructor(context: Context) : this(context, false, null)
+    constructor(
+        context: Context,
+        cancelable: Boolean,
+        cancelListener: DialogInterface.OnCancelListener?
+    ) : super(context, cancelable, cancelListener)
+
+    override fun initContentView(savedInstanceState: Bundle?): Int {
+        return R.layout.dialog_loading;
+    }
+
+    override fun init() {
+        binding!!.tvLoading.text = msg
+    }
+
+    /**
+     * 设置显示提示消息
+     */
+    fun setMsg(msg: String): LoadingDialog {
+        binding?.tvLoading?.text = msg
+        return this
+    }
+
 }

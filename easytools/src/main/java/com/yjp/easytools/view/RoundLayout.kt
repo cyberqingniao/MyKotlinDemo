@@ -19,7 +19,7 @@ class RoundLayout @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) :
     RelativeLayout(context, attrs, defStyleAttr) {
-    var radii =
+    private var radii =
         FloatArray(8) // top-left, top-right, bottom-right, bottom-left
     var mClipPath // 剪裁区域路径
             : Path? = null
@@ -67,7 +67,7 @@ class RoundLayout @JvmOverloads constructor(
         }
     }
 
-    fun initAttrs(
+    private fun initAttrs(
         context: Context,
         attrs: AttributeSet?
     ) {
@@ -109,7 +109,7 @@ class RoundLayout @JvmOverloads constructor(
         setLayerType(View.LAYER_TYPE_HARDWARE, null)
     }
 
-    fun refreshRegion(view: View) {
+    private fun refreshRegion(view: View) {
         val w = mLayer!!.width().toInt()
         val h = mLayer!!.height().toInt()
         val areas = RectF()
@@ -126,7 +126,7 @@ class RoundLayout @JvmOverloads constructor(
         mAreaRegion!!.setPath(mClipPath!!, clip)
     }
 
-    fun onClipDraw(canvas: Canvas) {
+    private fun onClipDraw(canvas: Canvas) {
         if (mStrokeWidth > 0) { // 将与描边区域重叠的内容裁剪掉
             mPaint!!.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
             mPaint!!.color = Color.WHITE

@@ -41,7 +41,7 @@ object Utils {
      * 16位MD5加密
      */
     fun md5Decode32(content: String): String {
-        var hash: ByteArray
+        val hash: ByteArray
         try {
             hash = MessageDigest.getInstance("MD5").digest(content.commonAsUtf8ToByteArray())
         } catch (e: NoSuchAlgorithmException) {
@@ -49,7 +49,7 @@ object Utils {
         } catch (e: UnsupportedEncodingException) {
             throw RuntimeException("UnsupportedEncodingException", e)
         }
-        var hex = StringBuilder(hash.size * 2)
+        val hex = StringBuilder(hash.size * 2)
         for (b in hash) {
             if (b and 0xFF.toByte() < 0x10) {
                 hex.append("0")
@@ -126,7 +126,7 @@ object Utils {
      * 根据资源ID获取字符串
      */
     fun getString(@StringRes resId: Int): String {
-        return StringUtils.getString(resId)
+        return context.getString(resId)
     }
 
     /**
@@ -167,7 +167,7 @@ object Utils {
      * get方法获取
      *
      * @param fieldName : 属性名
-     * @param o         : 实体类
+     * @param obj         : 实体类
      * @return Object 属性值
      */
     fun getFieldValueByName(fieldName: String, obj: Any): Any? {
@@ -210,7 +210,7 @@ object Utils {
      * @return
      */
     fun isBackground(): Boolean {
-        var isBack = false;
+        val isBack = false;
         val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager?
         if (am != null) {
             val aps = am.runningAppProcesses
@@ -280,7 +280,7 @@ object Utils {
     }
 
     /**
-     * 设置图标
+     * 获取Drawable
      *
      * @param resId : 资源Id
      * @return Drawable
@@ -326,7 +326,7 @@ object Utils {
     }
 
     /**
-     * 判断是否安装了应用
+     * 判断是否安装了某应用
      */
     fun isInstallApp(pkgName: String): Boolean {
         try {
@@ -400,4 +400,5 @@ object Utils {
         }
         return data
     }
+
 }

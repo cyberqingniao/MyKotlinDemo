@@ -6,6 +6,11 @@
         <variable
             name="messageViewModel"
             type="com.yjp.mydemo.ui.message.MessageViewModel" />
+
+        <variable
+            name="adapter"
+            type="com.yjp.mydemo.ui.message.MessageAdapter" />
+
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
     </data>
 
@@ -27,6 +32,16 @@
                 android:text="@string/page_message"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp_18" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:paddingLeft="@dimen/dp_12"
+                android:paddingRight="@dimen/dp_12"
+                android:src="@mipmap/btn_message_menu"
+                binding:onClickCommand="@{messageViewModel.menuOnClickCommand}" />
+
         </RelativeLayout>
 
         <com.scwang.smart.refresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -41,11 +56,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:overScrollMode="never"/>
-<!--                binding:adapter="@{adapter}"-->
-<!--                binding:itemBinding="@{messageViewModel.itemBinding}"-->
-<!--                binding:items="@{messageViewModel.mData}"-->
-<!--                binding:layoutManager="@{LayoutManagers.linear()}" />-->
+                android:overScrollMode="never"
+                binding:adapter="@{adapter}"
+                binding:itemBinding="@{messageViewModel.itemBinding}"
+                binding:items="@{messageViewModel.items}"
+                binding:layoutManager="@{LayoutManagers.linear()}" />
 
             <com.scwang.smart.refresh.footer.ClassicsFooter
                 android:layout_width="match_parent"

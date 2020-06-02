@@ -1,5 +1,6 @@
 package com.yjp.easytools.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
 import android.os.Environment
@@ -43,7 +44,7 @@ object FileUtil {
             path = Utils.context.getExternalFilesDir(fileName)
             if (!path!!.exists()) {
                 if (!path!!.mkdirs()) {
-                    println("创建内部目录失败\t" + path!!.path);
+                    println("创建外部私有目录失败\t" + path!!.path);
                 }
             }
         }

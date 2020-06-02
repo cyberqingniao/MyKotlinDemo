@@ -41,7 +41,7 @@ class ForgetPasswordViewModel(application: Application) : BaseViewModel(applicat
     })
     val reportOnClickCommand = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            startActivity(LoginActivity::class.java)
+            finish()
         }
 
     })
