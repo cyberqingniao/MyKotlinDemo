@@ -1,0 +1,23 @@
+package ${model_path}
+
+import android.os.Bundle
+import com.yjp.easytools.base.BaseActivity
+import ${package_path}.BR
+import ${package_path}.R
+import ${package_path}.databinding.Activity${b_model_name}Binding
+
+/**
+ * ${desc}
+ * @author yjp
+ * @date ${date}
+ */
+class ${b_model_name}Activity: BaseActivity<Activity${b_model_name}Binding, ${b_model_name}ViewModel>() {
+
+    override fun initContentView(saveInstanceState: Bundle?): Int {
+        return R.layout.activity_${layout_name}
+    }
+
+    override fun initVariableId(): Int {
+        return BR.${s_model_name}ViewModel
+    }
+}

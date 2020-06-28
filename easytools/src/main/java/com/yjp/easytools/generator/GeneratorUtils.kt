@@ -1,6 +1,8 @@
 package com.yjp.easytools.generator
 
+import com.yjp.easytools.generator.creater.*
 import com.yjp.easytools.utils.DataUtils
+import com.yjp.easytools.utils.FileUtil
 import com.yjp.easytools.utils.StringUtils
 import com.yjp.easytools.utils.Utils
 import java.io.File
@@ -12,6 +14,7 @@ import java.io.PrintWriter
  * @author com.yjp
  * @date 2020/3/25 11:30
  */
+@Deprecated("2020-06-28弃用，改用QGTools.kt")
 class GeneratorUtils {
     companion object {
         //项目主路径
@@ -69,9 +72,9 @@ class GeneratorUtils {
 //            gu.generateUIFile("register", "Activity")
 //            gu.generateUIFile("bindPhone", UiType.ACTIVITY)
 //            gu.generateUIFile("tip", UiType.DIALOG)
-            gu.generateUIFile("goodsDetails",UiType.ACTIVITY)
+//            gu.generateUIFile("goodsDetails",UiType.ACTIVITY)
             //创建Http模块
-//            gu.generateHttpFile()
+            gu.generateHttpFile()
 
             //创建工具模块
 //            gu.generateTools()
@@ -567,7 +570,8 @@ class GeneratorUtils {
         sb.append("</resources>")
         outFile(
             PATH_EASYTOOLS_VALUES,
-            DIMEN_NAME, sb)
+            DIMEN_NAME, sb
+        )
     }
 
     /**
@@ -682,8 +686,4 @@ class GeneratorUtils {
         }
         return true
     }
-}
-
-enum class UiType {
-    ACTIVITY, FRAGMENT, DIALOG
 }

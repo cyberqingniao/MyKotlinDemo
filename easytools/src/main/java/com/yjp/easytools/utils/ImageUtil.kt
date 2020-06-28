@@ -12,7 +12,6 @@ import android.util.Base64
 import android.util.Log
 import android.util.LruCache
 import androidx.appcompat.app.AppCompatActivity
-import com.yjp.easytools.utils.FileUtil.saveBitmap
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.FileNotFoundException
@@ -105,7 +104,7 @@ object ImageUtil {
     ): Bitmap? {
         val bitmap = BitmapFactory.decodeFile(path)
         //        BitmapFactory.decodeResource(mContext.getResources(), resources);
-// 获取图片的宽高
+        // 获取图片的宽高
         val bitmapWidth = bitmap.width
         val bitmapHeight = bitmap.height
         // 创建一个和图片一样大的背景图
@@ -273,7 +272,7 @@ object ImageUtil {
         view.destroyDrawingCache()
         view.isDrawingCacheEnabled = false
         if (null != bitmap) {
-            saveBitmap(bitmap, fileName, Bitmap.CompressFormat.JPEG)
+            FileUtil.writeFile(fileName, bitmap, Bitmap.CompressFormat.JPEG)
         }
         return bitmap!!
     }
@@ -286,7 +285,7 @@ object ImageUtil {
      * @param config
      * @return
      */
-    fun image_2_bitmap(image: Image, config: Bitmap.Config): Bitmap {
+    fun image2Bitmap(image: Image, config: Bitmap.Config): Bitmap {
         val width = image.width
         val height = image.height
         val bitmap: Bitmap
@@ -318,6 +317,10 @@ object ImageUtil {
         return baos.toByteArray()
     }
 
+    /**
+     * PNG
+     * @return
+     */
     fun byte2bitmap(data: ByteArray): Bitmap {
         return BitmapFactory.decodeByteArray(data, 0, data.size)
     }

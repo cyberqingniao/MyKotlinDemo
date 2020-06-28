@@ -10,7 +10,7 @@ import kotlin.math.floor
  */
 object LonLatUtil {
     /**
-     *
+     * 度分秒转double
      */
     fun toDecimal(latlng: Double, jf: Float): Double {
         //替换′和″错误的情况

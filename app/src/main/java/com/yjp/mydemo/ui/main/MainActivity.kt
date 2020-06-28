@@ -36,10 +36,10 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         super.initData()
         val bt = supportFragmentManager.beginTransaction();
         bt.add(R.id.fl_main, HomeFragment.instance)
-            .add(R.id.fl_main, GoodsTypeFragment.instance)
+            .add(R.id.fl_main, GoodsTypeFragment.getInstance())
             .add(R.id.fl_main, MessageFragment.instance)
             .add(R.id.fl_main, MyFragment.instance)
-            .hide(GoodsTypeFragment.instance)
+            .hide(GoodsTypeFragment.getInstance())
             .hide(MessageFragment.instance)
             .hide(MyFragment.instance)
             .commit()
@@ -63,7 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
         val bt = supportFragmentManager.beginTransaction()
         when (index) {
             0 -> {
-                bt.hide(GoodsTypeFragment.instance)
+                bt.hide(GoodsTypeFragment.getInstance())
                     .hide(MessageFragment.instance)
                     .hide(MyFragment.instance)
                     .show(HomeFragment.instance)
@@ -73,19 +73,19 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
                 bt.hide(HomeFragment.instance)
                     .hide(MessageFragment.instance)
                     .hide(MyFragment.instance)
-                    .show(GoodsTypeFragment.instance)
+                    .show(GoodsTypeFragment.getInstance())
                     .commit()
             }
             2 -> {
                 bt.hide(HomeFragment.instance)
-                    .hide(GoodsTypeFragment.instance)
+                    .hide(GoodsTypeFragment.getInstance())
                     .hide(MyFragment.instance)
                     .show(MessageFragment.instance)
                     .commit()
             }
             3 -> {
                 bt.hide(HomeFragment.instance)
-                    .hide(GoodsTypeFragment.instance)
+                    .hide(GoodsTypeFragment.getInstance())
                     .hide(MessageFragment.instance)
                     .show(MyFragment.instance)
                     .commit()

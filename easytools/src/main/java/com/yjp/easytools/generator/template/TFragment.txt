@@ -1,0 +1,43 @@
+package ${model_path}
+
+import android.os.Bundle
+import com.yjp.easytools.base.BaseFragment
+import ${package_path}.BR
+import ${package_path}.R
+import ${package_path}.databinding.Fragment${b_model_name}Binding
+
+/**
+ * ${desc}
+ * @author yjp
+ * @date ${date}
+ */
+class ${b_model_name}Fragment : BaseFragment<Fragment${b_model_name}Binding, ${b_model_name}ViewModel>() {
+
+    companion object {
+
+       private var instance: ${b_model_name}Fragment? = null
+
+        @Synchronized
+        fun getInstance(): ${b_model_name}Fragment {
+            if (instance == null) {
+                synchronized(${b_model_name}Fragment::class.java) {
+                    instance = ${b_model_name}Fragment()
+                }
+            }
+            return instance!!
+        }
+    }
+
+    override fun initContentView(saveInstanceState: Bundle?): Int {
+        return R.layout.fragment_${layout_name}
+    }
+
+    override fun initVariableId(): Int {
+        return BR.${s_model_name}ViewModel
+    }
+
+    override fun onDestroyView() {
+            instance = null
+            super.onDestroyView()
+        }
+}

@@ -58,7 +58,7 @@ abstract class BaseFragment<V : ViewDataBinding, VM : BaseViewModel> : RxFragmen
         //页面数据初始化
         initData()
         //页面事件监听方法，一般用于ViewModel层转到View层的事件注册
-        initViewDatabinding()
+        initViewObservable()
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.yjp.mydemo.http
 
 import com.yjp.easytools.http.BaseApi
+import com.yjp.easytools.http.transformer.BaseResult
+import com.yjp.mydemo.entity.LoginEntity
 import com.yjp.mydemo.entity.LotteryEntity
 import io.reactivex.Observable
 import retrofit2.http.POST
@@ -13,6 +15,15 @@ import retrofit2.http.Url
  * @date 2020-05-11 23:41:52
  */
 interface ApiService : BaseApi {
+
+    /**
+     * 登录
+     */
+    @POST("/login/login")
+    fun login(
+        @Query("username") username: String,
+        @Query("password") password: String
+    ): Observable<BaseResult<LoginEntity>>
 
     @POST
     fun getLotteryHistory(

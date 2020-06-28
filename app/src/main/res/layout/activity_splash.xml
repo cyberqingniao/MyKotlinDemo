@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -23,5 +23,6 @@
             android:text="@{splashViewModel.timer}"
             android:textColor="@color/c_33"
             android:textSize="@dimen/sp_12" />
+
     </RelativeLayout>
 </layout>

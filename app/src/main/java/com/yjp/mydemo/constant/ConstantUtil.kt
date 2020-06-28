@@ -6,8 +6,8 @@ package com.yjp.mydemo.constant
  * @date 2020-05-11 23:41:52
  */
 object ConstantUtil {
-    const val IP = "11.1.1.80"
-    const val PORT = "8080"
+    const val IP = "11.1.1.87"
+    const val PORT = "8888"
 
     //彩票Key
     const val LOTTERY_KEY="ea23286e2b09d5acb1ffd055a4e33ff9"

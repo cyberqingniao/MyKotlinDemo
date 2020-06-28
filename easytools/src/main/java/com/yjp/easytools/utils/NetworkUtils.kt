@@ -4,12 +4,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.wifi.WifiManager
+import android.os.Build
 import android.telephony.TelephonyManager
-import android.text.format.Formatter
-import java.io.IOException
-import java.net.HttpURLConnection
+import android.util.Log
 import java.net.NetworkInterface
-import java.net.URL
+import java.net.SocketException
+import java.util.*
 
 /**
  * 网络操作工具类$
@@ -23,148 +23,140 @@ object NetworkUtils {
     fun isNetworkAvailable(): Boolean {
         val manager =
             Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val info = manager.activeNetworkInfo
-        if (null == info || !info.isAvailable) {
-            return false
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            manager.isDefaultNetworkActive
+        } else {
+            val nwi = manager.activeNetworkInfo
+            !(nwi == null || nwi.isAvailable)
         }
-        return true
     }
 
     /**
-     * 获取本地IP
-     *
-     * @return
+     * ping 百度 判断当前连接的网络是否有外网访问
+     */
+    fun ping(): Boolean {
+        val address = "www.baidu.com"
+        val p = Runtime.getRuntime().exec("ping -c 3 -w 100 $address")
+        return p.waitFor() == 0
+    }
+
+
+    /**
+     * 获取网络信息
+     */
+    private fun getActiveNetworkInfo(): NetworkInfo? {
+        val manager =
+            Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return manager.activeNetworkInfo
+    }
+
+    /**
+     * 获取网络状态
+     */
+    fun getNetworkType(): NetworkType {
+        var netType = NetworkType.NETWORK_NO
+        val info = getActiveNetworkInfo()
+        if (info != null && info.isAvailable) {
+            netType = when (info.type) {
+                ConnectivityManager.TYPE_WIFI -> {
+                    NetworkType.NETWORK_WIFI
+                }
+                ConnectivityManager.TYPE_MOBILE -> {
+                    when (info.subtype) {
+                        TelephonyManager.NETWORK_TYPE_GSM,
+                        TelephonyManager.NETWORK_TYPE_GPRS,
+                        TelephonyManager.NETWORK_TYPE_CDMA,
+                        TelephonyManager.NETWORK_TYPE_EDGE,
+                        TelephonyManager.NETWORK_TYPE_1xRTT,
+                        TelephonyManager.NETWORK_TYPE_IDEN
+                        -> {
+                            NetworkType.NETWORK_2G
+                        }
+                        TelephonyManager.NETWORK_TYPE_TD_SCDMA,
+                        TelephonyManager.NETWORK_TYPE_EVDO_A,
+                        TelephonyManager.NETWORK_TYPE_UMTS,
+                        TelephonyManager.NETWORK_TYPE_EVDO_0,
+                        TelephonyManager.NETWORK_TYPE_HSDPA,
+                        TelephonyManager.NETWORK_TYPE_HSUPA,
+                        TelephonyManager.NETWORK_TYPE_HSPA,
+                        TelephonyManager.NETWORK_TYPE_EVDO_B,
+                        TelephonyManager.NETWORK_TYPE_EHRPD,
+                        TelephonyManager.NETWORK_TYPE_HSPAP
+                        -> {
+                            NetworkType.NETWORK_3G
+                        }
+                        TelephonyManager.NETWORK_TYPE_LTE,
+                        TelephonyManager.NETWORK_TYPE_IWLAN
+                        -> {
+                            NetworkType.NETWORK_4G
+                        }
+                        TelephonyManager.NETWORK_TYPE_NR -> {
+                            NetworkType.NETWORK_5G
+                        }
+                        else -> {
+                            val subtypeName = info.subtypeName
+                            if (subtypeName.equals("TD-SCDMA", true) ||
+                                subtypeName.equals("WCDMA", true) ||
+                                subtypeName.equals("CDMA2000", true)
+                            ) {
+                                NetworkType.NETWORK_3G
+                            } else {
+                                NetworkType.NETWORK_UNKNOWN
+                            }
+                        }
+                    }
+                }
+                else -> {
+                    NetworkType.NETWORK_UNKNOWN
+                }
+            }
+        }
+        return netType
+    }
+
+    /**
+     * 获取IP地址
      */
     fun getIP(): String {
-        val en =
-            NetworkInterface.getNetworkInterfaces()
-        while (en.hasMoreElements()) {
-            val intf = en.nextElement()
-            val enumIpAddr = intf.inetAddresses
-            while (enumIpAddr.hasMoreElements()) {
-                val inetAddress = enumIpAddr.nextElement()
-                if (!inetAddress.isLoopbackAddress) {
-                    return inetAddress.hostAddress
-                }
+        return when (getNetworkType()) {
+            NetworkType.NETWORK_5G,
+            NetworkType.NETWORK_4G,
+            NetworkType.NETWORK_3G,
+            NetworkType.NETWORK_2G
+            -> {
+                getLocalIPAddress() ?: ""
+            }
+            NetworkType.NETWORK_WIFI -> {
+                val wifiManager =
+                    Utils.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+                val wifiInfo = wifiManager.connectionInfo
+                val ipAddress = wifiInfo.ipAddress
+                int2ip(ipAddress)
+            }
+            else -> {
+                ""
             }
         }
-        return ""
     }
 
     /**
-     * wifi获取 路由ip地址
-     *
-     * @param context
-     * @return
+     * 获取本地IP地址
      */
-    fun getWifiIP(): String {
-        val wifi_service =
-            Utils.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val dhcpInfo = wifi_service.dhcpInfo
-        return Formatter.formatIpAddress(dhcpInfo.gateway)
-    }
-
-    /**
-     * h获取网络状态
-     *
-     * @return
-     */
-    fun getState(): Int {
+    private fun getLocalIPAddress(): String? {
         try {
-            val connectivity =
-                Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val networkinfo = connectivity.activeNetworkInfo
-            if (networkinfo != null) {
-                return if (networkinfo.isAvailable && networkinfo.isConnected) {
-                    if (!connectionNetwork()) {
-                        // No NetworkAvailable
-                        2
-                    } else {
-                        // NetworkAvailable
-                        1
+            val nilist = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (ni in nilist) {
+                val ialist = Collections.list(ni.inetAddresses)
+                for (address in ialist) {
+                    if (!address.isLoopbackAddress) {
+                        return address.hostAddress
                     }
-                } else {
-                    // Net No Ready
-                    3
                 }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (e: SocketException) {
+            Log.e("NetworkUtils", e.toString())
         }
-        // Net Error
-        return 4
-    }
-
-    /**
-     * ping "www.baidu.com"
-     *
-     * @return
-     */
-    fun connectionNetwork(): Boolean {
-        var result = false
-        var httpUrl: HttpURLConnection? = null
-        try {
-            httpUrl = URL("www.baidu.com").openConnection() as HttpURLConnection
-            // TIMEOUT
-            val TIMEOUT = 3000
-            httpUrl.connectTimeout = TIMEOUT
-            httpUrl.connect()
-            result = true
-        } catch (ignored: IOException) {
-        } finally {
-            httpUrl?.disconnect()
-        }
-        return result
-    }
-
-    /**
-     * check is 2G
-     *
-     * @return boolean
-     */
-    fun is2G(): Boolean {
-        val connectivityManager = Utils.context
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var activeNetInfo: NetworkInfo? = null
-        activeNetInfo = connectivityManager.activeNetworkInfo
-        return (activeNetInfo != null
-                && (activeNetInfo.subtype == TelephonyManager.NETWORK_TYPE_EDGE || activeNetInfo.subtype == TelephonyManager.NETWORK_TYPE_GPRS || activeNetInfo
-            .subtype == TelephonyManager.NETWORK_TYPE_CDMA))
-    }
-
-    /**
-     * check is3G
-     *
-     * @return boolean
-     */
-    fun is3G(): Boolean {
-        val connectivityManager = Utils.context
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var activeNetInfo: NetworkInfo? = null
-        activeNetInfo = connectivityManager.activeNetworkInfo
-        return (activeNetInfo != null && activeNetInfo.type == ConnectivityManager.TYPE_MOBILE)
-    }
-
-    /**
-     * check is Wifi
-     *
-     * @return boolean
-     */
-    fun isWifi(): Boolean {
-        val connectivityManager = Utils.context
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var activeNetInfo: NetworkInfo? = null
-        activeNetInfo = connectivityManager.activeNetworkInfo
-        return (activeNetInfo != null && activeNetInfo.type == ConnectivityManager.TYPE_WIFI)
-    }
-
-    /**
-     * check is wifi on
-     */
-    fun isWifiEnabled(): Boolean {
-        val mgrConn = Utils.context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val mgrTel = Utils.context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        return mgrConn.activeNetworkInfo != null && mgrConn.activeNetworkInfo!!.state == NetworkInfo.State.CONNECTED || mgrTel.networkType == TelephonyManager.NETWORK_TYPE_UMTS
+        return null
     }
 
     /**
@@ -173,10 +165,30 @@ object NetworkUtils {
      * @param ipInt
      * @return
      */
-    fun int2ip(ipInt: Int): String? {
+    private fun int2ip(ipInt: Int): String {
         return (ipInt and 0xFF).toString() + "." +
                 (ipInt shr 8 and 0xFF) + "." +
                 (ipInt shr 16 and 0xFF) + "." +
                 (ipInt shr 24 and 0xFF)
+    }
+}
+
+/**
+ * 网络连接状态
+ * @author yjp
+ * @date 2020/6/5
+ */
+enum class NetworkType(private var desc: String) {
+
+    NETWORK_WIFI("WiFi"),
+    NETWORK_5G("5G"),
+    NETWORK_4G("4G"),
+    NETWORK_2G("2G"),
+    NETWORK_3G("3G"),
+    NETWORK_UNKNOWN("Unknown"),
+    NETWORK_NO("No network");
+
+    override fun toString(): String {
+        return desc
     }
 }

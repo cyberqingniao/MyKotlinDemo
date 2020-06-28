@@ -180,6 +180,7 @@ object DataUtils {
 
     /**
      * 比较时间大小
+     * 1:小于 -2:大于 0:等于
      */
     fun compareDate(begin: String, end: String): Int {
         val df = SimpleDateFormat(FORMAT.DATETIME_YMDHM)

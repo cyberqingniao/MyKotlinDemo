@@ -6,6 +6,10 @@ import androidx.databinding.ObservableField
 import com.yjp.easytools.base.BaseViewModel
 import com.yjp.easytools.databing.command.BindingAction
 import com.yjp.easytools.databing.command.BindingCommand
+import com.yjp.easytools.http.transformer.CommonTransformer
+import com.yjp.mydemo.entity.LoginEntity
+import com.yjp.mydemo.http.CommonObserver
+import com.yjp.mydemo.http.HttpHelp
 import com.yjp.mydemo.ui.bindPhone.BindPhoneActivity
 import com.yjp.mydemo.ui.forgetPassword.ForgetPasswordActivity
 import com.yjp.mydemo.ui.main.MainActivity
@@ -52,8 +56,9 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
      */
     val loginOnClickCommand = BindingCommand<Any>(object : BindingAction {
         override fun call() {
-            startActivity(MainActivity::class.java)
-            finish()
+            login()
+//            startActivity(MainActivity::class.java)
+//            finish()
         }
 
     })
@@ -87,4 +92,14 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         }
 
     })
+
+    private fun login() {
+        HttpHelp.api().login(username.get()!!, password.get()!!)
+            .compose(CommonTransformer<LoginEntity>())
+            .subscribe(object : CommonObserver<LoginEntity>(true) {
+                override fun onSuccess(result: LoginEntity?) {
+
+                }
+            })
+    }
 }

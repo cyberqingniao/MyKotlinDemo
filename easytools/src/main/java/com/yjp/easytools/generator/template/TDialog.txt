@@ -1,0 +1,23 @@
+package ${model_path}
+
+import android.os.Bundle
+import com.yjp.easytools.base.BaseDialog
+import com.yjp.easytools.utils.ActivityManager
+import ${package_path}.R
+import ${package_path}.databinding.Dialog${b_model_name}Binding
+
+/**
+*$
+* @author yjp
+* @date 2020-06-24 13:55:39
+*/
+class ${b_model_name}Dialog: BaseDialog<Dialog${b_model_name}Binding>(ActivityManager.instance.currentActivity()) {
+
+	override fun initContentView(savedInstanceState: Bundle?): Int {
+		return R.layout.dialog_${layout_name}
+	}
+
+	override fun init() {
+
+	}
+}

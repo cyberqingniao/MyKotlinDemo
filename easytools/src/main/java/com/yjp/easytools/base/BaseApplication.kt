@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 import com.yjp.easytools.utils.ActivityManager
-import com.yjp.easytools.utils.FileUtil
 import com.yjp.easytools.utils.Utils
 
 /**
@@ -18,8 +17,6 @@ open class BaseApplication : Application() {
         super.onCreate()
         //初始化工具
         Utils.init(this)
-        //初始化文件操作工具
-        FileUtil.init()
         //生命周期管理
         setLifecycleCallback(this)
     }

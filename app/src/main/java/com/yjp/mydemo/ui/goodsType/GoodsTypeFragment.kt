@@ -14,7 +14,18 @@ import com.yjp.mydemo.databinding.FragmentGoodsTypeBinding
 class GoodsTypeFragment : BaseFragment<FragmentGoodsTypeBinding, GoodsTypeViewModel>() {
 
     companion object {
-        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { GoodsTypeFragment() }
+
+        private var instance: GoodsTypeFragment? = null
+
+        @Synchronized
+        fun getInstance(): GoodsTypeFragment {
+            if (instance == null) {
+                synchronized(GoodsTypeFragment::class.java) {
+                    instance = GoodsTypeFragment()
+                }
+            }
+            return instance!!
+        }
     }
 
     override fun initContentView(saveInstanceState: Bundle?): Int {
@@ -23,5 +34,10 @@ class GoodsTypeFragment : BaseFragment<FragmentGoodsTypeBinding, GoodsTypeViewMo
 
     override fun initVariableId(): Int {
         return BR.goodsTypeViewModel
+    }
+
+    override fun onDestroyView() {
+        instance = null
+        super.onDestroyView()
     }
 }

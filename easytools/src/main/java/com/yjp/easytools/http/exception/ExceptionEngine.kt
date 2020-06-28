@@ -6,6 +6,7 @@ import org.json.JSONException
 import retrofit2.adapter.rxjava2.HttpException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
+import java.util.concurrent.TimeoutException
 
 /**
  * 、$
@@ -53,12 +54,12 @@ object ExceptionEngine {
             ex = ApiException(e, ErrorType.PARSE_ERROR)
             ex.msg = "数据解析错误"
             ex
-        } else if (e is ConnectException || e is SocketTimeoutException || e is ConnectTimeoutException) { // 均视为网络错误
+        } else if (e is ConnectException || e is TimeoutException || e is SocketTimeoutException || e is ConnectTimeoutException) { // 均视为网络错误
             ex = ApiException(e, ErrorType.NETWORK_ERROR)
             ex.msg = "连接服务器失败"
             ex
         } else if (e is HttpException) {
-            if ("HTTP 404 Not Found" == e.message) {
+            if (e.message?.contains("404") == true) {
                 ex = ApiException(e, ErrorType.NETWORK_ERROR)
                 ex.msg = "没有发现服务器"
             } else {

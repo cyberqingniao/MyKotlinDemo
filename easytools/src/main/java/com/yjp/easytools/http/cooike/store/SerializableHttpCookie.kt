@@ -11,9 +11,6 @@ import java.io.Serializable
  * @date 2020/4/1 11:49
  */
 class SerializableHttpCookie(private var cookie: Cookie) : Serializable {
-    companion object {
-        private const val serialVersionUID = 6374381323722046732L
-    }
 
     private var clientCookie: Cookie? = null
 

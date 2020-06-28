@@ -118,6 +118,7 @@ object Utils {
     /**
      * 判断字符串是否为空
      */
+    @Contract(value = "null->true;!null->false", pure = true)
     fun isEmpty(s: String?): Boolean {
         return StringUtils.isEmpty(s)
     }
@@ -354,7 +355,7 @@ object Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             val uri =
-                FileProvider.getUriForFile(context, context.packageName + ".fileProvider", file)
+                FileProvider.getUriForFile(context, context.packageName + ".provider", file)
             intent.setDataAndType(uri, "application/vnd.android.package-archive")
         } else {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive")

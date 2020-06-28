@@ -1,0 +1,13 @@
+package ${model_path}
+
+import android.app.Application
+import com.yjp.easytools.base.BaseViewModel
+
+/**
+ * ${desc}
+ * @author yjp
+ * @date ${date}
+ */
+class ${b_model_name}ViewModel(application: Application) : BaseViewModel(application) {
+
+}

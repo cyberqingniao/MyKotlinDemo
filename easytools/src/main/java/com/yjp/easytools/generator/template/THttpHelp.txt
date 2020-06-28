@@ -1,9 +1,9 @@
-package com.yjp.mydemo.http
+package ${package_path}.http
 
 import com.yjp.easytools.http.BaseHttp
 import com.yjp.easytools.utils.SPUtils
-import com.yjp.mydemo.constant.ConstantUtil
-import com.yjp.mydemo.constant.SPKey
+import ${package_path}.constant.ConstantUtil
+import ${package_path}.constant.SPKey
 import okhttp3.Interceptor
 
 /**
@@ -33,9 +33,6 @@ class HttpHelp : BaseHttp() {
         }
     }
 
-    /**
-     * 设置链接地址
-     */
     override fun getBaseUrl(): String {
         return "http://" + SPUtils.getString(
             SPKey.CURRENT_IP,
@@ -43,9 +40,6 @@ class HttpHelp : BaseHttp() {
         ) + ":" + SPUtils.getString(SPKey.CURRENT_PORT, ConstantUtil.PORT)
     }
 
-    /**
-     * 设置头信息
-     */
     override fun getHeaderInterceptor(): Interceptor {
         return Interceptor.invoke {
             val originalRequest = it.request()

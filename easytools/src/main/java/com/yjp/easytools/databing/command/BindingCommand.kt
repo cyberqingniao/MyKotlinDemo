@@ -28,7 +28,7 @@ class BindingCommand<T> {
         this.canExecute0 = canExecute0
     }
 
-    fun canExecute0(): Boolean {
+    private fun canExecute0(): Boolean {
         if (canExecute0 == null) {
             return true
         }

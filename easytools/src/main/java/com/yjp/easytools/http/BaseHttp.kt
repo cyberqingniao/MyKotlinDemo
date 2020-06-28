@@ -1,6 +1,10 @@
 package com.yjp.easytools.http
 
+import android.util.Log
 import com.com.yjp.easytools.BuildConfig
+import com.google.gson.Gson
+import com.yjp.easytools.http.cooike.CookieJarImpl
+import com.yjp.easytools.http.cooike.store.MemoryCookieStore
 import com.yjp.easytools.http.interceptor.logging.Level
 import com.yjp.easytools.http.interceptor.logging.LoggingInterceptor
 import com.yjp.easytools.utils.SystemUtils
@@ -51,8 +55,7 @@ abstract class BaseHttp() {
      * 重置
      */
     fun reset() {
-        retrofit = null
-        client = null
+        retrofit = initRetrofit()
     }
 
     /**
@@ -65,6 +68,7 @@ abstract class BaseHttp() {
                 retrofit = initRetrofit()
             }
         }
+        Log.e("BaseHttp", "装入的Retrofit Base Url地址：" + Gson().toJson(retrofit!!.baseUrl()));
         return retrofit!!
     }
 
@@ -112,7 +116,7 @@ abstract class BaseHttp() {
             .addInterceptor(getHeaderInterceptor())
             .addInterceptor(mLoggingInterceptor)
             // TODO Cookie报错暂未探究
-//            .cookieJar(CookieJarImpl(PersistentCookieStore(Utils.context)))
+            .cookieJar(CookieJarImpl(MemoryCookieStore()))
             .cache(cache)
             .connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIME_OUT, TimeUnit.SECONDS)

@@ -1,5 +1,6 @@
 package com.yjp.easytools.utils
 
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -150,7 +151,7 @@ object StringUtils {
         while (m.find(endIndex)) {
             val index = temp.indexOf(m.group())
             val str = temp.substring(index, index + 1);
-            temp = temp.substring(0, index) + "_" + str.toLowerCase() + temp.substring(index + 1)
+            temp = temp.substring(0, index) + "_" + str.toLowerCase(Locale.ROOT) + temp.substring(index + 1)
             endIndex = m.end()
         }
         println(temp)
@@ -279,7 +280,7 @@ object StringUtils {
                 s.toDouble()
             }
             else -> {
-                -1.0
+                0.0
             }
         }
     }
@@ -310,11 +311,11 @@ object StringUtils {
                 if (isNumber(end) && end.toInt() == 0) {
                     s.substring(0, s.indexOf(".")).toInt()
                 } else {
-                    -1
+                    0
                 }
             }
             else -> {
-                -1
+                0
             }
         }
     }
