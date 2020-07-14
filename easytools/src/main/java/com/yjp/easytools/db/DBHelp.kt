@@ -14,10 +14,11 @@ import java.util.*
  * @date 2020/4/9 14:58
  */
 class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, null, DB_VERSION) {
+
     companion object {
         private const val DB_NAME = "DB_YJP"
         private const val DB_VERSION = 1
-        val _instance: DBHelp by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { DBHelp() }
+        val instance: DBHelp by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { DBHelp() }
     }
 
     private var db: SQLiteDatabase = writableDatabase
@@ -82,13 +83,18 @@ class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, nu
      */
     fun isTable(tableName: String): Boolean {
         val c =
-            db.rawQuery("SELECT name FORM sqlite_master WHERE type='table' ORDER BY name;", null)
-        while (c.moveToNext()) {
-            if (c.getString(0) == tableName) {
-                return true
+            db.rawQuery("SELECT name FORM 'sqlite_master' WHERE type='table' ORDER BY name;", null)
+        var isExist = false
+        if (null != c) {
+            while (c.moveToNext()) {
+                if (c.getString(0) == tableName) {
+                    isExist = true
+                    break
+                }
             }
+            c.close()
         }
-        return false
+        return isExist
     }
 
     /**
@@ -96,8 +102,9 @@ class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, nu
      *
      * @param o : 盛装数据的实体类
      */
-    fun insert(o: Any) { //不存在则创建表
+    fun insert(o: Any) {
         val tableName = getColumnName(o.javaClass.simpleName)
+        //不存在则创建表
         if (!isTable(tableName)) {
             createTable(o.javaClass)
         }
@@ -255,7 +262,7 @@ class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, nu
                 sb.append(chars[i])
             }
         }
-        return sb.toString().toUpperCase()
+        return sb.toString().toUpperCase(Locale.ROOT)
     }
 
     /**
@@ -366,7 +373,7 @@ class DBHelp private constructor() : SQLiteOpenHelper(Utils.context, DB_NAME, nu
                 val name = field.name
                 val value = values[getColumnName(name)]
                 val methodStr =
-                    "set" + name.substring(0, 1).toUpperCase() + name.substring(1)
+                    "set" + name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1)
                 val method = o.getMethod(methodStr, field.type)
                 method.invoke(t, value)
             }

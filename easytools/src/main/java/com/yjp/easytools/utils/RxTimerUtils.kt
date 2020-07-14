@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
  * @author yjp
  * @date 2020/3/31 17:38
  */
-class RxTimerUtil {
+class RxTimerUtils {
 
     private var mDisposable: Disposable? = null
 

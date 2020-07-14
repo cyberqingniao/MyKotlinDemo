@@ -1,15 +1,15 @@
-package ${package_path}.http
+package ${model_path}.http
 
 import com.yjp.easytools.http.BaseHttp
 import com.yjp.easytools.utils.SPUtils
-import ${package_path}.constant.ConstantUtil
-import ${package_path}.constant.SPKey
+import ${model_path}.utils.ConstantUtil
+import ${model_path}.utils.SPKey
 import okhttp3.Interceptor
 
 /**
  * 网络请求框架
  * @author yjp
- * @date 2020-05-11 23:41:52
+ * @date ${date}
  */
 class HttpHelp : BaseHttp() {
 

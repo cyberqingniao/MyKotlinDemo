@@ -5,7 +5,7 @@ import androidx.databinding.ObservableField
 import com.yjp.easytools.base.BaseViewModel
 import com.yjp.easytools.databing.command.BindingAction
 import com.yjp.easytools.databing.command.BindingCommand
-import com.yjp.easytools.utils.RxTimerUtil
+import com.yjp.easytools.utils.RxTimerUtils
 import com.yjp.mydemo.ui.main.MainActivity
 
 /**
@@ -19,14 +19,14 @@ class RegisterViewModel(application: Application) : BaseViewModel(application) {
     val password = ObservableField<String>("")
     val password1 = ObservableField<String>("")
     val codeTxt = ObservableField<String>("验证码")
-    val rxTimerUtil = RxTimerUtil()
+    val rxTimerUtil = RxTimerUtils()
     var oldTime = 60L
 
     val getCodeOncClickCommand = BindingCommand<Any>(object : BindingAction {
         override fun call() {
             if (rxTimerUtil.isDispose()) {
                 codeTxt.set("${oldTime}s")
-                rxTimerUtil.interval(1000, object : RxTimerUtil.IRxNext {
+                rxTimerUtil.interval(1000, object : RxTimerUtils.IRxNext {
                     override fun next(number: Long) {
                         oldTime--
                         if (oldTime > 0) {

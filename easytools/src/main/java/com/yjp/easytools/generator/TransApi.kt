@@ -2,7 +2,7 @@ package com.yjp.easytools.generator
 
 import android.annotation.SuppressLint
 import com.google.gson.Gson
-import com.yjp.easytools.utils.FileUtil
+import com.yjp.easytools.utils.FileUtils
 import com.yjp.easytools.utils.Utils
 import java.io.*
 import java.net.HttpURLConnection
@@ -74,7 +74,7 @@ class TransApi(private var appId: String, private var securityKey: String) {
             val strData = mutableListOf<String>()
             val str = StringBuffer()
             for (path in readPath) {
-                val files = FileUtil.readFile(path)
+                val files = FileUtils.readFile(path)
                 for (f in files) {
                     println(f.path)
                     try {
@@ -122,7 +122,7 @@ class TransApi(private var appId: String, private var securityKey: String) {
                 }
             }
             if (!Utils.isEmpty(str.toString())) {
-                FileUtil.writeFile(outPath, "string.xml", str.toString())
+                FileUtils.writeFile(outPath, "string.xml", str.toString())
             }
         }
 

@@ -1,0 +1,18 @@
+package ${package_path}.utils
+
+/**
+* SharedPreferences存储Key
+* @author yjp
+* @date ${date}
+*/
+object SPKey{
+
+    //当前服务器IP
+	const val CURRENT_IP="CURRENT_IP"
+
+	//当前服务器端口
+	const val CURRENT_PORT="CURRENT_PORT"
+
+	//当前登录用户的TOKEN令牌
+	const val TOKEN="TOKEN"
+}

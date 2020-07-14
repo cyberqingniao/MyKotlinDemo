@@ -11,7 +11,7 @@ import android.net.Uri
  * @author yjp
  * @date 2020/3/31 17:48
  */
-object NotifyUtil {
+object NotifyUtils {
     private var nManager: NotificationManager? = null
     private var notifyId: Int = 0
 

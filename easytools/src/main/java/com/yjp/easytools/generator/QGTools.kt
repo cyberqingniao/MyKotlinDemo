@@ -1,8 +1,7 @@
 package com.yjp.easytools.generator
 
-import com.yjp.easytools.generator.creater.UiType
-import com.yjp.easytools.utils.DataUtils
-import com.yjp.easytools.utils.FileUtil
+import com.yjp.easytools.utils.DateUtils
+import com.yjp.easytools.utils.FileUtils
 import com.yjp.easytools.utils.StringUtils
 import java.io.BufferedReader
 import java.io.File
@@ -51,13 +50,44 @@ class QGTools {
             "./easytools/src/main/java/com/yjp/easytools/generator/template/TDialogLayout.txt"
         const val VIEW_MODEL =
             "./easytools/src/main/java/com/yjp/easytools/generator/template/TViewModel.txt"
+        const val HTTP =
+            "./easytools/src/main/java/com/yjp/easytools/generator/template/THttpHelp.txt"
+        const val API =
+            "./easytools/src/main/java/com/yjp/easytools/generator/template/TApi.txt"
+        const val COMMON_OBSERVER =
+            "./easytools/src/main/java/com/yjp/easytools/generator/template/TCommonObserver.txt"
+        const val SP_KEY =
+            "./easytools/src/main/java/com/yjp/easytools/generator/template/TSPKey.txt"
+        const val CONSTANT =
+            "./easytools/src/main/java/com/yjp/easytools/generator/template/TConstantUtils.txt"
 
         @JvmStatic
         fun main(args: Array<String>) {
-            ui("shopCat", "购物车", UiType.ACTIVITY)
-            ui("web", "Web查看", UiType.FRAGMENT)
-            ui("tip", "提示弹窗", UiType.DIALOG)
+
+
         }
+
+        /**
+         * Model生成
+         * 生成Http请求工具
+         * 生成SharedPreferences存储Key的统一管理工具
+         * 生成网络链接配置
+         */
+        private fun model() {
+            //主包路径
+            val packagePath = "${PATH_MAIN_CODE}${PATH_PACKAGE.replace(".", "/")}"
+            //Http工具包路径
+            val httpPackagePath = "$packagePath/http/"
+            //内部使用工具
+            val constantPackagePath = "$packagePath/utils/"
+            //HTTP工具生成
+            create(httpPackagePath, "HttpHelp.kt", File(HTTP))
+            //SharedPreferences存储Key管理工具生成
+            create(constantPackagePath, "SPKey.kt", File(SP_KEY))
+            //网络链接配置工具生成
+            create(constantPackagePath, "ConstantUtils.kt", File(CONSTANT))
+        }
+
 
         /**
          * 根据传入的模块名、类型匹配模板
@@ -76,70 +106,140 @@ class QGTools {
                 model,
                 StringUtils.toLowerCaseName(model),
                 desc,
-                DataUtils.data2Str(System.currentTimeMillis())
+                DateUtils.data2Str(System.currentTimeMillis())
             )
             //判断文件类型
             when (type) {
+                //生成Activity
                 UiType.ACTIVITY -> {
                     val af = File(ACTIVITY)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_CODE + bean.model_path.replace(".", "/"),
                         "${bean.b_model_name}Activity.kt",
                         create(bean, af)
                     )
                     val xf = File(LAYOUT)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_LAYOUT,
                         "activity_${bean.layout_name}.xml",
                         create(bean, xf)
                     )
                     val vf = File(VIEW_MODEL)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_CODE + bean.model_path.replace(".", "/"),
                         "${bean.b_model_name}ViewModel.kt",
                         create(bean, vf)
                     )
                 }
+                //生成Fragemnt
                 UiType.FRAGMENT -> {
                     val ff = File(FRAGMENT)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_CODE + bean.model_path.replace(".", "/"),
                         "${bean.b_model_name}Fragment.kt",
                         create(bean, ff)
                     )
                     val xf = File(LAYOUT)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_LAYOUT,
                         "fragment_${bean.layout_name}.xml",
                         create(bean, xf)
                     )
                     val vf = File(VIEW_MODEL)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_CODE + bean.model_path.replace(".", "/"),
                         "${bean.b_model_name}ViewModel.kt",
                         create(bean, vf)
                     )
                 }
+                //生成Dialog
                 UiType.DIALOG -> {
                     bean.model_path = "${PATH_PACKAGE}.dialog"
                     val df = File(DIALOG)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_CODE + bean.model_path.replace(".", "/"),
                         "${bean.b_model_name}Dialog.kt",
                         create(bean, df)
                     )
                     val xf = File(DIALOG_LAYOUT)
-                    FileUtil.writeFile(
+                    FileUtils.writeFile(
                         PATH_MAIN_LAYOUT,
                         "dialog_${bean.layout_name}.xml",
                         create(bean, xf)
+                    )
+                }
+                //HTTP
+                UiType.HTTP -> {
+                    bean.model_path = PATH_PACKAGE
+                    //HTTP工具
+                    val hf = File(HTTP)
+                    FileUtils.writeFile(
+                        "${PATH_MAIN_CODE + bean.model_path.replace(".", "/")}/http",
+                        "HttpHelp.kt",
+                        create(bean, hf)
+                    )
+                    //返回统一解析
+                    val cof = File(COMMON_OBSERVER)
+                    FileUtils.writeFile(
+                        "${PATH_MAIN_CODE + bean.model_path.replace(".", "/")}/http",
+                        "CommonObserver.kt",
+                        create(bean, cof)
+                    )
+                    //API
+                    val apif = File(API)
+                    FileUtils.writeFile(
+                        "${PATH_MAIN_CODE + bean.model_path.replace(".", "/")}/http",
+                        "ApiService.kt",
+                        create(bean, apif)
+                    )
+                    //SPKey
+                    val kf = File(SP_KEY)
+                    FileUtils.writeFile(
+                        "${PATH_MAIN_CODE + bean.model_path.replace(".", "/")}/utils",
+                        "SPKey.kt",
+                        create(bean, kf)
+                    )
+                    //链接配置
+                    val cf = File(CONSTANT)
+                    FileUtils.writeFile(
+                        "${PATH_MAIN_CODE + bean.model_path.replace(".", "/")}/utils",
+                        "ConstantUtils.kt",
+                        create(bean, cf)
                     )
                 }
             }
         }
 
         /**
-         * 生成文件
+         * 固定工具类创建
+         * @param packagePath : 工具类所在包路径
+         * @param fileName : 工具类名称
+         * @param file ： 工具类文件
+         */
+        private fun create(packagePath: String, fileName: String, file: File) {
+            FileUtils.writeFile(
+                packagePath,
+                fileName,
+                create(
+                    QGBean(
+                        "",
+                        packagePath,
+                        "",
+                        "",
+                        "",
+                        "",
+                        DateUtils.data2Str(System.currentTimeMillis())
+                    ),
+                    file
+                )
+            )
+        }
+
+        /**
+         * MVVM模板样式生成
+         * @param bean
+         * @param file
+         * @return
          */
         private fun create(bean: QGBean, file: File): String {
             if (file.exists()) {
@@ -178,6 +278,11 @@ class QGTools {
     }
 }
 
+/**
+ * 项目结构生成配置实体类
+ * @author yjp
+ * @date 2020/6/30
+ */
 data class QGBean(
     //model路径
     var model_path: String,
@@ -194,3 +299,12 @@ data class QGBean(
     //时间
     var date: String
 )
+
+/**
+ * 文件创建类型
+ * @author yjp
+ * @date 2020/6/24
+ */
+enum class UiType {
+    ACTIVITY, FRAGMENT, DIALOG, HTTP
+}

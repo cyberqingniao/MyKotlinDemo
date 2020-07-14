@@ -1,0 +1,16 @@
+package ${package_path}.utils
+
+/**
+ * 网络链接配置
+ * @author yjp
+ * @date ${date}
+ */
+object ConstantUtil {
+
+    //默认服务器链接IP
+    const val IP = "11.1.1.87"
+    //默认服务器链接端口
+    const val PORT = "8888"
+
+
+}

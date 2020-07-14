@@ -12,7 +12,7 @@ import java.util.*
  * @date 2020-03-29 15:24
  */
 @SuppressLint("SimpleDateFormat")
-object DataUtils {
+object DateUtils {
     /**
      * 中文星期
      */

@@ -1,8 +1,6 @@
 package com.yjp.easytools.generator
 
-import com.yjp.easytools.generator.creater.*
-import com.yjp.easytools.utils.DataUtils
-import com.yjp.easytools.utils.FileUtil
+import com.yjp.easytools.utils.DateUtils
 import com.yjp.easytools.utils.StringUtils
 import com.yjp.easytools.utils.Utils
 import java.io.File
@@ -106,7 +104,7 @@ class GeneratorUtils {
         val sSB = StringBuilder()
         sSB.append("package $PATH_PACKAGE.constant\n\n")
         sSB.append(
-            "/**\n* SharedPreferences存储Key\n* @author yjp\n* @date ${DataUtils.data2Str(
+            "/**\n* SharedPreferences存储Key\n* @author yjp\n* @date ${DateUtils.data2Str(
                 System.currentTimeMillis()
             )}\n*/\n"
         )
@@ -118,7 +116,7 @@ class GeneratorUtils {
         writeFile(sFile, sSB)
         val cSB = StringBuilder()
         cSB.append("package $PATH_PACKAGE.constant\n\n")
-        cSB.append("/**\n* 网络链接配置\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        cSB.append("/**\n* 网络链接配置\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         cSB.append("object ${constantUtilName.substring(0, constantUtilName.indexOf("."))}{\n")
         cSB.append("\tconst val IP=\"11.1.1.80\"\n")
         cSB.append("\tconst val PORT=\"8080\"\n")
@@ -126,7 +124,7 @@ class GeneratorUtils {
         writeFile(cFile, cSB)
         val eSB = StringBuilder()
         eSB.append("package $PATH_PACKAGE.constant\n\n")
-        eSB.append("/**\n* EventBus Key\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        eSB.append("/**\n* EventBus Key\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         eSB.append(
             "data class ${eventKeyName.substring(
                 0,
@@ -248,7 +246,7 @@ class GeneratorUtils {
         cSB.append("import com.yjp.easytools.utils.ToastUtils\n")
         cSB.append("import io.reactivex.disposables.Disposable\n")
         cSB.append("import org.greenrobot.eventbus.EventBus\n")
-        cSB.append("/**\n* 数据解析\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        cSB.append("/**\n* 数据解析\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         cSB.append(
             "abstract class ${commonObserver.substring(
                 0,
@@ -290,7 +288,7 @@ class GeneratorUtils {
         aSB.append("import com.yjp.easytools.http.transformer.BaseResult\n")
         aSB.append("import io.reactivex.Observable\n")
         aSB.append("import retrofit2.http.GET\n")
-        aSB.append("/**\n* API$\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        aSB.append("/**\n* API$\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         aSB.append(
             "interface ${apiServiceName.substring(
                 0,
@@ -315,7 +313,7 @@ class GeneratorUtils {
         hSB.append("import $PATH_PACKAGE.constant.ConstantUtil\n")
         hSB.append("import $PATH_PACKAGE.constant.SPKey\n")
         hSB.append("import okhttp3.Interceptor\n\n")
-        hSB.append("/**\n* 网络请求框架\n* @author yjp\n*@date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        hSB.append("/**\n* 网络请求框架\n* @author yjp\n*@date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         hSB.append("class ${httpHelpName.substring(0, httpHelpName.indexOf("."))} : BaseHttp(){\n")
         hSB.append("\tcompanion object {\n")
         hSB.append(
@@ -368,7 +366,7 @@ class GeneratorUtils {
         dSB.append("import com.yjp.easytools.base.BaseDialog\n")
         dSB.append("import com.yjp.mydemo.R\n")
         dSB.append("import com.yjp.mydemo.databinding.DialogTipBinding\n")
-        dSB.append("/**\n*$\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        dSB.append("/**\n*$\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         dSB.append(
             "class ${aName.substring(
                 0,
@@ -408,7 +406,7 @@ class GeneratorUtils {
                 modelName
             )}Binding\n\n"
         )
-        aSB.append("/**\n*\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        aSB.append("/**\n*\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         aSB.append(
             "class ${aName.substring(
                 0,
@@ -462,7 +460,7 @@ class GeneratorUtils {
                 modelName
             )}Binding\n\n"
         )
-        aSB.append("/**\n*\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        aSB.append("/**\n*\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         aSB.append(
             "class ${aName.substring(
                 0,
@@ -507,7 +505,7 @@ class GeneratorUtils {
         vmSB.append("package $PATH_PACKAGE.ui.${modelName}\n\n")
         vmSB.append("import android.app.Application\n")
         vmSB.append("import com.yjp.easytools.base.BaseViewModel\n\n")
-        vmSB.append("/**\n*\n* @author yjp\n* @date ${DataUtils.data2Str(System.currentTimeMillis())}\n*/\n")
+        vmSB.append("/**\n*\n* @author yjp\n* @date ${DateUtils.data2Str(System.currentTimeMillis())}\n*/\n")
         vmSB.append(
             "class ${vmName.substring(
                 0,

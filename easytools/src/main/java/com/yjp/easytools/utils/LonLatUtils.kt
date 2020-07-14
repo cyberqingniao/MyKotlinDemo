@@ -8,7 +8,7 @@ import kotlin.math.floor
  * @author yjp
  * @date 2020/3/31 18:20
  */
-object LonLatUtil {
+object LonLatUtils {
     /**
      * 度分秒转double
      */

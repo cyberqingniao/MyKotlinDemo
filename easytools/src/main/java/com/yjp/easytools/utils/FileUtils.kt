@@ -10,7 +10,7 @@ import java.io.*
  * @author yjp
  * @date 2020/3/31 18:25
  */
-object FileUtil {
+object FileUtils {
 
     //存储父目录
     private var path: File? = null

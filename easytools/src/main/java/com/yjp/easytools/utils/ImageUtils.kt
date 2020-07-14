@@ -22,7 +22,7 @@ import java.io.IOException
  * @author yjp
  * @date 2020/3/31 18:21
  */
-object ImageUtil {
+object ImageUtils {
     private var mMemoryCache: LruCache<String, Bitmap?>? = null
     private var cacheSize = 0
 
@@ -272,7 +272,7 @@ object ImageUtil {
         view.destroyDrawingCache()
         view.isDrawingCacheEnabled = false
         if (null != bitmap) {
-            FileUtil.writeFile(fileName, bitmap, Bitmap.CompressFormat.JPEG)
+            FileUtils.writeFile(fileName, bitmap, Bitmap.CompressFormat.JPEG)
         }
         return bitmap!!
     }
