@@ -3,7 +3,7 @@
 	<data>
 		<variable
 			name="orderDetailsViewModel"
-			type="com.yjp.mydemo.ui.orderDetails.OrderDetailsViewModel"/>
+			type="com.yjp.mydemo.ui.order_details.OrderDetailsViewModel"/>
 	</data>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"

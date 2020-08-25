@@ -63,7 +63,7 @@ class QGTools {
 
         @JvmStatic
         fun main(args: Array<String>) {
-
+            ui("videoDemo","视频测试", UiType.ACTIVITY)
 
         }
 

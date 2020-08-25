@@ -4,20 +4,20 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.util.concurrent.ConcurrentHashMap
-
 /**
- * 把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
+ * $
+ *
  * @author yjp
- * @date 2020/6/30 16:23
+ * @date 2020/7/15 9:10
  */
-class RxBus private constructor() {
+class RxBus {
 
     companion object {
 
         @Volatile
         private var mDefaultInstance: RxBus? = null
 
-        fun getDefault(): RxBus? {
+        fun getDefault(): RxBus {
             if (mDefaultInstance == null) {
                 synchronized(RxBus::class.java) {
                     if (mDefaultInstance == null) {
@@ -25,20 +25,19 @@ class RxBus private constructor() {
                     }
                 }
             }
-            return mDefaultInstance
+            return mDefaultInstance!!
         }
     }
 
-
     private var mBus: Subject<Any>? = null
 
-    private var mStickyEventMap: MutableMap<Class<*>, Any>? =
-        null
+    private var mStickyEventMap: Map<Class<*>, Any>? = null
 
     init {
         mBus = PublishSubject.create<Any>().toSerialized()
         mStickyEventMap = ConcurrentHashMap()
     }
+
 
     /**
      * 发送事件
@@ -65,53 +64,9 @@ class RxBus private constructor() {
         mDefaultInstance = null
     }
 
-    /**
-     * Stciky 相关
-     */
-    /**
-     * 发送一个新Sticky事件
-     */
-    fun postSticky(event: Any) {
-        synchronized(mStickyEventMap!!) { mStickyEventMap!!.put(event.javaClass, event) }
-        post(event)
-    }
-
-    /**
-     * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
-     */
-    fun <T> toObservableSticky(eventType: Class<T>): Observable<T>? {
-        synchronized(mStickyEventMap!!) {
-            val observable = mBus!!.ofType(eventType)
-            val event = mStickyEventMap!![eventType]
-            return if (event != null) {
-                Observable.merge(
-                    observable,
-                    Observable.create { emitter -> emitter.onNext(eventType.cast(event)!!) }
-                )
-            } else {
-                observable
-            }
-        }
-    }
-
-    /**
-     * 根据eventType获取Sticky事件
-     */
-    fun <T> getStickyEvent(eventType: Class<T>): T? {
-        synchronized(mStickyEventMap!!) { return eventType.cast(mStickyEventMap!![eventType]) }
-    }
-
-    /**
-     * 移除指定eventType的Sticky事件
-     */
-    fun <T> removeStickyEvent(eventType: Class<T>): T? {
-        synchronized(mStickyEventMap!!) { return eventType.cast(mStickyEventMap!!.remove(eventType)) }
-    }
-
-    /**
-     * 移除所有的Sticky事件
-     */
-    fun removeAllStickyEvents() {
-        synchronized(mStickyEventMap!!) { mStickyEventMap!!.clear() }
-    }
 }
+
+data class EventEntity(
+    var type: Any,
+    var arg: Any?
+)

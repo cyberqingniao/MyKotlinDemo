@@ -1,12 +1,17 @@
 package com.yjp.easytools.utils
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.net.wifi.WifiManager
+import android.os.Build
 import android.provider.Settings
-import java.io.DataOutputStream
-import java.io.File
-import java.io.IOException
+import android.telephony.TelephonyManager
+import androidx.annotation.RequiresPermission
+import java.io.*
 import java.util.*
 
 /**
@@ -59,18 +64,105 @@ object SystemUtils {
     /**
      * 版本号
      */
-    val VERSION_CODE by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { getPackageInfo()?.versionCode }
+    val VERSION_CODE: Long
+        get() {
+            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                getPackageInfo()?.longVersionCode!!
+            } else {
+                getPackageInfo()?.versionCode!!.toLong()
+            }
+        }
 
     /**
      * 获取手机IMEI(需要“android.permission.READ_PHONE_STATE”权限)
      *
      * @return 手机IMEI
      */
-    fun getDeviceId(): String? {
-        return Settings.System.getString(
-            Utils.context.contentResolver,
-            Settings.System.ANDROID_ID
-        );
+    @RequiresPermission(allOf = [Manifest.permission.READ_PHONE_STATE, Manifest.permission.CHANGE_WIFI_STATE])
+    fun getDeviceId(): String {
+        var deviceId = getIMEI()
+        if (Utils.isEmpty(deviceId)) {
+            deviceId = getIMSI()
+        }
+        if (Utils.isEmpty(deviceId)) {
+            deviceId = getWifiManagerMacAddress()
+        }
+        if (Utils.isEmpty(deviceId)) {
+            deviceId = getAndroidId()
+        }
+        return deviceId!!
+    }
+
+    /**
+     * 通过Linux命令获取Mac地址
+     * 如果设备没有启动WiFi则返回空
+     */
+    fun getLinuxMacAddress(): String? {
+        var macAddress: String? = null
+        var str = ""
+        try {
+            val pp = Runtime.getRuntime().exec("cat /sys/class/net/wlan0/address")
+            val isr = InputStreamReader(pp.inputStream)
+            val input = LineNumberReader(isr)
+            while (input.readLine()?.let { str = it } != null) {
+                macAddress = str.trim()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return macAddress
+    }
+
+    /**
+     * 通过WifiManager获取Mac地址
+     */
+    @SuppressLint("HardwareIds")
+    @RequiresPermission(Manifest.permission.CHANGE_WIFI_STATE)
+    fun getWifiManagerMacAddress(): String? {
+        val wifiManager =
+            Utils.context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
+        wifiManager?.let {
+            if (!it.isWifiEnabled) {
+                it.isWifiEnabled = true
+                it.isWifiEnabled = false
+            }
+        }
+        val info = wifiManager?.connectionInfo
+        return info?.macAddress
+    }
+
+    @SuppressLint("HardwareIds")
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    fun getIMSI(): String? {
+        val mTelephonyManager =
+            Utils.context.applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        mTelephonyManager?.let {
+            return it.deviceId
+        }
+        return null
+    }
+
+    @SuppressLint("HardwareIds")
+    @RequiresPermission(Manifest.permission.READ_PHONE_STATE)
+    fun getIMEI(): String? {
+        val mTelephonyManager =
+            Utils.context.applicationContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager?
+        mTelephonyManager?.let {
+            return it.subscriberId
+        }
+        return null
+    }
+
+    /**
+     * 获取AndroidId
+     */
+    fun getAndroidId(): String {
+        var androidId = SPUtils.getString("ANDROID_ID", "")
+        if (Utils.isEmpty(androidId)) {
+            androidId = Settings.Secure.ANDROID_ID
+            SPUtils.put("ANDROID_ID", androidId)
+        }
+        return androidId
     }
 
     /**
@@ -124,5 +216,12 @@ object SystemUtils {
         } else {
             Runtime.getRuntime().exec("su")
         }
+    }
+
+    fun resetAPP(context: Context) {
+        val intent =
+            context.packageManager.getLaunchIntentForPackage(context.packageName)
+        intent!!.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        context.startActivity(intent)
     }
 }

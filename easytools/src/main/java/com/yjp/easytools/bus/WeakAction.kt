@@ -6,60 +6,60 @@ import java.lang.ref.WeakReference
 
 
 /**
- * About : kelin的WeakBindingAction
+ * $
+ * @author yjp
+ * @date 2020/7/15 9:16
  */
 class WeakAction<T> {
-    private var action: BindingAction? = null
-    private var consumer: BindingConsumer<T>? = null
+
+    var action: BindingAction? = null
+        private set
+
+    var consumer: BindingConsumer<T>? = null
+        private set
+
+    private var reference: WeakReference<Any>? = null
+
+    val target: Any?
+        get() {
+            return reference?.get()
+        }
+
     val isLive: Boolean
         get() {
-            if (reference == null) {
+            if (reference == null || reference?.get() == null) {
                 return false
             }
-            return reference.get() != null
+            return true
         }
-    val target: Any?
-        get() = if (reference != null) {
-            reference.get()
-        } else null
 
-    private var reference: WeakReference<*>?
-
-    constructor(target: Any?, action: BindingAction?) {
+    constructor(target: Any, action: BindingAction) {
         reference = WeakReference(target)
         this.action = action
     }
 
-    constructor(target: Any?, consumer: BindingConsumer<T>?) {
+    constructor(target: Any, consumer: BindingConsumer<T>) {
         reference = WeakReference(target)
         this.consumer = consumer
     }
 
     fun execute() {
-        if (action != null && isLive) {
-            action!!.call()
+        if (isLive) {
+            action?.call()
         }
     }
 
     fun execute(parameter: T) {
-        if (consumer != null
-            && isLive
-        ) {
-            consumer!!.call(parameter)
+        if (isLive) {
+            consumer?.call(parameter)
         }
     }
 
     fun markForDeletion() {
-        reference!!.clear()
+        reference?.clear()
         reference = null
         action = null
         consumer = null
     }
-
-    val bindingAction: BindingAction?
-        get() = action
-
-    val bindingConsumer: BindingConsumer<T>?
-        get() = consumer
 
 }

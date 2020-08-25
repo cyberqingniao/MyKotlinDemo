@@ -3,7 +3,7 @@
 	<data>
 		<variable
 			name="recyclerListViewModel"
-			type="com.yjp.mydemo.ui.recyclerList.RecyclerListViewModel"/>
+			type="com.yjp.mydemo.ui.recycler_list.RecyclerListViewModel"/>
 	</data>
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
